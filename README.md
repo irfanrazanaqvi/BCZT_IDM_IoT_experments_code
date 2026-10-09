@@ -8,4 +8,4 @@ Code, experiment scripts and result files for the paper *A Blockchain-Enabled Ze
 - `results/` – JSON metrics; `paper/` – LaTeX sources
 - TON_IoT data is not redistributed; obtain it from the UNSW TON_IoT page and place the CSVs in `data/`.
 
-Research code, unit-tested but not audited.
+Paper PDF is not included here. Research code, unit-tested but not audited.

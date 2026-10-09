@@ -92,3 +92,13 @@ for name, pol in rows:
 L += ["\\bottomrule", "\\end{tabular}"]
 open("tab_realpolicy.tex", "w").write("\n".join(L))
 print("real-data tables written")
+
+# ---- additional baselines (validity-window schemes and a central PDP)
+b2 = json.load(open("../results/baselines2.json"))["results"]
+L = [r"\begin{tabular}{@{}lrrr@{}}", r"\toprule",
+     r"\textbf{Scheme} & \textbf{Mean exp.} & \textbf{Max exp.} & \textbf{Avail. (\%)} \\", r"\midrule"]
+for k, v in b2.items():
+    name = k.replace("&", r"\&")
+    L.append(f"{name} & {v['mean_exposure']:.1f} & {v['max_exposure']} & {v['legit_availability_pct']:.1f} \\\\")
+L += [r"\bottomrule", r"\end{tabular}"]
+open("tab_base2.tex", "w").write("\n".join(L))

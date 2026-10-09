@@ -3,7 +3,7 @@
   "decisions": {
     "allow_strict_tier": 70339,
     "deny_anomaly_gate": 70158,
-    "deny_strict_borderline": 70381,
+    "deny_strict_borderline": 70369,
     "deny_trust_below": 70193
   },
   "recall": [
@@ -17,35 +17,35 @@
     },
     {
       "devices": 10,
-      "individual_total_gas": 588584,
-      "batch_gas": 373727,
+      "individual_total_gas": 588620,
+      "batch_gas": 373739,
       "saving_pct": 36.5,
-      "per_device_batch_gas": 37373,
+      "per_device_batch_gas": 37374,
       "suspendBatch_gas": 98895
     },
     {
       "devices": 50,
-      "individual_total_gas": 2943016,
-      "batch_gas": 1768639,
+      "individual_total_gas": 2943076,
+      "batch_gas": 1768651,
       "saving_pct": 39.9,
       "per_device_batch_gas": 35373,
-      "suspendBatch_gas": 397963
+      "suspendBatch_gas": 397927
     },
     {
       "devices": 100,
-      "individual_total_gas": 5886008,
-      "batch_gas": 3512255,
+      "individual_total_gas": 5885960,
+      "batch_gas": 3512303,
       "saving_pct": 40.3,
       "per_device_batch_gas": 35123,
-      "suspendBatch_gas": 771729
+      "suspendBatch_gas": 771669
     },
     {
       "devices": 200,
-      "individual_total_gas": 11772196,
+      "individual_total_gas": 11772076,
       "batch_gas": 6999571,
       "saving_pct": 40.5,
       "per_device_batch_gas": 34998,
-      "suspendBatch_gas": 1519225
+      "suspendBatch_gas": 1519249
     }
   ],
   "anchor_gas": {

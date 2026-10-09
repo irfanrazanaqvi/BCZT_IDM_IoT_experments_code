@@ -1,0 +1,42 @@
+{
+ "runs": 30,
+ "devices": 60,
+ "horizon_s": 600,
+ "results": {
+  "Short-lived cert (lifetime 60 s)": {
+   "mean_exposure": 29.0,
+   "max_exposure": 60,
+   "legit_availability_pct": 100.0
+  },
+  "Short-lived cert (lifetime 300 s)": {
+   "mean_exposure": 140.8,
+   "max_exposure": 300,
+   "legit_availability_pct": 100.0
+  },
+  "OCSP stapling (validity 60 s)": {
+   "mean_exposure": 29.0,
+   "max_exposure": 60,
+   "legit_availability_pct": 100.0
+  },
+  "OCSP stapling (validity 300 s)": {
+   "mean_exposure": 140.8,
+   "max_exposure": 300,
+   "legit_availability_pct": 100.0
+  },
+  "Central PDP (online, no outage)": {
+   "mean_exposure": 0,
+   "max_exposure": 0,
+   "legit_availability_pct": 100.0
+  },
+  "Central PDP, 60 s outage, fail-closed": {
+   "mean_exposure": 0,
+   "max_exposure": 0,
+   "legit_availability_pct": 86.73
+  },
+  "Central PDP, 60 s outage, fail-open": {
+   "mean_exposure": 21.0,
+   "max_exposure": 60,
+   "legit_availability_pct": 100.0
+  }
+ }
+}

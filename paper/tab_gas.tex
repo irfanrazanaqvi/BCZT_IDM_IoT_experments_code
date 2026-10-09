@@ -2,18 +2,18 @@
 \toprule
 \textbf{Operation} & \textbf{Mean gas} & \textbf{Std.} \\
 \midrule
-\texttt{registerDevice} & 214{,}888 & 9.6 \\
-\texttt{suspendDevice} & 32{,}709 & 4.2 \\
-\texttt{reinstateDevice} & 32{,}901 & 4.2 \\
-\texttt{revokeDevice} & 58{,}824 & 4.2 \\
-\texttt{evaluateAccess} (ALLOW) & 70{,}369 & 8.5 \\
-\texttt{evaluateAccess} (STEP\_UP) & 70{,}413 & 6.4 \\
-\texttt{evaluateAccess} (DENY, bad oracle sig.) & 70{,}141 & 8.1 \\
-\texttt{evaluateAccess} (DENY, replay) & 41{,}527 & 8.5 \\
-\texttt{evaluateAccess} (DENY, revoked) & 39{,}310 & 8.0 \\
+\texttt{registerDevice} & 214{,}950 & 8.9 \\
+\texttt{suspendDevice} & 32{,}709 & 5.9 \\
+\texttt{reinstateDevice} & 32{,}901 & 5.9 \\
+\texttt{revokeDevice} & 58{,}824 & 5.9 \\
+\texttt{evaluateAccess} (ALLOW) & 70{,}368 & 9.7 \\
+\texttt{evaluateAccess} (STEP\_UP) & 70{,}413 & 8.0 \\
+\texttt{evaluateAccess} (DENY, bad oracle sig.) & 70{,}143 & 8.3 \\
+\texttt{evaluateAccess} (DENY, replay) & 41{,}526 & 9.7 \\
+\texttt{evaluateAccess} (DENY, revoked) & 39{,}308 & 8.4 \\
 \midrule
-Deploy \texttt{IdentityRegistry} & 1{,}327{,}399 & -- \\
-Deploy \texttt{ZeroTrustAccess} & 1{,}078{,}477 & -- \\
+Deploy \texttt{IdentityRegistry} & 1{,}333{,}022 & -- \\
+Deploy \texttt{ZeroTrustAccess} & 1{,}079{,}680 & -- \\
 \texttt{definePolicy} (2 classes) & 97{,}805 & -- \\
 \bottomrule
 \end{tabular}

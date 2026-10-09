@@ -49,6 +49,7 @@ contract ZeroTrustAccess {
     }
 
     constructor(address registryAddress, address oracle) {
+        require(oracle != address(0), "zero oracle");
         registry = IdentityRegistry(registryAddress);
         policyAdmin = msg.sender;
         trustOracle = oracle;

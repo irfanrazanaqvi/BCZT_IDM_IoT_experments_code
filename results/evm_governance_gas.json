@@ -14,9 +14,9 @@
     "quorum": 4,
     "deploy_gas": 972143,
     "propose_gas": 72474,
-    "first_vote_gas": 77930,
-    "final_vote_gas_incl_revocation": 102168,
-    "total_gas_to_revoke": 374232,
+    "first_vote_gas": 77918,
+    "final_vote_gas_incl_revocation": 102156,
+    "total_gas_to_revoke": 374184,
     "revoked": true
   },
   {
@@ -53,10 +53,10 @@
     "N": 21,
     "quorum": 11,
     "deploy_gas": 1607603,
-    "propose_gas": 72474,
+    "propose_gas": 72462,
     "first_vote_gas": 77930,
     "final_vote_gas_incl_revocation": 102168,
-    "total_gas_to_revoke": 800042,
+    "total_gas_to_revoke": 800030,
     "revoked": true
   }
 ]

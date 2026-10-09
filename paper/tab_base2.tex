@@ -1,0 +1,13 @@
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+\textbf{Scheme} & \textbf{Mean exp.} & \textbf{Max exp.} & \textbf{Avail. (\%)} \\
+\midrule
+Short-lived cert (lifetime 60 s) & 29.0 & 60 & 100.0 \\
+Short-lived cert (lifetime 300 s) & 140.8 & 300 & 100.0 \\
+OCSP stapling (validity 60 s) & 29.0 & 60 & 100.0 \\
+OCSP stapling (validity 300 s) & 140.8 & 300 & 100.0 \\
+Central PDP (online, no outage) & 0.0 & 0 & 100.0 \\
+Central PDP, 60 s outage, fail-closed & 0.0 & 0 & 86.7 \\
+Central PDP, 60 s outage, fail-open & 21.0 & 60 & 100.0 \\
+\bottomrule
+\end{tabular}

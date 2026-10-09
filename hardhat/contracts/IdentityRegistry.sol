@@ -76,7 +76,8 @@ contract IdentityRegistry {
 
         bytes32 messageHash = keccak256(abi.encode(pubKeyHash, attributeHash, deviceClass, msg.sender));
         bytes32 ethSignedHash = _toEthSignedMessageHash(messageHash);
-        if (_recover(ethSignedHash, signature) != deviceSigner) revert InvalidSignature();
+        address rec = _recover(ethSignedHash, signature);
+        if (rec == address(0) || rec != deviceSigner) revert InvalidSignature();
 
         did = keccak256(abi.encodePacked("did:iot:", pubKeyHash));
         if (devices[did].registeredAt != 0) revert AlreadyRegistered();

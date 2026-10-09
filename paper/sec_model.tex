@@ -1,0 +1,51 @@
+\section{Industrial Requirements, System and Threat Model}\label{sec:model}
+
+\subsection{Requirements Specific to Industrial Settings}\label{sec:reqs}
+Translating the generic Zero Trust and blockchain-identity goals into a plant yields six requirements that drive the design; they are our reading of OT security guidance \cite{stouffer2023sp80082} and of the identity literature surveyed above, not a standard.
+\begin{itemize}[leftmargin=1.1em,itemsep=0pt,topsep=1pt]
+  \item \textbf{R1 Multi-party authority.} No single organization (operator, manufacturer, integrator) should be able to unilaterally revoke or reinstate a device.
+  \item \textbf{R2 Consequence-aware verification.} The evidence required before a request is accepted must grow with the consequence of the target resource: reading telemetry is not rewriting a controller's program.
+  \item \textbf{R3 Predictable, available enforcement.} The common-case decision must be fast and must not depend on the ledger being reachable; consensus latency is acceptable only for rare, high-consequence actions.
+  \item \textbf{R4 Brownfield coexistence.} Devices that cannot hold a key or run a signature scheme must be representable without weakening the identities of those that can.
+  \item \textbf{R5 Recall at fleet scale.} Withdrawing a vulnerable firmware generation must be possible for thousands of devices in a bounded number of blocks.
+  \item \textbf{R6 Auditability.} Every decision, including those taken locally for speed, must be attributable and tamper-evident after the fact.
+\end{itemize}
+\emph{Scope.} We target the supervisory, engineering and maintenance plane: historian writes, setpoint changes, program and firmware downloads, and telemetry reads. Hard real-time cyclic I/O between a controller and its field devices, with millisecond or microsecond determinism, is outside the scope: per-message authorization there would be inappropriate, and such traffic remains protected by segmentation and by device-level mechanisms that this architecture only complements.
+
+\subsection{System Model and Assumptions}\label{sec:sysmodel}
+Devices $\mathcal{D}$ hold signing keys $(sk_i,pk_i)$ generated at commissioning, except for a \emph{legacy} subset that is represented by a protocol gateway holding a proxy identity. Zone gateways act as Policy Enforcement Points (PEPs). A trust oracle $\mathcal{O}$ with key $sk_\mathcal{O}$ attests the context signals. A registrar role is held by a provisioning service, and an optional set of $N$ voters (for example the manufacturer, the operator and an auditor) governs revocation. A consortium of $V$ validators runs a permissioned PoA chain. We assume:
+\begin{itemize}[leftmargin=1.1em,itemsep=0pt,topsep=1pt]
+  \item \textbf{A1 (ledger integrity).} Fewer than half of the validators are Byzantine, so finalized state is immutable and visible to subsequent contract calls.
+  \item \textbf{A2 (cryptography).} Ed25519 and ECDSA over secp256k1 are existentially unforgeable under chosen-message attack (EUF-CMA); SHA-256 and Keccak-256 are collision resistant.
+  \item \textbf{A3 (key custody).} A device key stays secret until the adversary compromises that device. Attestation, secure boot and key custody are off-chain dependencies the ledger cannot enforce \cite{shujaa2025enhancing}.
+  \item \textbf{A4 (role keys).} The policy-administrator and oracle keys are uncompromised, and at most $q-1$ voter keys are compromised.
+  \item \textbf{A5 (replica freshness).} A zone replica applies each finalized registry event within $\Delta$ seconds of finality. $\Delta$ is an operational parameter (for example the block interval plus a polling or subscription delay), not a protocol guarantee.
+\end{itemize}
+
+\subsection{Adversary Model and Security Goals}\label{sec:adversary}
+The adversary controls the network between devices and PEPs (observe, replay, drop, inject), may compromise a bounded set of devices and obtain their keys, may enrol devices of its own, and controls the context signals reported by a device it has compromised. It cannot break A1--A5. In addition, we consider an \emph{insider}: a single organization that holds the registrar role and tries to revoke or reinstate devices for its own advantage. Table~\ref{tab:threats} maps threats to mitigations and evidence.
+
+\begin{table}[t]
+\centering
+\caption{Threat model: adversary actions, mitigations and evidence}
+\label{tab:threats}
+\scriptsize
+\begin{tabular}{@{}p{1.9cm}p{3.3cm}p{1.8cm}@{}}
+\toprule
+\textbf{Threat} & \textbf{Mitigation} & \textbf{Evidence} \\
+\midrule
+T1 Replay & Nonce set (audited) or monotonic counter (fast path) & Prop.~\ref{prop:replay}; Sec.~\ref{sec:attacks} \\
+T2 Impersonation / forgery & Signature checked against on-chain key & Sec.~\ref{sec:attacks} \\
+T3 Use after revocation & Status first on every call; terminal REVOKED & Props.~\ref{prop:revoke}, \ref{prop:stale}; Sec.~\ref{sec:baselines} \\
+T4 Re-enrolment of a revoked key & Key-hash blacklist & Prop.~\ref{prop:key} \\
+T5 Self-declared trust or tampered anomaly value & Oracle signature over $(\mathrm{did},\mathrm{res},T,A,\mathrm{nonce})$ & Prop.~\ref{prop:oracle} \\
+T6 Signal spoofing / mimicry & Bounded signal weights, anomaly gate, strict tiers & Prop.~\ref{prop:bound}; Secs.~\ref{sec:tiers_eval}, \ref{sec:gate_eval} \\
+T7 Insider revokes or reinstates at will & Quorum governance & Prop.~\ref{prop:gov}; Sec.~\ref{sec:governance_eval} \\
+T8 Legacy device impersonated behind a gateway & Proxy identity limited to low tiers & Sec.~\ref{sec:legacy} \\
+T9 Ledger or replica outage & Tier-dependent degraded mode & Sec.~\ref{sec:outage} \\
+T10 Validator collusion, oracle compromise & Out of scope (A1, A4) & Sec.~\ref{sec:disc} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The goals are: \textbf{G1} no request is accepted from a revoked, suspended or unknown identity, immediately on the audited path and within $\Delta$ on the fast path; \textbf{G2} each request is accepted at most once; \textbf{G3} a device cannot raise its own trust or lower its own anomaly value; \textbf{G4} a compromised key cannot be reused under a new identity; \textbf{G5} the effect of any single context signal, and the conditions under which a spoofing attacker is accepted, are known exactly; \textbf{G6} fewer than $q$ voters cannot revoke a device, and fewer than $N-q+1$ cannot block a revocation that $q$ voters approve; and \textbf{G7} every decision, including fast-path ones, is covered by an anchored commitment.

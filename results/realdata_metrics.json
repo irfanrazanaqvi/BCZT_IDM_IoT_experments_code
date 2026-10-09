@@ -1,0 +1,1257 @@
+{
+  "network_rows_raw": 211043,
+  "network_rows_dedup": 190474,
+  "attack_types": [
+    "backdoor",
+    "ddos",
+    "dos",
+    "injection",
+    "mitm",
+    "password",
+    "ransomware",
+    "scanning",
+    "xss"
+  ],
+  "telemetry": [
+    {
+      "file": "Train_Test_IoT_Fridge.csv",
+      "rows_raw": 39944,
+      "rows_dedup": 37110,
+      "normal": 12282,
+      "attack": 24828,
+      "features": [
+        "fridge_temperature",
+        "temp_condition"
+      ],
+      "fridge_whitespace_note": "temp_condition strings carry label-specific padding in the raw file (AUC 1.0 if unstripped)",
+      "sup_auc_mean": 0.5312037653738921,
+      "sup_auc_sd": 0.00202371925512028,
+      "iforest_auc_mean": 0.48357272566957227,
+      "iforest_auc_sd": 0.003921967087933442
+    },
+    {
+      "file": "Train_Test_IoT_Modbus.csv",
+      "rows_raw": 31106,
+      "rows_dedup": 17792,
+      "normal": 3906,
+      "attack": 13886,
+      "features": [
+        "FC1_Read_Input_Register",
+        "FC2_Read_Discrete_Value",
+        "FC3_Read_Holding_Register",
+        "FC4_Read_Coil"
+      ],
+      "fridge_whitespace_note": "temp_condition strings carry label-specific padding in the raw file (AUC 1.0 if unstripped)",
+      "sup_auc_mean": 0.623419904181256,
+      "sup_auc_sd": 0.007912642748148487,
+      "iforest_auc_mean": 0.4975332162360995,
+      "iforest_auc_sd": 0.004874585479835202
+    },
+    {
+      "file": "Train_Test_IoT_Thermostat.csv",
+      "rows_raw": 32774,
+      "rows_dedup": 32350,
+      "normal": 14586,
+      "attack": 17764,
+      "features": [
+        "current_temperature",
+        "thermostat_status"
+      ],
+      "fridge_whitespace_note": "temp_condition strings carry label-specific padding in the raw file (AUC 1.0 if unstripped)",
+      "sup_auc_mean": 0.5127818603529446,
+      "sup_auc_sd": 0.005969167195065699,
+      "iforest_auc_mean": 0.49685655100939535,
+      "iforest_auc_sd": 0.007933442916430746
+    },
+    {
+      "file": "Train_Test_IoT_Weather.csv",
+      "rows_raw": 39260,
+      "rows_dedup": 39260,
+      "normal": 15000,
+      "attack": 24260,
+      "features": [
+        "temperature",
+        "pressure",
+        "humidity"
+      ],
+      "fridge_whitespace_note": "temp_condition strings carry label-specific padding in the raw file (AUC 1.0 if unstripped)",
+      "sup_auc_mean": 0.9717398705383042,
+      "sup_auc_sd": 0.0014794930849699216,
+      "iforest_auc_mean": 0.8193504228878506,
+      "iforest_auc_sd": 0.003912560319203826
+    }
+  ],
+  "detectors": {
+    "sup_auc_mean": 0.9998980401462634,
+    "sup_auc_sd": 3.0404822916919966e-05,
+    "iforest_auc_mean": 0.916295903772598,
+    "iforest_auc_sd": 0.004246738353943494,
+    "iforest_auc_by_type": {
+      "backdoor": [
+        0.9463237681836979,
+        0.0026041370431943126
+      ],
+      "ddos": [
+        0.8126517751397626,
+        0.006503225726717074
+      ],
+      "dos": [
+        0.912483124876084,
+        0.0033208845604242527
+      ],
+      "injection": [
+        0.9531856413256209,
+        0.0025628459869330568
+      ],
+      "mitm": [
+        0.8987169575983801,
+        0.010104458326762638
+      ],
+      "password": [
+        0.9556538117244452,
+        0.0018566556204372957
+      ],
+      "ransomware": [
+        0.9403024790211754,
+        0.004999082082384705
+      ],
+      "scanning": [
+        0.906415888307432,
+        0.009894649211877708
+      ],
+      "xss": [
+        0.9114514945864836,
+        0.007674787864630387
+      ]
+    },
+    "loto_by_type": {
+      "backdoor": {
+        "auc_vs_normal": 0.9998420565416392,
+        "detect_at_0.5": 0.9934081596294316,
+        "mean_A": 0.9942466353177799
+      },
+      "ddos": {
+        "auc_vs_normal": 0.9972636507337734,
+        "detect_at_0.5": 0.9509836612204068,
+        "mean_A": 0.8498430002250287
+      },
+      "dos": {
+        "auc_vs_normal": 0.9987378306241294,
+        "detect_at_0.5": 0.9429624429624429,
+        "mean_A": 0.948432627849568
+      },
+      "injection": {
+        "auc_vs_normal": 0.9992344432919279,
+        "detect_at_0.5": 0.9991651360828185,
+        "mean_A": 0.9789204833423498
+      },
+      "mitm": {
+        "auc_vs_normal": 0.9897417853977084,
+        "detect_at_0.5": 0.7371794871794872,
+        "mean_A": 0.7211537306183946
+      },
+      "password": {
+        "auc_vs_normal": 0.9997103915023088,
+        "detect_at_0.5": 0.9991609330424568,
+        "mean_A": 0.9901758516836539
+      },
+      "ransomware": {
+        "auc_vs_normal": 0.9905481852069379,
+        "detect_at_0.5": 0.6539244514815653,
+        "mean_A": 0.6051028398692544
+      },
+      "scanning": {
+        "auc_vs_normal": 0.998782072629242,
+        "detect_at_0.5": 0.9328333333333333,
+        "mean_A": 0.9336028498208968
+      },
+      "xss": {
+        "auc_vs_normal": 0.9986443247843084,
+        "detect_at_0.5": 0.956837700946928,
+        "mean_A": 0.9001515545059796
+      }
+    },
+    "seeds": [
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "train_test": "70/30 stratified by type after de-duplication; src_ip/dst_ip/src_port excluded from features"
+  },
+  "policy_seen": {
+    "telemetry.read": {
+      "legit_allow_threshold": 99.96666666666667,
+      "legit_allow_full": 99.96666666666667,
+      "attack_accepted": {
+        "backdoor": {
+          "threshold_only": 100.0,
+          "full_policy": 100.0
+        },
+        "ddos": {
+          "threshold_only": 100.0,
+          "full_policy": 100.0
+        },
+        "dos": {
+          "threshold_only": 100.0,
+          "full_policy": 100.0
+        },
+        "injection": {
+          "threshold_only": 100.0,
+          "full_policy": 100.0
+        },
+        "mitm": {
+          "threshold_only": 100.0,
+          "full_policy": 100.0
+        },
+        "password": {
+          "threshold_only": 100.0,
+          "full_policy": 100.0
+        },
+        "ransomware": {
+          "threshold_only": 100.0,
+          "full_policy": 100.0
+        },
+        "scanning": {
+          "threshold_only": 100.0,
+          "full_policy": 100.0
+        },
+        "xss": {
+          "threshold_only": 100.0,
+          "full_policy": 100.0
+        }
+      }
+    },
+    "historian.write": {
+      "legit_allow_threshold": 99.7,
+      "legit_allow_full": 99.63333333333333,
+      "attack_accepted": {
+        "backdoor": {
+          "threshold_only": 99.8,
+          "full_policy": 0.0
+        },
+        "ddos": {
+          "threshold_only": 100.0,
+          "full_policy": 1.0333333333333332
+        },
+        "dos": {
+          "threshold_only": 100.0,
+          "full_policy": 0.13333333333333333
+        },
+        "injection": {
+          "threshold_only": 100.0,
+          "full_policy": 0.03333333333333333
+        },
+        "mitm": {
+          "threshold_only": 100.0,
+          "full_policy": 4.866666666666666
+        },
+        "password": {
+          "threshold_only": 100.0,
+          "full_policy": 0.06666666666666667
+        },
+        "ransomware": {
+          "threshold_only": 100.0,
+          "full_policy": 0.1
+        },
+        "scanning": {
+          "threshold_only": 100.0,
+          "full_policy": 0.0
+        },
+        "xss": {
+          "threshold_only": 100.0,
+          "full_policy": 0.0
+        }
+      }
+    },
+    "plc.setpoint.write": {
+      "legit_allow_threshold": 99.46666666666667,
+      "legit_allow_full": 98.83333333333333,
+      "attack_accepted": {
+        "backdoor": {
+          "threshold_only": 0.0,
+          "full_policy": 0.0
+        },
+        "ddos": {
+          "threshold_only": 1.2,
+          "full_policy": 0.8999999999999999
+        },
+        "dos": {
+          "threshold_only": 0.46666666666666673,
+          "full_policy": 0.23333333333333336
+        },
+        "injection": {
+          "threshold_only": 0.03333333333333333,
+          "full_policy": 0.0
+        },
+        "mitm": {
+          "threshold_only": 7.466666666666668,
+          "full_policy": 2.2666666666666666
+        },
+        "password": {
+          "threshold_only": 0.1,
+          "full_policy": 0.0
+        },
+        "ransomware": {
+          "threshold_only": 0.16666666666666669,
+          "full_policy": 0.0
+        },
+        "scanning": {
+          "threshold_only": 0.13333333333333333,
+          "full_policy": 0.0
+        },
+        "xss": {
+          "threshold_only": 0.03333333333333333,
+          "full_policy": 0.0
+        }
+      }
+    },
+    "plc.firmware.update": {
+      "legit_allow_threshold": 99.0,
+      "legit_allow_full": 98.43333333333332,
+      "attack_accepted": {
+        "backdoor": {
+          "threshold_only": 0.0,
+          "full_policy": 0.0
+        },
+        "ddos": {
+          "threshold_only": 1.1666666666666667,
+          "full_policy": 0.6333333333333333
+        },
+        "dos": {
+          "threshold_only": 0.4333333333333333,
+          "full_policy": 0.23333333333333336
+        },
+        "injection": {
+          "threshold_only": 0.03333333333333333,
+          "full_policy": 0.0
+        },
+        "mitm": {
+          "threshold_only": 3.933333333333333,
+          "full_policy": 1.5
+        },
+        "password": {
+          "threshold_only": 0.03333333333333333,
+          "full_policy": 0.0
+        },
+        "ransomware": {
+          "threshold_only": 0.0,
+          "full_policy": 0.0
+        },
+        "scanning": {
+          "threshold_only": 0.1,
+          "full_policy": 0.0
+        },
+        "xss": {
+          "threshold_only": 0.0,
+          "full_policy": 0.0
+        }
+      }
+    }
+  },
+  "policy_loto": {
+    "telemetry.read": {
+      "legit_allow_threshold": 99.93333333333332,
+      "legit_allow_full": 99.93333333333332,
+      "attack_accepted": {
+        "backdoor": {
+          "threshold_only": 100.0,
+          "full_policy": 100.0
+        },
+        "ddos": {
+          "threshold_only": 100.0,
+          "full_policy": 100.0
+        },
+        "dos": {
+          "threshold_only": 100.0,
+          "full_policy": 100.0
+        },
+        "injection": {
+          "threshold_only": 100.0,
+          "full_policy": 100.0
+        },
+        "mitm": {
+          "threshold_only": 100.0,
+          "full_policy": 100.0
+        },
+        "password": {
+          "threshold_only": 100.0,
+          "full_policy": 100.0
+        },
+        "ransomware": {
+          "threshold_only": 100.0,
+          "full_policy": 100.0
+        },
+        "scanning": {
+          "threshold_only": 100.0,
+          "full_policy": 100.0
+        },
+        "xss": {
+          "threshold_only": 100.0,
+          "full_policy": 100.0
+        }
+      }
+    },
+    "historian.write": {
+      "legit_allow_threshold": 99.9,
+      "legit_allow_full": 99.76666666666667,
+      "attack_accepted": {
+        "backdoor": {
+          "threshold_only": 99.93333333333332,
+          "full_policy": 0.9333333333333335
+        },
+        "ddos": {
+          "threshold_only": 100.0,
+          "full_policy": 13.366666666666665
+        },
+        "dos": {
+          "threshold_only": 100.0,
+          "full_policy": 6.766666666666667
+        },
+        "injection": {
+          "threshold_only": 100.0,
+          "full_policy": 0.06666666666666667
+        },
+        "mitm": {
+          "threshold_only": 100.0,
+          "full_policy": 28.96666666666667
+        },
+        "password": {
+          "threshold_only": 100.0,
+          "full_policy": 0.26666666666666666
+        },
+        "ransomware": {
+          "threshold_only": 100.0,
+          "full_policy": 41.63333333333333
+        },
+        "scanning": {
+          "threshold_only": 100.0,
+          "full_policy": 6.033333333333333
+        },
+        "xss": {
+          "threshold_only": 100.0,
+          "full_policy": 9.366666666666665
+        }
+      }
+    },
+    "plc.setpoint.write": {
+      "legit_allow_threshold": 99.66666666666667,
+      "legit_allow_full": 99.2,
+      "attack_accepted": {
+        "backdoor": {
+          "threshold_only": 0.7333333333333333,
+          "full_policy": 0.6666666666666667
+        },
+        "ddos": {
+          "threshold_only": 28.066666666666666,
+          "full_policy": 3.4333333333333336
+        },
+        "dos": {
+          "threshold_only": 7.7,
+          "full_policy": 2.666666666666667
+        },
+        "injection": {
+          "threshold_only": 0.26666666666666666,
+          "full_policy": 0.1
+        },
+        "mitm": {
+          "threshold_only": 33.43333333333333,
+          "full_policy": 23.733333333333334
+        },
+        "password": {
+          "threshold_only": 0.46666666666666673,
+          "full_policy": 0.0
+        },
+        "ransomware": {
+          "threshold_only": 51.53333333333333,
+          "full_policy": 33.93333333333333
+        },
+        "scanning": {
+          "threshold_only": 6.833333333333333,
+          "full_policy": 4.466666666666667
+        },
+        "xss": {
+          "threshold_only": 14.233333333333334,
+          "full_policy": 1.7000000000000002
+        }
+      }
+    },
+    "plc.firmware.update": {
+      "legit_allow_threshold": 99.06666666666666,
+      "legit_allow_full": 98.53333333333333,
+      "attack_accepted": {
+        "backdoor": {
+          "threshold_only": 0.7333333333333333,
+          "full_policy": 0.7000000000000001
+        },
+        "ddos": {
+          "threshold_only": 5.2,
+          "full_policy": 2.7666666666666666
+        },
+        "dos": {
+          "threshold_only": 5.2,
+          "full_policy": 1.6666666666666667
+        },
+        "injection": {
+          "threshold_only": 0.06666666666666667,
+          "full_policy": 0.06666666666666667
+        },
+        "mitm": {
+          "threshold_only": 25.8,
+          "full_policy": 17.833333333333336
+        },
+        "password": {
+          "threshold_only": 0.03333333333333333,
+          "full_policy": 0.0
+        },
+        "ransomware": {
+          "threshold_only": 36.666666666666664,
+          "full_policy": 35.8
+        },
+        "scanning": {
+          "threshold_only": 5.866666666666666,
+          "full_policy": 0.0
+        },
+        "xss": {
+          "threshold_only": 4.1000000000000005,
+          "full_policy": 0.8999999999999999
+        }
+      }
+    }
+  },
+  "evasion_seen": {
+    "0.1": {
+      "telemetry.read": {
+        "legit_allow_threshold": 99.93333333333332,
+        "legit_allow_full": 99.93333333333332,
+        "attack_accepted": {
+          "backdoor": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "ddos": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "dos": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "injection": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "mitm": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "password": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "ransomware": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "scanning": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "xss": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          }
+        }
+      },
+      "historian.write": {
+        "legit_allow_threshold": 99.73333333333333,
+        "legit_allow_full": 99.66666666666667,
+        "attack_accepted": {
+          "backdoor": {
+            "threshold_only": 99.93333333333332,
+            "full_policy": 0.0
+          },
+          "ddos": {
+            "threshold_only": 100.0,
+            "full_policy": 11.200000000000001
+          },
+          "dos": {
+            "threshold_only": 100.0,
+            "full_policy": 2.8000000000000003
+          },
+          "injection": {
+            "threshold_only": 100.0,
+            "full_policy": 1.3333333333333335
+          },
+          "mitm": {
+            "threshold_only": 100.0,
+            "full_policy": 45.2
+          },
+          "password": {
+            "threshold_only": 100.0,
+            "full_policy": 0.33333333333333337
+          },
+          "ransomware": {
+            "threshold_only": 100.0,
+            "full_policy": 1.2
+          },
+          "scanning": {
+            "threshold_only": 100.0,
+            "full_policy": 0.6666666666666667
+          },
+          "xss": {
+            "threshold_only": 100.0,
+            "full_policy": 0.0
+          }
+        }
+      },
+      "plc.setpoint.write": {
+        "legit_allow_threshold": 99.33333333333333,
+        "legit_allow_full": 98.73333333333333,
+        "attack_accepted": {
+          "backdoor": {
+            "threshold_only": 0.0,
+            "full_policy": 0.0
+          },
+          "ddos": {
+            "threshold_only": 11.799999999999999,
+            "full_policy": 6.4
+          },
+          "dos": {
+            "threshold_only": 4.0,
+            "full_policy": 2.0666666666666664
+          },
+          "injection": {
+            "threshold_only": 0.8,
+            "full_policy": 0.06666666666666667
+          },
+          "mitm": {
+            "threshold_only": 74.93333333333332,
+            "full_policy": 22.6
+          },
+          "password": {
+            "threshold_only": 1.4666666666666666,
+            "full_policy": 0.33333333333333337
+          },
+          "ransomware": {
+            "threshold_only": 0.6666666666666667,
+            "full_policy": 0.0
+          },
+          "scanning": {
+            "threshold_only": 0.5333333333333333,
+            "full_policy": 0.0
+          },
+          "xss": {
+            "threshold_only": 0.46666666666666673,
+            "full_policy": 0.0
+          }
+        }
+      },
+      "plc.firmware.update": {
+        "legit_allow_threshold": 98.8,
+        "legit_allow_full": 98.4,
+        "attack_accepted": {
+          "backdoor": {
+            "threshold_only": 0.0,
+            "full_policy": 0.0
+          },
+          "ddos": {
+            "threshold_only": 9.533333333333333,
+            "full_policy": 4.533333333333333
+          },
+          "dos": {
+            "threshold_only": 3.5333333333333337,
+            "full_policy": 1.7333333333333332
+          },
+          "injection": {
+            "threshold_only": 0.6,
+            "full_policy": 0.06666666666666667
+          },
+          "mitm": {
+            "threshold_only": 40.33333333333333,
+            "full_policy": 15.133333333333333
+          },
+          "password": {
+            "threshold_only": 0.26666666666666666,
+            "full_policy": 0.06666666666666667
+          },
+          "ransomware": {
+            "threshold_only": 0.0,
+            "full_policy": 0.0
+          },
+          "scanning": {
+            "threshold_only": 0.13333333333333333,
+            "full_policy": 0.0
+          },
+          "xss": {
+            "threshold_only": 0.0,
+            "full_policy": 0.0
+          }
+        }
+      }
+    },
+    "0.01": {
+      "telemetry.read": {
+        "legit_allow_threshold": 99.93333333333332,
+        "legit_allow_full": 99.93333333333332,
+        "attack_accepted": {
+          "backdoor": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "ddos": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "dos": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "injection": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "mitm": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "password": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "ransomware": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "scanning": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "xss": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          }
+        }
+      },
+      "historian.write": {
+        "legit_allow_threshold": 99.73333333333333,
+        "legit_allow_full": 99.66666666666667,
+        "attack_accepted": {
+          "backdoor": {
+            "threshold_only": 99.93333333333332,
+            "full_policy": 0.0
+          },
+          "ddos": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "dos": {
+            "threshold_only": 100.0,
+            "full_policy": 28.999999999999996
+          },
+          "injection": {
+            "threshold_only": 100.0,
+            "full_policy": 8.333333333333332
+          },
+          "mitm": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "password": {
+            "threshold_only": 100.0,
+            "full_policy": 6.933333333333333
+          },
+          "ransomware": {
+            "threshold_only": 100.0,
+            "full_policy": 9.2
+          },
+          "scanning": {
+            "threshold_only": 100.0,
+            "full_policy": 5.533333333333333
+          },
+          "xss": {
+            "threshold_only": 100.0,
+            "full_policy": 0.0
+          }
+        }
+      },
+      "plc.setpoint.write": {
+        "legit_allow_threshold": 99.33333333333333,
+        "legit_allow_full": 98.73333333333333,
+        "attack_accepted": {
+          "backdoor": {
+            "threshold_only": 0.0,
+            "full_policy": 0.0
+          },
+          "ddos": {
+            "threshold_only": 100.0,
+            "full_policy": 71.53333333333333
+          },
+          "dos": {
+            "threshold_only": 39.800000000000004,
+            "full_policy": 19.26666666666667
+          },
+          "injection": {
+            "threshold_only": 10.733333333333334,
+            "full_policy": 1.4000000000000001
+          },
+          "mitm": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "password": {
+            "threshold_only": 15.933333333333334,
+            "full_policy": 1.7333333333333332
+          },
+          "ransomware": {
+            "threshold_only": 9.0,
+            "full_policy": 0.0
+          },
+          "scanning": {
+            "threshold_only": 4.666666666666667,
+            "full_policy": 0.0
+          },
+          "xss": {
+            "threshold_only": 2.3333333333333335,
+            "full_policy": 0.0
+          }
+        }
+      },
+      "plc.firmware.update": {
+        "legit_allow_threshold": 98.8,
+        "legit_allow_full": 98.4,
+        "attack_accepted": {
+          "backdoor": {
+            "threshold_only": 0.0,
+            "full_policy": 0.0
+          },
+          "ddos": {
+            "threshold_only": 100.0,
+            "full_policy": 51.0
+          },
+          "dos": {
+            "threshold_only": 28.733333333333334,
+            "full_policy": 13.133333333333333
+          },
+          "injection": {
+            "threshold_only": 6.666666666666667,
+            "full_policy": 1.2666666666666666
+          },
+          "mitm": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "password": {
+            "threshold_only": 5.666666666666666,
+            "full_policy": 1.3333333333333335
+          },
+          "ransomware": {
+            "threshold_only": 0.0,
+            "full_policy": 0.0
+          },
+          "scanning": {
+            "threshold_only": 4.133333333333333,
+            "full_policy": 0.0
+          },
+          "xss": {
+            "threshold_only": 0.0,
+            "full_policy": 0.0
+          }
+        }
+      }
+    }
+  },
+  "evasion_loto": {
+    "0.1": {
+      "telemetry.read": {
+        "legit_allow_threshold": 100.0,
+        "legit_allow_full": 100.0,
+        "attack_accepted": {
+          "backdoor": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "ddos": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "dos": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "injection": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "mitm": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "password": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "ransomware": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "scanning": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "xss": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          }
+        }
+      },
+      "historian.write": {
+        "legit_allow_threshold": 99.8,
+        "legit_allow_full": 99.66666666666667,
+        "attack_accepted": {
+          "backdoor": {
+            "threshold_only": 99.8,
+            "full_policy": 5.666666666666666
+          },
+          "ddos": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "dos": {
+            "threshold_only": 100.0,
+            "full_policy": 64.4
+          },
+          "injection": {
+            "threshold_only": 100.0,
+            "full_policy": 1.2
+          },
+          "mitm": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "password": {
+            "threshold_only": 100.0,
+            "full_policy": 1.1333333333333333
+          },
+          "ransomware": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "scanning": {
+            "threshold_only": 100.0,
+            "full_policy": 68.93333333333334
+          },
+          "xss": {
+            "threshold_only": 100.0,
+            "full_policy": 93.2
+          }
+        }
+      },
+      "plc.setpoint.write": {
+        "legit_allow_threshold": 99.6,
+        "legit_allow_full": 99.06666666666666,
+        "attack_accepted": {
+          "backdoor": {
+            "threshold_only": 7.066666666666667,
+            "full_policy": 6.933333333333333
+          },
+          "ddos": {
+            "threshold_only": 100.0,
+            "full_policy": 34.733333333333334
+          },
+          "dos": {
+            "threshold_only": 79.4,
+            "full_policy": 26.866666666666667
+          },
+          "injection": {
+            "threshold_only": 3.3333333333333335,
+            "full_policy": 0.46666666666666673
+          },
+          "mitm": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "password": {
+            "threshold_only": 6.6000000000000005,
+            "full_policy": 0.33333333333333337
+          },
+          "ransomware": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "scanning": {
+            "threshold_only": 80.2,
+            "full_policy": 53.400000000000006
+          },
+          "xss": {
+            "threshold_only": 100.0,
+            "full_policy": 18.46666666666667
+          }
+        }
+      },
+      "plc.firmware.update": {
+        "legit_allow_threshold": 98.93333333333332,
+        "legit_allow_full": 98.13333333333333,
+        "attack_accepted": {
+          "backdoor": {
+            "threshold_only": 6.800000000000001,
+            "full_policy": 5.666666666666666
+          },
+          "ddos": {
+            "threshold_only": 57.599999999999994,
+            "full_policy": 32.13333333333333
+          },
+          "dos": {
+            "threshold_only": 56.266666666666666,
+            "full_policy": 17.599999999999998
+          },
+          "injection": {
+            "threshold_only": 0.8666666666666666,
+            "full_policy": 0.2
+          },
+          "mitm": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "password": {
+            "threshold_only": 0.7333333333333333,
+            "full_policy": 0.13333333333333333
+          },
+          "ransomware": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "scanning": {
+            "threshold_only": 68.33333333333333,
+            "full_policy": 0.0
+          },
+          "xss": {
+            "threshold_only": 53.53333333333333,
+            "full_policy": 5.666666666666666
+          }
+        }
+      }
+    },
+    "0.01": {
+      "telemetry.read": {
+        "legit_allow_threshold": 100.0,
+        "legit_allow_full": 100.0,
+        "attack_accepted": {
+          "backdoor": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "ddos": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "dos": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "injection": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "mitm": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "password": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "ransomware": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "scanning": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "xss": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          }
+        }
+      },
+      "historian.write": {
+        "legit_allow_threshold": 99.8,
+        "legit_allow_full": 99.66666666666667,
+        "attack_accepted": {
+          "backdoor": {
+            "threshold_only": 99.93333333333332,
+            "full_policy": 65.60000000000001
+          },
+          "ddos": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "dos": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "injection": {
+            "threshold_only": 100.0,
+            "full_policy": 10.4
+          },
+          "mitm": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "password": {
+            "threshold_only": 100.0,
+            "full_policy": 12.066666666666666
+          },
+          "ransomware": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "scanning": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "xss": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          }
+        }
+      },
+      "plc.setpoint.write": {
+        "legit_allow_threshold": 99.6,
+        "legit_allow_full": 99.06666666666666,
+        "attack_accepted": {
+          "backdoor": {
+            "threshold_only": 64.93333333333334,
+            "full_policy": 63.26666666666667
+          },
+          "ddos": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "dos": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "injection": {
+            "threshold_only": 57.666666666666664,
+            "full_policy": 7.000000000000001
+          },
+          "mitm": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "password": {
+            "threshold_only": 64.26666666666667,
+            "full_policy": 2.3333333333333335
+          },
+          "ransomware": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "scanning": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "xss": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          }
+        }
+      },
+      "plc.firmware.update": {
+        "legit_allow_threshold": 98.93333333333332,
+        "legit_allow_full": 98.13333333333333,
+        "attack_accepted": {
+          "backdoor": {
+            "threshold_only": 65.93333333333334,
+            "full_policy": 57.53333333333334
+          },
+          "ddos": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "dos": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "injection": {
+            "threshold_only": 8.333333333333332,
+            "full_policy": 1.5333333333333332
+          },
+          "mitm": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "password": {
+            "threshold_only": 9.4,
+            "full_policy": 1.7999999999999998
+          },
+          "ransomware": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "scanning": {
+            "threshold_only": 100.0,
+            "full_policy": 0.0
+          },
+          "xss": {
+            "threshold_only": 100.0,
+            "full_policy": 63.2
+          }
+        }
+      }
+    }
+  },
+  "gate_sweep": [
+    {
+      "gate": 0.05,
+      "legit_denied_pct": 3.6473200126863303,
+      "attack_blocked_seen_pct": 99.97529810693673,
+      "attack_blocked_heldout_pct": 99.39592643327121
+    },
+    {
+      "gate": 0.1,
+      "legit_denied_pct": 2.4976213130352045,
+      "attack_blocked_seen_pct": 99.95733309379983,
+      "attack_blocked_heldout_pct": 98.33823628483528
+    },
+    {
+      "gate": 0.2,
+      "legit_denied_pct": 1.4827148747224865,
+      "attack_blocked_seen_pct": 99.90343805438908,
+      "attack_blocked_heldout_pct": 95.72432687341403
+    },
+    {
+      "gate": 0.3,
+      "legit_denied_pct": 0.9594037424674913,
+      "attack_blocked_seen_pct": 99.86301677483101,
+      "attack_blocked_heldout_pct": 94.62846107206217
+    },
+    {
+      "gate": 0.5,
+      "legit_denied_pct": 0.4281636536631779,
+      "attack_blocked_seen_pct": 99.77543733578855,
+      "attack_blocked_heldout_pct": 93.53933215063664
+    },
+    {
+      "gate": 0.7,
+      "legit_denied_pct": 0.3013003488740882,
+      "attack_blocked_seen_pct": 99.71031416316724,
+      "attack_blocked_heldout_pct": 88.6169185511217
+    },
+    {
+      "gate": 0.9,
+      "legit_denied_pct": 0.18236600063431654,
+      "attack_blocked_seen_pct": 99.46554085917676,
+      "attack_blocked_heldout_pct": 82.90853562686668
+    }
+  ],
+  "legit_A_quantiles": {
+    "0.5": 0.0003224581761001301,
+    "0.9": 0.0062995403094621965,
+    "0.99": 0.2687130358804289,
+    "0.999": 0.9647984382932658
+  }
+}

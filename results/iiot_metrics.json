@@ -1,0 +1,471 @@
+{
+  "seed": 20261004,
+  "X1_tiers": {
+    "n_per_population": 4000,
+    "process_upset_rate": 0.05,
+    "class_mix": {
+      "sensor": 0.4,
+      "plc": 0.15,
+      "hmi": 0.08,
+      "robot": 0.07,
+      "gateway": 0.15,
+      "legacy": 0.15
+    },
+    "results": {
+      "telemetry.read": {
+        "tier": 0,
+        "min_trust": 0.5,
+        "margin": 0.1,
+        "anomaly_gate": 1.0,
+        "strict": false,
+        "legit_eligible": 4000,
+        "threshold_only": {
+          "legit_allow_pct": 100.0,
+          "legit_stepup_pct": 0.0,
+          "legit_denied_pct": 0.0
+        },
+        "full_policy": {
+          "legit_allow_pct": 100.0,
+          "legit_stepup_pct": 0.0,
+          "legit_denied_pct": 0.0
+        },
+        "attack_accepted_pct": {
+          "naive compromise": {
+            "threshold_only": 0.0,
+            "full_policy": 0.0
+          },
+          "partial mimicry": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "stealthy mimicry": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "full spoof (P,N,R=1)": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          }
+        }
+      },
+      "historian.write": {
+        "tier": 1,
+        "min_trust": 0.55,
+        "margin": 0.1,
+        "anomaly_gate": 0.6,
+        "strict": false,
+        "legit_eligible": 3713,
+        "threshold_only": {
+          "legit_allow_pct": 99.97306760032319,
+          "legit_stepup_pct": 0.026932399676811204,
+          "legit_denied_pct": 0.0
+        },
+        "full_policy": {
+          "legit_allow_pct": 99.97306760032319,
+          "legit_stepup_pct": 0.026932399676811204,
+          "legit_denied_pct": 0.0
+        },
+        "attack_accepted_pct": {
+          "naive compromise": {
+            "threshold_only": 0.0,
+            "full_policy": 0.0
+          },
+          "partial mimicry": {
+            "threshold_only": 99.31972789115646,
+            "full_policy": 74.06802721088435
+          },
+          "stealthy mimicry": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "full spoof (P,N,R=1)": {
+            "threshold_only": 100.0,
+            "full_policy": 74.67320261437908
+          }
+        }
+      },
+      "plc.setpoint.write": {
+        "tier": 2,
+        "min_trust": 0.7,
+        "margin": 0.05,
+        "anomaly_gate": 0.3,
+        "strict": true,
+        "legit_eligible": 1145,
+        "threshold_only": {
+          "legit_allow_pct": 99.91266375545852,
+          "legit_stepup_pct": 0.08733624454148471,
+          "legit_denied_pct": 0.0
+        },
+        "full_policy": {
+          "legit_allow_pct": 97.81659388646288,
+          "legit_stepup_pct": 0.0,
+          "legit_denied_pct": 2.1834061135371177
+        },
+        "attack_accepted_pct": {
+          "naive compromise": {
+            "threshold_only": 0.0,
+            "full_policy": 0.0
+          },
+          "partial mimicry": {
+            "threshold_only": 54.35313262815297,
+            "full_policy": 0.0
+          },
+          "stealthy mimicry": {
+            "threshold_only": 98.4540276647681,
+            "full_policy": 60.86248982912937
+          },
+          "full spoof (P,N,R=1)": {
+            "threshold_only": 100.0,
+            "full_policy": 0.0
+          }
+        }
+      },
+      "plc.firmware.update": {
+        "tier": 3,
+        "min_trust": 0.78,
+        "margin": 0.04,
+        "anomaly_gate": 0.2,
+        "strict": true,
+        "legit_eligible": 858,
+        "threshold_only": {
+          "legit_allow_pct": 96.03729603729604,
+          "legit_stepup_pct": 2.797202797202797,
+          "legit_denied_pct": 1.1655011655011656
+        },
+        "full_policy": {
+          "legit_allow_pct": 94.75524475524476,
+          "legit_stepup_pct": 0.0,
+          "legit_denied_pct": 5.244755244755245
+        },
+        "attack_accepted_pct": {
+          "naive compromise": {
+            "threshold_only": 0.0,
+            "full_policy": 0.0
+          },
+          "partial mimicry": {
+            "threshold_only": 6.8584070796460175,
+            "full_policy": 0.0
+          },
+          "stealthy mimicry": {
+            "threshold_only": 52.21238938053098,
+            "full_policy": 13.606194690265486
+          },
+          "full spoof (P,N,R=1)": {
+            "threshold_only": 52.41935483870967,
+            "full_policy": 0.0
+          }
+        }
+      }
+    }
+  },
+  "X2_gate_sweep": {
+    "upset_rate_0.0": [
+      {
+        "gate": 0.15,
+        "legit_denied_pct": 0.0,
+        "stealthy_blocked_pct": 100.0,
+        "full_spoof_blocked_pct": 100.0
+      },
+      {
+        "gate": 0.2,
+        "legit_denied_pct": 0.0,
+        "stealthy_blocked_pct": 80.375,
+        "full_spoof_blocked_pct": 100.0
+      },
+      {
+        "gate": 0.25,
+        "legit_denied_pct": 0.0,
+        "stealthy_blocked_pct": 60.425,
+        "full_spoof_blocked_pct": 100.0
+      },
+      {
+        "gate": 0.3,
+        "legit_denied_pct": 0.0,
+        "stealthy_blocked_pct": 40.1,
+        "full_spoof_blocked_pct": 100.0
+      },
+      {
+        "gate": 0.4,
+        "legit_denied_pct": 0.0,
+        "stealthy_blocked_pct": 0.0,
+        "full_spoof_blocked_pct": 75.175
+      },
+      {
+        "gate": 0.5,
+        "legit_denied_pct": 0.0,
+        "stealthy_blocked_pct": 0.0,
+        "full_spoof_blocked_pct": 50.449999999999996
+      },
+      {
+        "gate": 0.6,
+        "legit_denied_pct": 0.0,
+        "stealthy_blocked_pct": 0.0,
+        "full_spoof_blocked_pct": 25.6
+      },
+      {
+        "gate": 1.0,
+        "legit_denied_pct": 0.0,
+        "stealthy_blocked_pct": 0.0,
+        "full_spoof_blocked_pct": 0.0
+      }
+    ],
+    "upset_rate_0.05": [
+      {
+        "gate": 0.15,
+        "legit_denied_pct": 4.6,
+        "stealthy_blocked_pct": 100.0,
+        "full_spoof_blocked_pct": 100.0
+      },
+      {
+        "gate": 0.2,
+        "legit_denied_pct": 3.775,
+        "stealthy_blocked_pct": 80.375,
+        "full_spoof_blocked_pct": 100.0
+      },
+      {
+        "gate": 0.25,
+        "legit_denied_pct": 3.125,
+        "stealthy_blocked_pct": 60.425,
+        "full_spoof_blocked_pct": 100.0
+      },
+      {
+        "gate": 0.3,
+        "legit_denied_pct": 2.325,
+        "stealthy_blocked_pct": 40.1,
+        "full_spoof_blocked_pct": 100.0
+      },
+      {
+        "gate": 0.4,
+        "legit_denied_pct": 0.8,
+        "stealthy_blocked_pct": 0.0,
+        "full_spoof_blocked_pct": 75.175
+      },
+      {
+        "gate": 0.5,
+        "legit_denied_pct": 0.0,
+        "stealthy_blocked_pct": 0.0,
+        "full_spoof_blocked_pct": 50.449999999999996
+      },
+      {
+        "gate": 0.6,
+        "legit_denied_pct": 0.0,
+        "stealthy_blocked_pct": 0.0,
+        "full_spoof_blocked_pct": 25.6
+      },
+      {
+        "gate": 1.0,
+        "legit_denied_pct": 0.0,
+        "stealthy_blocked_pct": 0.0,
+        "full_spoof_blocked_pct": 0.0
+      }
+    ],
+    "upset_rate_0.15": [
+      {
+        "gate": 0.15,
+        "legit_denied_pct": 14.35,
+        "stealthy_blocked_pct": 100.0,
+        "full_spoof_blocked_pct": 100.0
+      },
+      {
+        "gate": 0.2,
+        "legit_denied_pct": 12.25,
+        "stealthy_blocked_pct": 80.375,
+        "full_spoof_blocked_pct": 100.0
+      },
+      {
+        "gate": 0.25,
+        "legit_denied_pct": 10.0,
+        "stealthy_blocked_pct": 60.425,
+        "full_spoof_blocked_pct": 100.0
+      },
+      {
+        "gate": 0.3,
+        "legit_denied_pct": 7.449999999999999,
+        "stealthy_blocked_pct": 40.1,
+        "full_spoof_blocked_pct": 100.0
+      },
+      {
+        "gate": 0.4,
+        "legit_denied_pct": 2.4,
+        "stealthy_blocked_pct": 0.0,
+        "full_spoof_blocked_pct": 75.175
+      },
+      {
+        "gate": 0.5,
+        "legit_denied_pct": 0.0,
+        "stealthy_blocked_pct": 0.0,
+        "full_spoof_blocked_pct": 50.449999999999996
+      },
+      {
+        "gate": 0.6,
+        "legit_denied_pct": 0.0,
+        "stealthy_blocked_pct": 0.0,
+        "full_spoof_blocked_pct": 25.6
+      },
+      {
+        "gate": 1.0,
+        "legit_denied_pct": 0.0,
+        "stealthy_blocked_pct": 0.0,
+        "full_spoof_blocked_pct": 0.0
+      }
+    ]
+  },
+  "X3_hybrid": {
+    "requests_per_run": 2000,
+    "devices": 300,
+    "model_onchain_path_ms": {
+      "mean": 0.13371195489999083,
+      "sd": 0.01996514003759959,
+      "ci95": [
+        0.11942975409542254,
+        0.1479941557045591
+      ],
+      "runs": 10
+    },
+    "fast_path_ms": {
+      "mean": 0.26104840334998014,
+      "sd": 0.021916642432260974,
+      "ci95": [
+        0.24537018183037254,
+        0.2767266248695877
+      ],
+      "runs": 10
+    },
+    "anchor_gas_first": 70846,
+    "anchor_gas_steady": 53743,
+    "anchor_gas_per_decision_at_1000": 54,
+    "per_request_onchain_gas_allow": 70369
+  },
+  "X4_recall": {
+    "block_gas_limit_assumed": 30000000,
+    "single_revoke_gas": 58862,
+    "batch_per_device_gas": 34998,
+    "rows": [
+      {
+        "devices_recalled": 1000,
+        "blocks_single": 2,
+        "blocks_batch": 2,
+        "gas_single": 58862000,
+        "gas_batch": 34998000
+      },
+      {
+        "devices_recalled": 10000,
+        "blocks_single": 20,
+        "blocks_batch": 12,
+        "gas_single": 588620000,
+        "gas_batch": 349980000
+      },
+      {
+        "devices_recalled": 50000,
+        "blocks_single": 99,
+        "blocks_batch": 59,
+        "gas_single": 2943100000,
+        "gas_batch": 1749900000
+      }
+    ],
+    "note": "derived from measured gas; ignores other traffic and per-tx overhead; block interval not modelled"
+  },
+  "X5_outage": {
+    "devices": 400,
+    "horizon_s": 600,
+    "outage_start_s": 200,
+    "revoke_frac": 0.1,
+    "results": [
+      {
+        "outage_s": 10,
+        "revoked_devices": 43,
+        "fail_closed": {
+          "legit_ok": 219230,
+          "legit_total": 223061,
+          "unsafe": 0,
+          "availability_pct": 98.28253258077387
+        },
+        "degraded_cache": {
+          "legit_ok": 222727,
+          "legit_total": 223061,
+          "unsafe": 155,
+          "t2_denied": 334,
+          "t2_total": 334,
+          "availability_pct": 99.85026517410036,
+          "tier2_denied_pct": 100.0
+        }
+      },
+      {
+        "outage_s": 30,
+        "revoked_devices": 40,
+        "fail_closed": {
+          "legit_ok": 213200,
+          "legit_total": 224710,
+          "unsafe": 0,
+          "availability_pct": 94.87784255262338
+        },
+        "degraded_cache": {
+          "legit_ok": 223936,
+          "legit_total": 224710,
+          "unsafe": 456,
+          "t2_denied": 774,
+          "t2_total": 774,
+          "availability_pct": 99.65555605002002,
+          "tier2_denied_pct": 100.0
+        }
+      },
+      {
+        "outage_s": 60,
+        "revoked_devices": 36,
+        "fail_closed": {
+          "legit_ok": 203760,
+          "legit_total": 226728,
+          "unsafe": 0,
+          "availability_pct": 89.86979993648778
+        },
+        "degraded_cache": {
+          "legit_ok": 225298,
+          "legit_total": 226728,
+          "unsafe": 962,
+          "t2_denied": 1430,
+          "t2_total": 1430,
+          "availability_pct": 99.36928831022195,
+          "tier2_denied_pct": 100.0
+        }
+      },
+      {
+        "outage_s": 120,
+        "revoked_devices": 44,
+        "fail_closed": {
+          "legit_ok": 179680,
+          "legit_total": 225429,
+          "unsafe": 0,
+          "availability_pct": 79.70580537552844
+        },
+        "degraded_cache": {
+          "legit_ok": 223131,
+          "legit_total": 225429,
+          "unsafe": 2149,
+          "t2_denied": 2298,
+          "t2_total": 2298,
+          "availability_pct": 98.98061030302223,
+          "tier2_denied_pct": 100.0
+        }
+      },
+      {
+        "outage_s": 300,
+        "revoked_devices": 30,
+        "fail_closed": {
+          "legit_ok": 117000,
+          "legit_total": 232135,
+          "unsafe": 0,
+          "availability_pct": 50.40170590389213
+        },
+        "degraded_cache": {
+          "legit_ok": 225177,
+          "legit_total": 232135,
+          "unsafe": 4398,
+          "t2_denied": 6958,
+          "t2_total": 6958,
+          "availability_pct": 97.00260624205742,
+          "tier2_denied_pct": 100.0
+        }
+      }
+    ]
+  }
+}

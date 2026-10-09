@@ -1,0 +1,163 @@
+\section{Experimental Evaluation}\label{sec:eval}
+
+\subsection{Methodology and What the Numbers Mean}\label{sec:metrics}
+We report decision latency and throughput, on-chain gas, revocation exposure (requests accepted after the revocation instant), per-tier acceptance of legitimate and attacking requests, quorum behaviour, recall capacity and a degraded-mode scenario. Latencies are wall-clock times from a monotonic timer. Three limits apply throughout. (i) Testbed numbers are \emph{compute-bound}: they exclude network, block time and multi-node consensus. (ii) Sections~\ref{sec:scaling}--\ref{sec:outage_eval} use \emph{synthetic} devices, signals and attacks, so their detection-type results characterize policy mechanics under stated overlaps; Section~\ref{sec:real_eval} replaces the behavioural signal with detector scores computed on real TON\_IoT traffic, while posture and network context remain synthetic. (iii) One two-vCPU host was used.
+
+\subsection{Testbed Performance and Repeated-Run Statistics}\label{sec:scaling}
+Table~\ref{tab:results} gives one run per fleet size. Mean authorization latency is 0.120--0.197\,ms and registration 0.173--0.286\,ms; the two smallest fleets are slower (0.184 and 0.197\,ms against 0.120--0.127\,ms for $n\ge200$), probably from warm-up, which we did not isolate. Beyond $n=200$ latency is flat as the fleet grows eightfold, consistent with constant per-request cost dominated by one Ed25519 verification. Throughput is 3{,}700--6{,}200 decisions/s. Repeating $n=400$ thirty times gives a mean authorization latency of $0.133\pm0.013$\,ms (95\% CI 0.128--0.138) and registration $0.184\pm0.019$\,ms; over 20{,}000 sequential decisions the percentiles are p50 0.124, p95 0.188, p99 0.247 and p99.9 0.932\,ms, with a 4.3\,ms maximum attributable to scheduling or garbage collection. Intervals assume roughly normal run means and apply to this host.
+
+\begin{table}[t]
+\centering
+\caption{Scaling results, one run per fleet size (latency in ms, throughput in ops/s)}
+\label{tab:results}
+\scriptsize
+\input{tab_scaling}
+\end{table}
+
+\subsection{On-Chain Cost: Measured EVM Gas}\label{sec:gas}
+Table~\ref{tab:gas} lists gas measured over 50 devices on the Hardhat EVM; gas is deterministic given the state path (s.d.\ below 10). Registration costs about 215k gas and a full audited decision about 70k, of which one \texttt{ecrecover} and one new nonce slot are the main parts. Requests denied for replay (41.5k) or against a revoked device (39.3k) are cheaper because they exit early, while denials that occur after the oracle check cost as much as an allow. The industrial additions cost nothing visible: an ALLOW on a strict resource (70.4k), an anomaly-gate denial (70.2k), a strict-borderline denial (70.4k) and a below-threshold denial (70.2k) are all within 0.3\% of the base decision, since the extra checks are cheap comparisons. Anchoring a decision-log root costs 70.8k gas for the first anchor and 53.7k in steady state, which is 54 gas per decision at $B=1000$ decisions per root, about three orders of magnitude below the 70.4k of deciding each of them on-chain.
+
+\begin{table}[t]
+\centering
+\caption{Measured gas per operation (Hardhat EVM, solc 0.8.24, 50 devices)}
+\label{tab:gas}
+\scriptsize
+\input{tab_gas}
+\end{table}
+
+For capacity planning, a 30M-gas block (a typical default; PoA operators choose their own) holds at most $\lfloor 30\text{M}/70{,}369\rfloor=426$ audited decisions or 139 registrations. This is a gas-based upper bound, not a measured throughput (Section~\ref{sec:besu_eval} measures a much lower sustained rate on a real network), and it is the reason why only T2--T3 are decided on-chain. The in-process call latency including client-side signing was about 3\,ms per decision, an upper bound on pure EVM execution that says nothing about network or consensus delay.
+
+\subsection{Hybrid Enforcement: Cost of the Fast Path}\label{sec:fast_eval}
+We compare the contract model, which verifies one signature per decision (Track B), with the fast-path PEP, which verifies the device signature and the oracle attestation. Over 10 runs of 2{,}000 mixed T0/T2 requests, the contract model takes $0.134\pm0.020$\,ms (95\% CI 0.119--0.148) and the fast path $0.261\pm0.022$\,ms (CI 0.245--0.277). The fast path is therefore about twice as expensive \emph{in compute}, which is the expected cost of two verifications; it sustains roughly 3{,}800 decisions/s on one core. Its benefit is elsewhere: it needs no transaction, no gas and no block, and it keeps working when the ledger is slow. The compute comparison is thus a cost, not a gain, and the real advantage depends on the network and consensus latency that we did not measure.
+
+\subsection{Tiered Policy: Legitimate Acceptance and Attack Acceptance}\label{sec:tiers_eval}
+Table~\ref{tab:tiersres} runs 4{,}000 legitimate requests (5\% with a process upset) and 4{,}000 requests of each attack population through the four tiers, first with threshold alone and then with the full policy (gate and strict mode); eligibility is by device class, so the legitimate denominators shrink with the tier (4{,}000, 3{,}713, 1{,}145, 858). Fig.~\ref{fig:iiotres}(a) shows the same data graphically.
+
+\begin{table}[t]
+\centering
+\caption{Per-tier results: legitimate requests allowed and attacker requests accepted (\%), threshold alone $\to$ full policy ($\theta$ min.\ trust, $g$ anomaly gate)}
+\label{tab:tiersres}
+\scriptsize
+\setlength{\tabcolsep}{2.2pt}
+\input{tab_tiers}
+\end{table}
+
+Four observations follow. First, naive compromise is denied everywhere (0\% accepted at all tiers), so it does not test the design. Second, at T0 an attacker that spoofs signals is accepted 100\% of the time under any policy: this is by design, since T0 is read-only telemetry and we chose not to spend verification effort there, but it means T0 data can be read by a compromised device that keeps looking normal. Third, the gate and strict mode matter exactly where consequences are high: at T2 the full-spoof attacker falls from 100\% to 0\% accepted and the stealthy attacker from 98.5\% to 60.9\%; at T3 from 52.4\% to 0\% and from 52.2\% to 13.6\%. Fourth, this has a price. Legitimate allowance drops from 99.9\% to 97.8\% at T2 and from 96.0\% to 94.8\% at T3 (and 5.2\% of legitimate T3 requests are denied outright), because upset requests exceed the gate and strict mode refuses borderline scores. A plant would decide whether those denials are acceptable for setpoint and firmware writes, where a second confirmation is usually welcome, and the next experiment shows the trade-off.
+
+A short ablation of the trust signals, run in the base design, adds that the full score separates partial and stealthy mimicry with AUC 0.993 and 0.895 whereas dropping the behavioural signal leaves both at AUC 0.499--0.500, so the behavioural signal is the only one that separates mimicry from legitimate traffic in this setup; posture and network are drawn from the same ranges for both populations in the synthetic fleet, so removing them \emph{raises} AUC, which argues for adaptive rather than fixed weighting and should not be read as evidence that real posture is uninformative.
+
+\subsection{Sensitivity to the Anomaly Gate}\label{sec:gate_eval}
+Fig.~\ref{fig:iiotres}(b) sweeps the gate level from 0.15 to 0.60 for legitimate upset rates of 5\% and 15\% (0\% gives no false denials by construction). Under a 5\% upset rate, a gate of 0.30 blocks 40.1\% of stealthy mimicry and 100\% of full spoofing while denying 2.3\% of legitimate requests. Tightening to 0.25 and 0.20 raises the stealthy block rate to 60.4\% and 80.4\% at 3.1\% and 3.8\% legitimate denials, and 0.15 blocks all of it at 4.6\%. Loosening to 0.40 blocks no stealthy attacker and lets 25\% of full spoofing through, rising to 74\% at 0.60. At a 15\% upset rate the same gates deny 7.4\% (0.30) and 12.2\% (0.20) of legitimate requests. The gate is thus a genuine trade-off whose operating point depends on how noisy legitimate behaviour is, and because the attack range $[0.15,0.40]$ is built to overlap legitimate upsets, no gate separates them completely; an attacker who keeps its anomaly below the gate is accepted, as Proposition~\ref{prop:bound}(d) predicts.
+
+\subsection{Evaluation on Real Traffic: TON\_IoT}\label{sec:real_eval}
+The synthetic study fixes the anomaly distributions by hand, so we repeat the central experiments with the anomaly signal $A$ produced by detectors on a public dataset. We use the TON\_IoT collection, which provides labelled IIoT telemetry \cite{alsaedi2020ton} and labelled network flows \cite{moustafa2021network}; the heterogeneity of its features and attack types is analysed in \cite{booij2022ton}. The dataset licence grants free use for academic research on condition that the dataset papers are cited. We used four telemetry files (Fridge, Modbus, Thermostat, Weather) and the network file (211{,}043 flows, of which 190{,}474 remain after removing 20{,}569 exact duplicates; nine attack types plus normal traffic).
+
+\emph{Method.} Features exclude IP addresses and source ports, and for telemetry exclude dates and times, because normal and attack records were collected on different days. A gradient-boosted classifier (supervised) and an Isolation Forest trained on normal records only (unsupervised) are evaluated on a stratified 70/30 split repeated over five seeds. To approximate attacks unseen at training time, we also train the classifier with one attack type left out and score that type (seed 11). The classifier's attack probability is used as $A\in[0,1]$. Legitimate requests carry the score of a normal test flow, attackers carry the score of an attack flow and spoof posture and network context to 1 (the full-spoof attacker of Section~\ref{sec:devsim}); posture, network context and the reliability warm-up stay synthetic, and because the files share no device identifier, assigning a flow-derived score to a device is arbitrary. The four tiers of Table~\ref{tab:tiers} are used unchanged.
+
+\emph{Telemetry alone is a weak signal.} Table~\ref{tab:telemetry} shows that only the Weather file separates attacks from normal records usefully (supervised AUC 0.972, Isolation Forest 0.819); Modbus gives 0.623 and 0.498, and Thermostat and Fridge are close to chance (0.513 and 0.531 supervised). The Fridge result requires a warning: before whitespace stripping, one column (\texttt{temp\_condition}) carries label-specific padding that gives a perfect AUC of 1.0, an encoding artefact that has nothing to do with device behaviour, so we strip all strings before training. We did not investigate why most telemetry is uninformative; one plausible reading is that the attacks target the services around a device rather than the physical readings it reports. The practical consequence is that a behavioural signal for a plant should come from traffic, not only from sensor values.
+
+\begin{table}[t]
+\centering
+\caption{Detectability of attacks from TON\_IoT telemetry (five seeds, 70/30 split, after de-duplication)}
+\label{tab:telemetry}
+\scriptsize
+\input{tab_telemetry}
+\end{table}
+
+\emph{Network flows are a strong signal, with a caveat.} On flows the supervised classifier reaches AUC 0.9999 (s.d.\ below $10^{-4}$) and the Isolation Forest $0.916\pm0.004$, ranging from 0.813 (DDoS) to 0.956 (password attacks) by type. The near-perfect supervised value should be read as an upper bound: random splits of a benchmark whose attacks come from a few source hosts are optimistic, which is why we also test held-out types. With an attack type withheld, the AUC against normal traffic stays at 0.990--1.000, but the share of that type's flows scored above 0.5 falls to 65.4\% for ransomware and 73.7\% for man-in-the-middle, against 93--100\% for most others. Legitimate flows are overwhelmingly scored near zero (median 0.0003), but the tail is heavy: the 99th percentile is 0.27 and the 99.9th is 0.96, so any gate cuts into some legitimate traffic (see the gate sweep below).
+
+\emph{Policy on real scores.} Table~\ref{tab:realpolicy} gives the percentage of attacker requests accepted, averaged over the nine attack types and, in the worst-case columns, for the single worst type, with threshold alone (Thr.) and with the full policy (gate and strict mode). Four findings follow. First, the full policy costs legitimate traffic little: allowance falls from 99.7, 99.5 and 99.0\% to 99.6, 98.8 and 98.4\% at T1, T2 and T3. Second, for attack types seen in training, the gate matters at T1 (mean acceptance 100\% $\to$ 0.7\%, worst 4.9\%, man-in-the-middle), whereas at T2 and T3 the high thresholds already reject nearly all such flows (1.1\% and 0.6\% with threshold alone), because a real detector scores them near 1 and Proposition~\ref{prop:bound}(d) then gives $T\approx0.7$ or below. This corrects the synthetic study, in which the stealthy population was built to sit at $A\le0.4$ and therefore overstated how often the threshold alone fails on seen attacks. Third, for held-out types, residual acceptance grows to 11.9\% (T1), 7.9\% (T2) and 6.6\% (T3) on average, and to 41.6\%, 33.9\% and 35.8\% for the worst type (ransomware), so a policy that depends on a detector inherits the detector's blind spots. Fourth, an adaptive attacker that can observe the detector and send only its best-scoring flows is much more dangerous: if it can send only the lowest-scoring 10\% of a held-out type's flows, mean acceptance at T1--T3 is 59.4, 37.9 and 29.0\%, and 76.5, 74.7 and 58.2\% for the best 1\%, with some types always accepted. We assume here that the attacker can query the detector and craft traffic with a chosen score, which is a strong capability, so these numbers describe a worst case rather than a typical one.
+
+\begin{table}[t]
+\centering
+\caption{Attacker requests accepted (\%) with real TON\_IoT anomaly scores: mean over nine attack types and worst single type; threshold alone (Thr.) versus full policy}
+\label{tab:realpolicy}
+\scriptsize
+\input{tab_realpolicy}
+\end{table}
+
+Sweeping the gate on the real scores, a gate of 0.05 denies 3.6\% of legitimate flows and blocks 100\% of seen and 99.4\% of held-out attack flows; 0.30 denies 1.0\% and blocks 99.9\% and 94.6\%; 0.70 denies 0.3\% and blocks 99.7\% and 88.6\%; and 0.90 denies 0.2\% and blocks 99.5\% and 82.9\%. The real-score gate thus has a far better operating region than the synthetic one, because real attack scores are bimodal, but it degrades on unseen attack types. Detector hyper-parameters were left at library defaults, and the tier thresholds and gates are those fixed earlier for the synthetic study; none was tuned on these results.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.86\textwidth]{../figures/fig8_iiot_results.png}
+\caption{Industrial extensions: (a) attacker requests accepted per criticality tier under threshold-only and full policy; (b) anomaly-gate trade-off for 5\% and 15\% legitimate process-upset rates; (c) gas to recall devices with one transaction per device versus \texttt{revokeBatch}.}
+\label{fig:iiotres}
+\end{figure*}
+
+\subsection{Baseline Comparison: Revocation Exposure}\label{sec:baselines}
+On a shared logical clock we compare the per-request design with a session token (HMAC bearer token, TTL 60 or 300\,s) and PKI with a CRL refreshed every 60 or 300\,s, for 60 devices at 1 request/s with revocation times drawn from $U(100,500)$\,s. Table~\ref{tab:base} shows that the audited design accepts no request after revocation, as Proposition~\ref{prop:revoke} predicts, whereas the baselines accept on average 33 and 147 requests for the 60\,s and 300\,s windows (worst cases 59--299). The mechanism implies this result; the experiment quantifies it. Token validation is the cheapest per request (an HMAC, no public-key operation) and our design costs more per accepted request, which we do not hide. The fast path trades the zero for a bounded exposure of at most $\rho\Delta$ requests (Proposition~\ref{prop:stale}): for example, with $\Delta=5$\,s and one request per second the bound is 5 requests, still far below the 33--147 of token and CRL schemes.
+
+\begin{table}[t]
+\centering
+\caption{Revocation exposure (requests accepted after revocation; 60 devices, 1 req/s) and mean decision latency}
+\label{tab:base}
+\scriptsize
+\input{tab_base}
+\end{table}
+
+\subsection{Firmware Recall Capacity}\label{sec:recall_eval}
+Table~\ref{tab:recall} reports gas for revoking $k$ devices with one transaction each and with \texttt{revokeBatch} on the EVM; \texttt{suspendBatch} is shown for quarantine. For a single device the batch call is 1.7\% more expensive because of the loop and array overhead, but from ten devices on it saves 36.5--40.5\%, approaching about 35k gas per device against 58.9k. Taking a 30M-gas block, recalling $10^4$ devices needs about 20 blocks with individual transactions and 12 with batches, and $5\times10^4$ devices need 99 and 59 blocks (derived from the measured per-device gas; other traffic and block interval are not modelled, so at a 2\,s block time the larger recall would take on the order of two minutes at best). Revoking the highest-criticality devices first is therefore worth doing: devices revoked in later blocks stay exposed until their block.
+
+\begin{table}[t]
+\centering
+\caption{Gas for recalling devices: one transaction per device versus \texttt{revokeBatch}, and \texttt{suspendBatch}}
+\label{tab:recall}
+\scriptsize
+\input{tab_recall}
+\end{table}
+
+\subsection{Attack Detection}\label{sec:attacks}
+Four basic attacks were run in 500 independent trials each: replay, forged signature, use after revocation and probing with unregistered DIDs. All were denied in every trial. With 500 trials and no failure the one-sided 95\% upper bound on the failure probability is $3/500=0.6\%$ (rule of three). This validates the state-machine logic against the implemented attacks; it is not evidence of unconditional security.
+
+\subsection{Decentralized Revocation Governance}\label{sec:governance_eval}
+Table~\ref{tab:governance} evaluates \texttt{RevocationGovernance} for $N\in\{5,7,9,11,15,21\}$ with 200 trials per size. Mean quorum latency on the testbed grows roughly linearly, from 0.56\,ms ($N=5$) to 1.91\,ms ($N=21$) for a cooperative group and from 0.93 to 3.67\,ms under maximal tolerated dissent ($N-q$ DENY voters), with 95\% CI half-widths of at most 0.10\,ms. Across all 1{,}200 trials the dissenting minority never prevented approval, and in 1{,}200 forced-revocation attempts with only $q-1$ approvals no revocation executed, consistent with Proposition~\ref{prop:gov}. On the EVM a proposal costs 72k gas, each vote 78k, and the final vote that triggers revocation 102k, so a quorum revocation costs 313k ($N=5$) to 800k gas ($N=21$): the governance cost grows with $q$, not with the fleet. Kumar et al.\ report 3--4\,s for registration and under 5\,s for revocation on a live PoA chain \cite{kumar2026privacy}; our figures are two to three orders of magnitude lower but measure compute only and are not comparable like for like. In a deployment each vote is a transaction, so revocation takes about $q$ block confirmations when votes are sequential, or one to two blocks if voters submit in parallel.
+
+\begin{table}[t]
+\centering
+\caption{Governance: mean testbed latency (ms) cooperative and under maximal dissent; \% trials where maximal dissent still reached quorum (Appr.); \% where a $q-1$ coalition executed a revocation (Forced); EVM gas for one quorum revocation}
+\label{tab:governance}
+\scriptsize
+\input{tab_gov}
+\end{table}
+
+\subsection{End-to-End Evaluation on a Four-Validator QBFT Network}\label{sec:besu_eval}
+To move beyond in-process execution we deployed the three contracts on a private Hyperledger Besu 25.7.0 network of four validators running QBFT with a 2\,s block period, a 4\,s round-change timeout, chain ID 2026 and zero base fee, and drove it through JSON-RPC with signed transactions (\texttt{besu\_benchmark.js}, \texttt{besu\_fault.js}). All four validators and the load generator ran on the same two-vCPU container, so the network is real in the sense that blocks are proposed, voted on and committed by separate processes, but there is no wide-area delay and the processes compete for the same two cores. The numbers below therefore describe consensus-bound behaviour on a small host, not a plant network.
+
+\textit{Latency and finality.} Table~\ref{tab:besu} shows that every state-changing call needs about one block period from submission to receipt (1.98--2.00\,s on average, p95 about 2.2\,s), independent of the operation; QBFT finalizes in the block that includes the transaction, so a receipt is also a final result. Revocation became visible when queried on a second validator after 1.87\,s on average, and 30 of 30 audited \texttt{evaluateAccess} calls issued after that point returned DENY. The measured difference between the submitting node's receipt and the replica's view was $-117\pm75$\,ms (the replica was seen to be up to date before the receipt poll returned, the maximum being +27\,ms), which is within our polling jitter of a few milliseconds to tens of milliseconds. We therefore read the replica lag as $\Delta\approx 0$ relative to the block period on this network and, for the exposure bound $\rho\Delta$ of Proposition~\ref{prop:stale}, take the block period as the dominant term for the time between a revocation request and its enforcement. We did not measure replication over a wide-area link.
+
+\textit{Throughput.} Table~\ref{tab:besu2} reports audited decisions sent as pre-signed transactions from ten sender accounts. All transactions were mined at the three offered loads, but sustained throughput was 11--18 tx/s and latency grew with the queue (mean 31.6\,s at 600 offered). This is 12--19 times below the gas-based ceiling of about 213 decisions per second implied by 426 decisions per 30M-gas block at 2\,s, and the ceiling quoted in Section~\ref{sec:gas} should be read as an upper bound, not an estimate. We attribute the gap to CPU saturation (four JVMs and the load generator on two cores, with signature recovery and EVM execution for every transaction), but we did not profile it and a dedicated multi-host deployment could give different values. The practical consequence for the design is unchanged and strengthened: routine requests must not be sent through consensus.
+
+\begin{table}[t]
+\centering
+\caption{Four-validator QBFT network (Besu 25.7.0, 2\,s blocks, single host): latency, finality and quorum revocation}
+\label{tab:besu}
+\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\input{tab_besu}
+\end{table}
+
+\begin{table}[t]
+\centering
+\caption{Throughput of audited decisions on the same network (10 senders, pre-signed)}
+\label{tab:besu2}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\input{tab_besu2}
+\end{table}
+
+\textit{Governance and recall.} With five voters and quorum three, a revocation completed in 8.07\,s when votes were submitted one after another (each waiting for its block, so about four blocks) and in 4.03\,s when the votes were submitted together (about two blocks); all 20 proposals ended in revocation. A batch of 50 devices was revoked in one transaction (1.77M gas) and confirmed after 2.95\,s, and a batch of 200 devices (7.00M gas) after 6.13\,s; sampled revocations were visible on another validator. By comparison, registering 200 devices one transaction at a time took 399\,s. The batch and parallel-vote results confirm that on a block-timed chain, the number of blocks rather than the number of transactions determines recall and governance latency.
+
+\textit{Fault tolerance.} With four validators QBFT tolerates one fault. With one validator stopped, registration latency had a mean of 2.83\,s (sd 2.00\,s, p95 6.16\,s, $n=8$) against 1.97\,s at baseline: the median was unchanged (1.91\,s), but rounds in which the stopped validator was the proposer had to time out and change round. With two validators stopped no block was produced and a pending transaction was not mined within 20\,s; after both were restarted it was mined after 78\,s. These runs used a single pending transaction and small samples, so they show the qualitative behaviour (safe halt below the quorum, resumption after recovery) rather than a tight latency estimate. For the architecture, they mean that the fast path keeps deciding on its last replicated state during a halt and the outage policy of Section~\ref{sec:outage} governs what is allowed meanwhile.
+
+\subsection{Degraded Operation During an Outage}\label{sec:outage_eval}
+Table~\ref{tab:outage} applies the policy of Section~\ref{sec:outage} to a scenario with 400 devices, one request per second each, a quarter of the devices acting as T2 clients that issue a T2 request every fourth second, and 10\% of the devices revoked at random times during an outage that starts at $t=200$\,s of 600\,s. A fully fail-closed PEP stops serving everyone for the whole outage, so availability falls to 89.9\% for a 60\,s outage and 50.4\% for 300\,s. The degraded policy keeps T0--T1 running (99.4\% and 97.0\%) but denies every T2 request during the outage and accepts requests from devices revoked while it was blind (962 requests for 60\,s, 4{,}398 for 300\,s). This scenario follows directly from the stated policy and is deterministic given its parameters, so it is an illustration of the trade-off, not an empirical result; its use is to show that the operator chooses between unsafe acceptances and lost availability, and that the choice is explicit.
+
+\begin{table}[t]
+\centering
+\caption{Outage scenario (policy-defined, 400 devices, 1 req/s): availability of legitimate requests and unsafe accepts}
+\label{tab:outage}
+\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\input{tab_outage}
+\end{table}

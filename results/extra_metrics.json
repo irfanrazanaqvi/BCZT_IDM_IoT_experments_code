@@ -1,0 +1,213 @@
+{
+  "seed": 20261004,
+  "E1_repeated": {
+    "runs": 30,
+    "fleet_size": 400,
+    "reg_latency_ms": {
+      "n": 30,
+      "mean": 0.18444395900002064,
+      "sd": 0.01880483283785371,
+      "ci95_low": 0.17742211901765584,
+      "ci95_high": 0.19146579898238544
+    },
+    "authz_latency_ms": {
+      "n": 30,
+      "mean": 0.13285564475002806,
+      "sd": 0.013102304835974065,
+      "ci95_low": 0.1279631637186,
+      "ci95_high": 0.13774812578145612
+    },
+    "reg_tps": {
+      "n": 30,
+      "mean": 5468.8787564468275,
+      "sd": 480.39721641737134,
+      "ci95_low": 5289.495487755072,
+      "ci95_high": 5648.262025138583
+    },
+    "authz_tps": {
+      "n": 30,
+      "mean": 7589.670412761103,
+      "sd": 659.8371597592147,
+      "ci95_low": 7343.283168045978,
+      "ci95_high": 7836.057657476228
+    },
+    "authz_latency_percentiles_ms": {
+      "ops": 20000,
+      "p50": 0.12403700003460472,
+      "p95": 0.18804264998948383,
+      "p99": 0.2473565499531101,
+      "p999": 0.9317520159789013,
+      "max": 4.3035349999627215
+    }
+  },
+  "E2_baselines": {
+    "devices": 60,
+    "horizon_s": 600,
+    "request_rate_hz": 1,
+    "revocation_time_s": "U(100,500)",
+    "results": {
+      "Session token (TTL 60 s)": {
+        "mean_requests_accepted_after_revocation": 32.516666666666666,
+        "max_requests_accepted_after_revocation": 59,
+        "mean_decision_latency_ms": 0.004832631777964657,
+        "p95_decision_latency_ms": 0.008897100036620023
+      },
+      "Session token (TTL 300 s)": {
+        "mean_requests_accepted_after_revocation": 146.51666666666668,
+        "max_requests_accepted_after_revocation": 299,
+        "mean_decision_latency_ms": 0.005605223221746453,
+        "p95_decision_latency_ms": 0.009643100105449767
+      },
+      "PKI + CRL (refresh 60 s)": {
+        "mean_requests_accepted_after_revocation": 33.516666666666666,
+        "max_requests_accepted_after_revocation": 60,
+        "mean_decision_latency_ms": 0.07402818258322617,
+        "p95_decision_latency_ms": 0.17963019994340346
+      },
+      "PKI + CRL (refresh 300 s)": {
+        "mean_requests_accepted_after_revocation": 146.51666666666668,
+        "max_requests_accepted_after_revocation": 299,
+        "mean_decision_latency_ms": 0.09389621752742035,
+        "p95_decision_latency_ms": 0.1669644499827425
+      },
+      "Proposed (continuous, per-request)": {
+        "mean_requests_accepted_after_revocation": 0,
+        "max_requests_accepted_after_revocation": 0,
+        "mean_decision_latency_ms": 0.0702834674996369,
+        "p95_decision_latency_ms": 0.17809675002240494
+      }
+    }
+  },
+  "E3_ablation": {
+    "n_per_population": 4000,
+    "history_warmup_requests": 3,
+    "results": {
+      "Full (P,B,N,R)": {
+        "naive compromise": {
+          "auc": 1.0,
+          "tpr_at_fpr1": 1.0
+        },
+        "partial mimicry": {
+          "auc": 0.9925703125,
+          "tpr_at_fpr1": 0.8975
+        },
+        "stealthy mimicry": {
+          "auc": 0.8953411875,
+          "tpr_at_fpr1": 0.40775
+        },
+        "policy_operating_point": {
+          "legit_denied_pct": 0.0,
+          "legit_stepup_pct": 0.0,
+          "naive compromise_blocked_pct": 100.0,
+          "partial mimicry_blocked_pct": 0.0,
+          "stealthy mimicry_blocked_pct": 0.0
+        }
+      },
+      "w/o posture": {
+        "naive compromise": {
+          "auc": 1.0,
+          "tpr_at_fpr1": 1.0
+        },
+        "partial mimicry": {
+          "auc": 0.9997169375,
+          "tpr_at_fpr1": 0.98725
+        },
+        "stealthy mimicry": {
+          "auc": 0.95333075,
+          "tpr_at_fpr1": 0.65325
+        },
+        "policy_operating_point": {
+          "legit_denied_pct": 0.0,
+          "legit_stepup_pct": 6.950000000000001,
+          "naive compromise_blocked_pct": 100.0,
+          "partial mimicry_blocked_pct": 29.125,
+          "stealthy mimicry_blocked_pct": 0.0
+        }
+      },
+      "w/o behaviour": {
+        "naive compromise": {
+          "auc": 1.0,
+          "tpr_at_fpr1": 1.0
+        },
+        "partial mimicry": {
+          "auc": 0.499054,
+          "tpr_at_fpr1": 0.01225
+        },
+        "stealthy mimicry": {
+          "auc": 0.4998541875,
+          "tpr_at_fpr1": 0.0125
+        },
+        "policy_operating_point": {
+          "legit_denied_pct": 0.0,
+          "legit_stepup_pct": 32.75,
+          "naive compromise_blocked_pct": 100.0,
+          "partial mimicry_blocked_pct": 0.0,
+          "stealthy mimicry_blocked_pct": 0.0
+        }
+      },
+      "w/o network": {
+        "naive compromise": {
+          "auc": 1.0,
+          "tpr_at_fpr1": 1.0
+        },
+        "partial mimicry": {
+          "auc": 0.998648125,
+          "tpr_at_fpr1": 0.971
+        },
+        "stealthy mimicry": {
+          "auc": 0.9318734375,
+          "tpr_at_fpr1": 0.579
+        },
+        "policy_operating_point": {
+          "legit_denied_pct": 0.0,
+          "legit_stepup_pct": 0.0,
+          "naive compromise_blocked_pct": 94.77499999999999,
+          "partial mimicry_blocked_pct": 0.0,
+          "stealthy mimicry_blocked_pct": 0.0
+        }
+      },
+      "w/o reliability": {
+        "naive compromise": {
+          "auc": 1.0,
+          "tpr_at_fpr1": 1.0
+        },
+        "partial mimicry": {
+          "auc": 0.99282825,
+          "tpr_at_fpr1": 0.905
+        },
+        "stealthy mimicry": {
+          "auc": 0.8973330625,
+          "tpr_at_fpr1": 0.4195
+        },
+        "policy_operating_point": {
+          "legit_denied_pct": 0.0,
+          "legit_stepup_pct": 0.0,
+          "naive compromise_blocked_pct": 100.0,
+          "partial mimicry_blocked_pct": 0.0,
+          "stealthy mimicry_blocked_pct": 0.0
+        }
+      },
+      "Identity-only (no trust score)": {
+        "naive compromise": {
+          "auc": 0.5,
+          "tpr_at_fpr1": 0.0
+        },
+        "partial mimicry": {
+          "auc": 0.5,
+          "tpr_at_fpr1": 0.0
+        },
+        "stealthy mimicry": {
+          "auc": 0.5,
+          "tpr_at_fpr1": 0.0
+        },
+        "policy_operating_point": {
+          "legit_denied_pct": 0.0,
+          "legit_stepup_pct": 0.0,
+          "naive compromise_blocked_pct": 0.0,
+          "partial mimicry_blocked_pct": 0.0,
+          "stealthy mimicry_blocked_pct": 0.0
+        }
+      }
+    }
+  }
+}

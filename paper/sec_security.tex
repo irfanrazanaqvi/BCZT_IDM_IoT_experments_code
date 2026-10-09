@@ -1,0 +1,43 @@
+\section{Security Analysis}\label{sec:security}
+The contracts are deterministic state machines, so the proofs are short; they establish that the logic meets goals G1--G7 under A1--A5, not that a deployment is secure.
+
+\subsection{Security Properties}\label{sec:props}
+\begin{proposition}[Immediate revocation on the audited path, G1]\label{prop:revoke}
+If \texttt{revokeDevice(did)} (or \texttt{revokeBatch} containing \texttt{did}) is in a finalized block, every later call to \texttt{evaluateAccess} for \texttt{did} returns DENY.
+\end{proposition}
+\emph{Proof.} By A1 the call sees finalized state with $\mathrm{status}(\mathrm{did})=$ REVOKED. No function leaves REVOKED, and step~1 of Algorithm~1 runs before every other check and denies all non-ACTIVE statuses. \hfill$\square$
+
+\begin{proposition}[Bounded exposure on the fast path, G1]\label{prop:stale}
+Let a revocation finalize at time $t_f$ and let a PEP satisfy A5. A fast-path request evaluated at time $\tau\ge t_f+\Delta$ is denied. If the device submits at most $\rho$ accepted requests per second, at most $\rho\Delta$ requests are accepted after $t_f$.
+\end{proposition}
+\emph{Proof.} By A5 the replica shows status REVOKED from $t_f+\Delta$ on, and the fast path denies non-ACTIVE devices before any other check. Requests accepted after $t_f$ therefore fall in $[t_f,t_f+\Delta)$, which holds at most $\rho\Delta$ of them. \hfill$\square$
+
+\begin{proposition}[Replay resistance, G2]\label{prop:replay}
+For a single PEP and any $(\mathrm{did},c)$ with $c$ a nonce (audited) or counter value (fast path), at most one evaluation returns ALLOW or STEP\_UP.
+\end{proposition}
+\emph{Proof.} Audited path: the test-and-set of the used-nonce flag is one transaction and transactions execute serially, so a second evaluation sees the flag and denies at step~2. Fast path: the PEP accepts only counters greater than the stored maximum and then stores the new value, so a repeated or older counter is denied. In a multi-PEP zone, the PEP identity must be bound into the signed message so that a request captured at one PEP is useless at another; our testbed exercises a single PEP. \hfill$\square$
+
+\begin{proposition}[Attestation unforgeability, G3]\label{prop:oracle}
+A PPT adversary without $sk_\mathcal{O}$ obtains ALLOW or STEP\_UP for a pair $(T,A)$ not attested by $\mathcal{O}$ for that request only with negligible probability.
+\end{proposition}
+\emph{Proof.} Steps 5--8 are reached only after the signature over $(\mathrm{did},\mathrm{res},T,A,\mathrm{nonce})$ verifies under $pk_\mathcal{O}$. Producing a different $(T,A)$ with a valid signature is an EUF-CMA forgery (A2). The nonce is inside the message, so an attestation cannot be moved to another request. Changing only $A$ (for example, reporting a lower anomaly) changes the signed message, which the contract tests demonstrate. \hfill$\square$
+
+\begin{proposition}[Key-reuse prevention, G4]\label{prop:key}
+After a finalized revocation, \texttt{registerDevice} with the same key hash reverts.
+\end{proposition}
+\emph{Proof.} Revocation sets $\mathrm{revokedKey}[\mathrm{H}(pk)]$, and registration reverts on that flag. Since the DID is a function of $\mathrm{H}(pk)$, a new identity needs a new key, which the adversary lacks unless it compromised another device. \hfill$\square$
+
+\begin{proposition}[Governance safety and liveness, G6]\label{prop:gov}
+With $N$ voters and quorum $q$: (a) a revocation executes only if at least $q$ distinct voters approved; (b) a set of at most $N-q$ voters cannot stop a proposal that the other $q$ approve; (c) a coalition of at most $q-1$ voters cannot execute a revocation.
+\end{proposition}
+\emph{Proof.} (a) \texttt{hasVoted} blocks repeats and \texttt{isVoter} blocks outsiders; the approval counter reaches $q$ only with $q$ distinct approvals, and only then is \texttt{revokeDevice} called. (b) Denials end a proposal only when they exceed $N-q$, which at most $N-q$ dissenters cannot, so the $q$ approvers can always complete. (c) Fewer than $q$ approvals never trigger execution. Safety additionally requires that no other registrar path exists for the affected devices. \hfill$\square$
+
+\begin{proposition}[Spoofing, the gate and strictness, G5]\label{prop:bound}
+(a) If scores $T,T'$ differ only in signal $s_j$ with weight $w_j$, then $|T-T'|\le w_j$. (b) On a resource with gate $g$, every ALLOW satisfies $A\le g$. (c) On a strict resource, every ALLOW satisfies $T\ge\theta+m$. (d) For an attacker with $P=N=R=1$, $T=1-w_bA$, and it is accepted on a strict resource if and only if $A\le\min\{g,(1-\theta-m)/w_b\}$.
+\end{proposition}
+\emph{Proof.} (a) $T-T'=w_j(s_j-s_j')$ and $|s_j-s_j'|\le1$. (b) and (c) are steps 5 and 7 of Algorithm~1. (d) Substituting gives $T=0.3+0.3(1-A)+0.2+0.2=1-0.3A$, and ALLOW needs $A\le g$ and $T\ge\theta+m$. \hfill$\square$
+
+\emph{Corollary (what a fixed threshold cannot do).} With the default weights a fully spoofing attacker has $T\ge0.70$ even at $A=1$. Hence on a non-strict resource with $\theta=0.55$ and no gate, \emph{no} anomaly value gets such an attacker denied, and for the tiers of Table~\ref{tab:tiers} the bound $(1-\theta-m)/w_b$ is $0.83$ (T2) and $0.60$ (T3), above the gates $0.30$ and $0.20$; the \emph{gate}, not the score, is what stops the attacker, and the residual risk is exactly the set of attackers who keep $A\le g$. The experiments of Section~\ref{sec:gate_eval} measure how that residual behaves.
+
+\subsection{Residual Risks}\label{sec:residual}
+The properties say nothing about (i) compromised validators or oracle keys (A1, A4); (ii) a stolen key used by an attacker who behaves like the owner until revoked, which no continuous scheme separates from the owner except by behaviour; (iii) side-channel extraction of keys; or (iv) smart-contract defects, for which the quality-assurance literature recommends testing, verification and audit \cite{wei2024quality}. Also, the trust oracle is a trusted data source, which is the blockchain-oracle problem in a specific form \cite{hassan2023oracle}; a threshold-signed oracle would reduce it (Section~\ref{sec:disc}). Finally, the nonce set costs one storage slot per accepted audited request and needs epoch-based pruning in a long-lived deployment.

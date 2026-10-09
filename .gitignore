@@ -1,0 +1,7 @@
+node_modules/
+cache/
+artifacts/
+data/
+*.aux
+*.log
+besu-25.7.0/

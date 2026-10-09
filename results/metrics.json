@@ -1,0 +1,88 @@
+{
+  "host": {
+    "python": "3.13.16",
+    "platform": "Linux-6.18.44-fc-v64-x86_64-with-glibc2.39",
+    "cpu_count": 2
+  },
+  "scaling_results": [
+    {
+      "fleet_size": 50,
+      "reg_latency_ms_mean": 0.2864327799878083,
+      "reg_latency_ms_p95": 0.3445909998845309,
+      "authz_latency_ms_mean": 0.184193880003877,
+      "authz_latency_ms_p95": 0.21551799995359033,
+      "registration_throughput_tps": 3476.6520563814192,
+      "authorization_throughput_tps": 3811.9149330184555,
+      "process_rss_mb": 29.31640625,
+      "chain_height": 1,
+      "chain_valid": true
+    },
+    {
+      "fleet_size": 100,
+      "reg_latency_ms_mean": 0.28182998999138364,
+      "reg_latency_ms_p95": 0.33094699995126575,
+      "authz_latency_ms_mean": 0.19697689999011345,
+      "authz_latency_ms_p95": 0.23566000000573695,
+      "registration_throughput_tps": 3538.866199650885,
+      "authorization_throughput_tps": 3679.431448366301,
+      "process_rss_mb": 29.484375,
+      "chain_height": 1,
+      "chain_valid": true
+    },
+    {
+      "fleet_size": 200,
+      "reg_latency_ms_mean": 0.25550385999435093,
+      "reg_latency_ms_p95": 0.3305500000715256,
+      "authz_latency_ms_mean": 0.12479996500187554,
+      "authz_latency_ms_p95": 0.14783699996769428,
+      "registration_throughput_tps": 3906.2918095316877,
+      "authorization_throughput_tps": 5908.930266755517,
+      "process_rss_mb": 29.79296875,
+      "chain_height": 1,
+      "chain_valid": true
+    },
+    {
+      "fleet_size": 400,
+      "reg_latency_ms_mean": 0.17347454750357427,
+      "reg_latency_ms_p95": 0.20567499997559935,
+      "authz_latency_ms_mean": 0.12014961249573389,
+      "authz_latency_ms_p95": 0.14343399996869266,
+      "registration_throughput_tps": 5755.283227695319,
+      "authorization_throughput_tps": 6159.0697082403785,
+      "process_rss_mb": 30.48046875,
+      "chain_height": 1,
+      "chain_valid": true
+    },
+    {
+      "fleet_size": 800,
+      "reg_latency_ms_mean": 0.17686900499742478,
+      "reg_latency_ms_p95": 0.22990300005767494,
+      "authz_latency_ms_mean": 0.1270513999996183,
+      "authz_latency_ms_p95": 0.16247099998872727,
+      "registration_throughput_tps": 5645.158331167658,
+      "authorization_throughput_tps": 5803.8662338827235,
+      "process_rss_mb": 31.828125,
+      "chain_height": 1,
+      "chain_valid": true
+    },
+    {
+      "fleet_size": 1600,
+      "reg_latency_ms_mean": 0.17539839375109295,
+      "reg_latency_ms_p95": 0.21226300008129328,
+      "authz_latency_ms_mean": 0.1256719443730253,
+      "authz_latency_ms_p95": 0.1531870000762865,
+      "registration_throughput_tps": 5693.26838372096,
+      "authorization_throughput_tps": 5878.645439430842,
+      "process_rss_mb": 34.51171875,
+      "chain_height": 1,
+      "chain_valid": true
+    }
+  ],
+  "security_detection_rates_pct": {
+    "replay_detected": 100.0,
+    "forged_sig_detected": 100.0,
+    "revoked_device_blocked": 100.0,
+    "credential_stuffing_blocked": 100.0
+  },
+  "generated_at": "2026-10-04 11:57:24"
+}

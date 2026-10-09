@@ -1,0 +1,25 @@
+{
+  "baseline_register_ms": {
+    "n": 8,
+    "mean": 1971.9026456249999,
+    "sd": 118.2594932650852,
+    "p50": 1914.4257059999998,
+    "p95": 2167.215037,
+    "min": 1890.3331680000001,
+    "max": 2167.215037
+  },
+  "fault_tolerance": {
+    "one_validator_down_register_ms": {
+      "n": 8,
+      "mean": 2832.831415750001,
+      "sd": 2001.8977446559577,
+      "p50": 1914.376451,
+      "p95": 6159.5526580000005,
+      "min": 887.406850000003,
+      "max": 6159.5526580000005
+    },
+    "two_validators_down_mined_within_20s": false,
+    "two_validators_down_blocks_produced": 0,
+    "recovery_ms_until_pending_tx_mined": 78122.939362
+  }
+}

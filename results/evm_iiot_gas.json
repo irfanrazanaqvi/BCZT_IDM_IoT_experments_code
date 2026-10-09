@@ -1,0 +1,56 @@
+{
+  "definePolicy_iiot": 74637,
+  "decisions": {
+    "allow_strict_tier": 70339,
+    "deny_anomaly_gate": 70158,
+    "deny_strict_borderline": 70381,
+    "deny_trust_below": 70193
+  },
+  "recall": [
+    {
+      "devices": 1,
+      "individual_total_gas": 58862,
+      "batch_gas": 59885,
+      "saving_pct": -1.7,
+      "per_device_batch_gas": 59885,
+      "suspendBatch_gas": 31626
+    },
+    {
+      "devices": 10,
+      "individual_total_gas": 588584,
+      "batch_gas": 373727,
+      "saving_pct": 36.5,
+      "per_device_batch_gas": 37373,
+      "suspendBatch_gas": 98895
+    },
+    {
+      "devices": 50,
+      "individual_total_gas": 2943016,
+      "batch_gas": 1768639,
+      "saving_pct": 39.9,
+      "per_device_batch_gas": 35373,
+      "suspendBatch_gas": 397963
+    },
+    {
+      "devices": 100,
+      "individual_total_gas": 5886008,
+      "batch_gas": 3512255,
+      "saving_pct": 40.3,
+      "per_device_batch_gas": 35123,
+      "suspendBatch_gas": 771729
+    },
+    {
+      "devices": 200,
+      "individual_total_gas": 11772196,
+      "batch_gas": 6999571,
+      "saving_pct": 40.5,
+      "per_device_batch_gas": 34998,
+      "suspendBatch_gas": 1519225
+    }
+  ],
+  "anchor_gas": {
+    "first": 70846,
+    "steady_mean": 53743,
+    "per_decision_at_1000": 54
+  }
+}

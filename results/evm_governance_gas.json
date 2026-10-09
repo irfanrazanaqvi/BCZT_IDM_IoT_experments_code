@@ -1,0 +1,62 @@
+[
+  {
+    "N": 5,
+    "quorum": 3,
+    "deploy_gas": 881375,
+    "propose_gas": 72474,
+    "first_vote_gas": 77930,
+    "final_vote_gas_incl_revocation": 102168,
+    "total_gas_to_revoke": 313402,
+    "revoked": true
+  },
+  {
+    "N": 7,
+    "quorum": 4,
+    "deploy_gas": 972143,
+    "propose_gas": 72474,
+    "first_vote_gas": 77930,
+    "final_vote_gas_incl_revocation": 102168,
+    "total_gas_to_revoke": 374232,
+    "revoked": true
+  },
+  {
+    "N": 9,
+    "quorum": 5,
+    "deploy_gas": 1062935,
+    "propose_gas": 72474,
+    "first_vote_gas": 77930,
+    "final_vote_gas_incl_revocation": 102168,
+    "total_gas_to_revoke": 435062,
+    "revoked": true
+  },
+  {
+    "N": 11,
+    "quorum": 6,
+    "deploy_gas": 1153703,
+    "propose_gas": 72474,
+    "first_vote_gas": 77930,
+    "final_vote_gas_incl_revocation": 102168,
+    "total_gas_to_revoke": 495892,
+    "revoked": true
+  },
+  {
+    "N": 15,
+    "quorum": 8,
+    "deploy_gas": 1335263,
+    "propose_gas": 72474,
+    "first_vote_gas": 77930,
+    "final_vote_gas_incl_revocation": 102168,
+    "total_gas_to_revoke": 617552,
+    "revoked": true
+  },
+  {
+    "N": 21,
+    "quorum": 11,
+    "deploy_gas": 1607603,
+    "propose_gas": 72474,
+    "first_vote_gas": 77930,
+    "final_vote_gas_incl_revocation": 102168,
+    "total_gas_to_revoke": 800042,
+    "revoked": true
+  }
+]

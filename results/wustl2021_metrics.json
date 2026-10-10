@@ -1,0 +1,773 @@
+{
+  "rows_raw": 1194464,
+  "rows_dedup": 1152819,
+  "type_counts": {
+    "normal": 1094990,
+    "Backdoor": 209,
+    "CommInj": 248,
+    "DoS": 49132,
+    "Reconn": 8240
+  },
+  "n_features": 39,
+  "excluded": [
+    "StartTime",
+    "LastTime",
+    "SrcAddr",
+    "DstAddr",
+    "Sport",
+    "IdleTime",
+    "sIpId",
+    "dIpId"
+  ],
+  "detectors": {
+    "sup_auc_mean": 0.9999997737359838,
+    "sup_auc_sd": 7.646628755179764e-08,
+    "sup_auc_no_ttl_mean": 0.9999997568210157,
+    "iforest_auc_mean": 0.9872344824427846,
+    "iforest_auc_sd": 0.00060638159677106,
+    "iforest_auc_by_type": {
+      "Backdoor": [
+        0.9896043746334616,
+        0.0009222119547039756
+      ],
+      "CommInj": [
+        0.9896083587583056,
+        0.0010469167881617194
+      ],
+      "DoS": [
+        0.9879568168808184,
+        0.0006572295432052837
+      ],
+      "Reconn": [
+        0.9827958984330841,
+        0.0005786664708460657
+      ]
+    },
+    "loto_by_type": {
+      "Backdoor": {
+        "auc_vs_normal": 0.9292119601391833,
+        "detect_at_0.5": 0.6666666666666666,
+        "mean_A": 0.6671383294454615,
+        "n_test": 63
+      },
+      "CommInj": {
+        "auc_vs_normal": 0.9996336714251947,
+        "detect_at_0.5": 0.08108108108108109,
+        "mean_A": 0.08964422476160205,
+        "n_test": 74
+      },
+      "DoS": {
+        "auc_vs_normal": 0.7130059219514444,
+        "detect_at_0.5": 0.006512890094979647,
+        "mean_A": 0.022220026674331064,
+        "n_test": 14740
+      },
+      "Reconn": {
+        "auc_vs_normal": 0.9999803557583976,
+        "detect_at_0.5": 0.12985436893203883,
+        "mean_A": 0.2775202739860337,
+        "n_test": 2472
+      }
+    },
+    "seeds": [
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "split": "70/30 stratified by type after de-duplication"
+  },
+  "policy_seen": {
+    "telemetry.read": {
+      "legit_allow_threshold": 100.0,
+      "legit_allow_full": 100.0,
+      "attack_accepted": {
+        "Backdoor": {
+          "threshold_only": 100.0,
+          "full_policy": 100.0
+        },
+        "CommInj": {
+          "threshold_only": 100.0,
+          "full_policy": 100.0
+        },
+        "DoS": {
+          "threshold_only": 100.0,
+          "full_policy": 100.0
+        },
+        "Reconn": {
+          "threshold_only": 100.0,
+          "full_policy": 100.0
+        }
+      }
+    },
+    "historian.write": {
+      "legit_allow_threshold": 100.0,
+      "legit_allow_full": 100.0,
+      "attack_accepted": {
+        "Backdoor": {
+          "threshold_only": 100.0,
+          "full_policy": 10.8
+        },
+        "CommInj": {
+          "threshold_only": 100.0,
+          "full_policy": 3.7666666666666666
+        },
+        "DoS": {
+          "threshold_only": 100.0,
+          "full_policy": 0.0
+        },
+        "Reconn": {
+          "threshold_only": 100.0,
+          "full_policy": 0.0
+        }
+      }
+    },
+    "plc.setpoint.write": {
+      "legit_allow_threshold": 100.0,
+      "legit_allow_full": 100.0,
+      "attack_accepted": {
+        "Backdoor": {
+          "threshold_only": 11.233333333333333,
+          "full_policy": 11.233333333333333
+        },
+        "CommInj": {
+          "threshold_only": 4.1000000000000005,
+          "full_policy": 4.1000000000000005
+        },
+        "DoS": {
+          "threshold_only": 0.0,
+          "full_policy": 0.0
+        },
+        "Reconn": {
+          "threshold_only": 0.0,
+          "full_policy": 0.0
+        }
+      }
+    },
+    "plc.firmware.update": {
+      "legit_allow_threshold": 100.0,
+      "legit_allow_full": 100.0,
+      "attack_accepted": {
+        "Backdoor": {
+          "threshold_only": 12.133333333333333,
+          "full_policy": 12.133333333333333
+        },
+        "CommInj": {
+          "threshold_only": 4.466666666666667,
+          "full_policy": 4.466666666666667
+        },
+        "DoS": {
+          "threshold_only": 0.0,
+          "full_policy": 0.0
+        },
+        "Reconn": {
+          "threshold_only": 0.0,
+          "full_policy": 0.0
+        }
+      }
+    }
+  },
+  "policy_loto": {
+    "telemetry.read": {
+      "legit_allow_threshold": 100.0,
+      "legit_allow_full": 100.0,
+      "attack_accepted": {
+        "Backdoor": {
+          "threshold_only": 100.0,
+          "full_policy": 100.0
+        },
+        "CommInj": {
+          "threshold_only": 100.0,
+          "full_policy": 100.0
+        },
+        "DoS": {
+          "threshold_only": 100.0,
+          "full_policy": 100.0
+        },
+        "Reconn": {
+          "threshold_only": 100.0,
+          "full_policy": 100.0
+        }
+      }
+    },
+    "historian.write": {
+      "legit_allow_threshold": 100.0,
+      "legit_allow_full": 100.0,
+      "attack_accepted": {
+        "Backdoor": {
+          "threshold_only": 100.0,
+          "full_policy": 32.766666666666666
+        },
+        "CommInj": {
+          "threshold_only": 100.0,
+          "full_policy": 91.9
+        },
+        "DoS": {
+          "threshold_only": 100.0,
+          "full_policy": 99.2
+        },
+        "Reconn": {
+          "threshold_only": 100.0,
+          "full_policy": 87.33333333333333
+        }
+      }
+    },
+    "plc.setpoint.write": {
+      "legit_allow_threshold": 100.0,
+      "legit_allow_full": 100.0,
+      "attack_accepted": {
+        "Backdoor": {
+          "threshold_only": 34.06666666666667,
+          "full_policy": 34.06666666666667
+        },
+        "CommInj": {
+          "threshold_only": 90.86666666666666,
+          "full_policy": 90.86666666666666
+        },
+        "DoS": {
+          "threshold_only": 99.43333333333332,
+          "full_policy": 98.83333333333333
+        },
+        "Reconn": {
+          "threshold_only": 87.5,
+          "full_policy": 78.5
+        }
+      }
+    },
+    "plc.firmware.update": {
+      "legit_allow_threshold": 100.0,
+      "legit_allow_full": 100.0,
+      "attack_accepted": {
+        "Backdoor": {
+          "threshold_only": 33.233333333333334,
+          "full_policy": 33.233333333333334
+        },
+        "CommInj": {
+          "threshold_only": 91.26666666666667,
+          "full_policy": 91.26666666666667
+        },
+        "DoS": {
+          "threshold_only": 99.43333333333332,
+          "full_policy": 97.93333333333332
+        },
+        "Reconn": {
+          "threshold_only": 87.46666666666667,
+          "full_policy": 79.23333333333333
+        }
+      }
+    }
+  },
+  "policy_iforest": {
+    "telemetry.read": {
+      "legit_allow_threshold": 99.43333333333332,
+      "legit_allow_full": 99.43333333333332,
+      "attack_accepted": {
+        "Backdoor": {
+          "threshold_only": 100.0,
+          "full_policy": 100.0
+        },
+        "CommInj": {
+          "threshold_only": 100.0,
+          "full_policy": 100.0
+        },
+        "DoS": {
+          "threshold_only": 100.0,
+          "full_policy": 100.0
+        },
+        "Reconn": {
+          "threshold_only": 100.0,
+          "full_policy": 100.0
+        }
+      }
+    },
+    "historian.write": {
+      "legit_allow_threshold": 99.03333333333333,
+      "legit_allow_full": 98.46666666666667,
+      "attack_accepted": {
+        "Backdoor": {
+          "threshold_only": 100.0,
+          "full_policy": 0.0
+        },
+        "CommInj": {
+          "threshold_only": 100.0,
+          "full_policy": 0.0
+        },
+        "DoS": {
+          "threshold_only": 100.0,
+          "full_policy": 0.0
+        },
+        "Reconn": {
+          "threshold_only": 100.0,
+          "full_policy": 0.0
+        }
+      }
+    },
+    "plc.setpoint.write": {
+      "legit_allow_threshold": 96.76666666666667,
+      "legit_allow_full": 87.9,
+      "attack_accepted": {
+        "Backdoor": {
+          "threshold_only": 9.8,
+          "full_policy": 0.0
+        },
+        "CommInj": {
+          "threshold_only": 5.233333333333333,
+          "full_policy": 0.0
+        },
+        "DoS": {
+          "threshold_only": 0.6,
+          "full_policy": 0.0
+        },
+        "Reconn": {
+          "threshold_only": 29.133333333333333,
+          "full_policy": 0.0
+        }
+      }
+    },
+    "plc.firmware.update": {
+      "legit_allow_threshold": 85.93333333333332,
+      "legit_allow_full": 77.73333333333333,
+      "attack_accepted": {
+        "Backdoor": {
+          "threshold_only": 0.0,
+          "full_policy": 0.0
+        },
+        "CommInj": {
+          "threshold_only": 0.0,
+          "full_policy": 0.0
+        },
+        "DoS": {
+          "threshold_only": 0.0,
+          "full_policy": 0.0
+        },
+        "Reconn": {
+          "threshold_only": 0.0,
+          "full_policy": 0.0
+        }
+      }
+    }
+  },
+  "evasion_loto": {
+    "0.1": {
+      "telemetry.read": {
+        "legit_allow_threshold": 100.0,
+        "legit_allow_full": 100.0,
+        "attack_accepted": {
+          "Backdoor": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "CommInj": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "DoS": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "Reconn": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          }
+        }
+      },
+      "historian.write": {
+        "legit_allow_threshold": 100.0,
+        "legit_allow_full": 100.0,
+        "attack_accepted": {
+          "Backdoor": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "CommInj": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "DoS": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "Reconn": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          }
+        }
+      },
+      "plc.setpoint.write": {
+        "legit_allow_threshold": 100.0,
+        "legit_allow_full": 100.0,
+        "attack_accepted": {
+          "Backdoor": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "CommInj": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "DoS": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "Reconn": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          }
+        }
+      },
+      "plc.firmware.update": {
+        "legit_allow_threshold": 100.0,
+        "legit_allow_full": 100.0,
+        "attack_accepted": {
+          "Backdoor": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "CommInj": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "DoS": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "Reconn": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          }
+        }
+      }
+    },
+    "0.01": {
+      "telemetry.read": {
+        "legit_allow_threshold": 100.0,
+        "legit_allow_full": 100.0,
+        "attack_accepted": {
+          "Backdoor": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "CommInj": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "DoS": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "Reconn": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          }
+        }
+      },
+      "historian.write": {
+        "legit_allow_threshold": 100.0,
+        "legit_allow_full": 100.0,
+        "attack_accepted": {
+          "Backdoor": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "CommInj": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "DoS": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "Reconn": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          }
+        }
+      },
+      "plc.setpoint.write": {
+        "legit_allow_threshold": 100.0,
+        "legit_allow_full": 100.0,
+        "attack_accepted": {
+          "Backdoor": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "CommInj": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "DoS": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "Reconn": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          }
+        }
+      },
+      "plc.firmware.update": {
+        "legit_allow_threshold": 100.0,
+        "legit_allow_full": 100.0,
+        "attack_accepted": {
+          "Backdoor": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "CommInj": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "DoS": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "Reconn": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          }
+        }
+      }
+    }
+  },
+  "evasion_iforest": {
+    "0.1": {
+      "telemetry.read": {
+        "legit_allow_threshold": 99.53333333333333,
+        "legit_allow_full": 99.53333333333333,
+        "attack_accepted": {
+          "Backdoor": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "CommInj": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "DoS": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "Reconn": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          }
+        }
+      },
+      "historian.write": {
+        "legit_allow_threshold": 99.13333333333333,
+        "legit_allow_full": 98.73333333333333,
+        "attack_accepted": {
+          "Backdoor": {
+            "threshold_only": 100.0,
+            "full_policy": 0.0
+          },
+          "CommInj": {
+            "threshold_only": 100.0,
+            "full_policy": 0.0
+          },
+          "DoS": {
+            "threshold_only": 100.0,
+            "full_policy": 0.0
+          },
+          "Reconn": {
+            "threshold_only": 100.0,
+            "full_policy": 0.0
+          }
+        }
+      },
+      "plc.setpoint.write": {
+        "legit_allow_threshold": 96.6,
+        "legit_allow_full": 88.13333333333333,
+        "attack_accepted": {
+          "Backdoor": {
+            "threshold_only": 92.06666666666666,
+            "full_policy": 0.0
+          },
+          "CommInj": {
+            "threshold_only": 58.266666666666666,
+            "full_policy": 0.0
+          },
+          "DoS": {
+            "threshold_only": 7.333333333333333,
+            "full_policy": 0.0
+          },
+          "Reconn": {
+            "threshold_only": 100.0,
+            "full_policy": 0.0
+          }
+        }
+      },
+      "plc.firmware.update": {
+        "legit_allow_threshold": 83.73333333333333,
+        "legit_allow_full": 77.13333333333333,
+        "attack_accepted": {
+          "Backdoor": {
+            "threshold_only": 0.0,
+            "full_policy": 0.0
+          },
+          "CommInj": {
+            "threshold_only": 0.0,
+            "full_policy": 0.0
+          },
+          "DoS": {
+            "threshold_only": 0.0,
+            "full_policy": 0.0
+          },
+          "Reconn": {
+            "threshold_only": 0.0,
+            "full_policy": 0.0
+          }
+        }
+      }
+    },
+    "0.01": {
+      "telemetry.read": {
+        "legit_allow_threshold": 99.53333333333333,
+        "legit_allow_full": 99.53333333333333,
+        "attack_accepted": {
+          "Backdoor": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "CommInj": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "DoS": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          },
+          "Reconn": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          }
+        }
+      },
+      "historian.write": {
+        "legit_allow_threshold": 98.86666666666667,
+        "legit_allow_full": 97.39999999999999,
+        "attack_accepted": {
+          "Backdoor": {
+            "threshold_only": 100.0,
+            "full_policy": 0.0
+          },
+          "CommInj": {
+            "threshold_only": 100.0,
+            "full_policy": 0.0
+          },
+          "DoS": {
+            "threshold_only": 100.0,
+            "full_policy": 0.0
+          },
+          "Reconn": {
+            "threshold_only": 100.0,
+            "full_policy": 0.0
+          }
+        }
+      },
+      "plc.setpoint.write": {
+        "legit_allow_threshold": 95.8,
+        "legit_allow_full": 87.06666666666666,
+        "attack_accepted": {
+          "Backdoor": {
+            "threshold_only": 97.26666666666667,
+            "full_policy": 0.0
+          },
+          "CommInj": {
+            "threshold_only": 100.0,
+            "full_policy": 0.0
+          },
+          "DoS": {
+            "threshold_only": 65.26666666666667,
+            "full_policy": 0.0
+          },
+          "Reconn": {
+            "threshold_only": 100.0,
+            "full_policy": 0.0
+          }
+        }
+      },
+      "plc.firmware.update": {
+        "legit_allow_threshold": 85.6,
+        "legit_allow_full": 78.06666666666666,
+        "attack_accepted": {
+          "Backdoor": {
+            "threshold_only": 0.0,
+            "full_policy": 0.0
+          },
+          "CommInj": {
+            "threshold_only": 0.0,
+            "full_policy": 0.0
+          },
+          "DoS": {
+            "threshold_only": 0.0,
+            "full_policy": 0.0
+          },
+          "Reconn": {
+            "threshold_only": 0.0,
+            "full_policy": 0.0
+          }
+        }
+      }
+    }
+  },
+  "gate_sweep": [
+    {
+      "gate": 0.05,
+      "legit_denied_pct_sup": 0.011567837758031276,
+      "blocked_seen_pct": 99.94812381117067,
+      "blocked_heldout_pct": 17.862701020231714,
+      "legit_denied_pct_if": 30.38262145468604,
+      "blocked_if_pct": 100.0
+    },
+    {
+      "gate": 0.1,
+      "legit_denied_pct_sup": 0.0076104195776521555,
+      "blocked_seen_pct": 99.94812381117067,
+      "blocked_heldout_pct": 17.80506081042135,
+      "legit_denied_pct_if": 25.69216766058746,
+      "blocked_if_pct": 100.0
+    },
+    {
+      "gate": 0.2,
+      "legit_denied_pct_sup": 0.002739751047954776,
+      "blocked_seen_pct": 99.94235979018964,
+      "blocked_heldout_pct": 5.2452590927430975,
+      "legit_denied_pct_if": 21.479952632748546,
+      "blocked_if_pct": 100.0
+    },
+    {
+      "gate": 0.3,
+      "legit_denied_pct_sup": 0.001217667132424345,
+      "blocked_seen_pct": 99.94235979018964,
+      "blocked_heldout_pct": 4.524756470113552,
+      "legit_denied_pct_if": 12.03968377184571,
+      "blocked_if_pct": 100.0
+    },
+    {
+      "gate": 0.5,
+      "legit_denied_pct_sup": 0.0,
+      "blocked_seen_pct": 99.94235979018964,
+      "blocked_heldout_pct": 2.6802697561819127,
+      "legit_denied_pct_if": 2.320264720834589,
+      "blocked_if_pct": 100.0
+    },
+    {
+      "gate": 0.7,
+      "legit_denied_pct_sup": 0.0,
+      "blocked_seen_pct": 99.94235979018964,
+      "blocked_heldout_pct": 2.6629776932388034,
+      "legit_denied_pct_if": 1.7260431602115087,
+      "blocked_if_pct": 97.12375353046285
+    },
+    {
+      "gate": 0.9,
+      "legit_denied_pct_sup": 0.0,
+      "blocked_seen_pct": 99.94235979018964,
+      "blocked_heldout_pct": 2.628393567352585,
+      "legit_denied_pct_if": 1.052064402414634,
+      "blocked_if_pct": 35.82339039714105
+    }
+  ]
+}

@@ -118,3 +118,19 @@ for rn, tn in names.items():
     L.append(f"{tn} & " + " & ".join(cells) + r" \\")
 L += [r"\bottomrule", r"\end{tabular}"]
 open("tab_wustl.tex", "w").write("\n".join(L))
+
+# ---- WUSTL-IIoT-2021 table
+w21 = json.load(open(f"{B}/wustl2021_metrics.json"))
+def mean_full(pol, rn):
+    a = pol[rn]["attack_accepted"]; return sum(v["full_policy"] for v in a.values()) / len(a)
+def mean_thr(pol, rn):
+    a = pol[rn]["attack_accepted"]; return sum(v["threshold_only"] for v in a.values()) / len(a)
+L = [r"\begin{tabular}{@{}lrrrrrr@{}}", r"\toprule",
+     r" & \multicolumn{3}{c}{Supervised $A$} & \multicolumn{2}{c}{Isolation Forest $A$} & \\",
+     r"\cmidrule(lr){2-4}\cmidrule(lr){5-6}",
+     r"Tier & Legit & Seen & Held-out & Legit & Attack & Thr.-only$^{a}$ \\", r"\midrule"]
+for rn, tn in names.items():
+    ps, pl, pi = w21["policy_seen"], w21["policy_loto"], w21["policy_iforest"]
+    L.append(f"{tn} & {ps[rn]['legit_allow_full']:.1f} & {mean_full(ps, rn):.1f} & {mean_full(pl, rn):.1f} & {pi[rn]['legit_allow_full']:.1f} & {mean_full(pi, rn):.1f} & {mean_thr(pl, rn):.1f} \\\\")
+L += [r"\bottomrule", r"\end{tabular}"]
+open("tab_wustl21.tex", "w").write("\n".join(L))

@@ -1,0 +1,386 @@
+{
+  "rows_raw": 7037983,
+  "rows_unique": 62959,
+  "duplicate_pct": 99.10543972612608,
+  "normal_unique": 39817,
+  "attack_unique": 23142,
+  "features": [
+    "TotPkts",
+    "TotBytes",
+    "SrcPkts",
+    "DstPkts",
+    "SrcBytes"
+  ],
+  "label": "binary (0 normal, 1 attack); no attack types available",
+  "excluded": "Sport (source port), as in the TON_IoT study",
+  "detectors": {
+    "sup_auc_mean": 0.9999756252356162,
+    "sup_auc_sd": 2.4251142767288357e-05,
+    "iforest_auc_mean": 0.9086203780867794,
+    "iforest_auc_sd": 0.0064793545575614325,
+    "seeds": [
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "split": "70/30 stratified on de-duplicated unique rows"
+  },
+  "supervised": {
+    "legit_A_quantiles": {
+      "0.5": 6.609972366099374e-05,
+      "0.9": 6.609972382203371e-05,
+      "0.99": 0.01806467388572126,
+      "0.999": 0.21247454478336425
+    },
+    "attack_A_quantiles": {
+      "0.01": 0.9988799163845541,
+      "0.1": 0.9998894927432319,
+      "0.5": 0.9998894927432319
+    },
+    "policy": {
+      "telemetry.read": {
+        "legit_allow_threshold": 100.0,
+        "legit_allow_full": 100.0,
+        "attack_accepted": {
+          "attack": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          }
+        }
+      },
+      "historian.write": {
+        "legit_allow_threshold": 100.0,
+        "legit_allow_full": 100.0,
+        "attack_accepted": {
+          "attack": {
+            "threshold_only": 100.0,
+            "full_policy": 0.06666666666666667
+          }
+        }
+      },
+      "plc.setpoint.write": {
+        "legit_allow_threshold": 100.0,
+        "legit_allow_full": 100.0,
+        "attack_accepted": {
+          "attack": {
+            "threshold_only": 0.33333333333333337,
+            "full_policy": 0.3
+          }
+        }
+      },
+      "plc.firmware.update": {
+        "legit_allow_threshold": 100.0,
+        "legit_allow_full": 99.76666666666667,
+        "attack_accepted": {
+          "attack": {
+            "threshold_only": 0.23333333333333336,
+            "full_policy": 0.13333333333333333
+          }
+        }
+      }
+    },
+    "evasion": {
+      "0.1": {
+        "telemetry.read": {
+          "legit_allow_threshold": 100.0,
+          "legit_allow_full": 100.0,
+          "attack_accepted": {
+            "attack": {
+              "threshold_only": 100.0,
+              "full_policy": 100.0
+            }
+          }
+        },
+        "historian.write": {
+          "legit_allow_threshold": 100.0,
+          "legit_allow_full": 100.0,
+          "attack_accepted": {
+            "attack": {
+              "threshold_only": 100.0,
+              "full_policy": 1.3333333333333335
+            }
+          }
+        },
+        "plc.setpoint.write": {
+          "legit_allow_threshold": 100.0,
+          "legit_allow_full": 100.0,
+          "attack_accepted": {
+            "attack": {
+              "threshold_only": 2.1333333333333333,
+              "full_policy": 2.1333333333333333
+            }
+          }
+        },
+        "plc.firmware.update": {
+          "legit_allow_threshold": 100.0,
+          "legit_allow_full": 99.93333333333332,
+          "attack_accepted": {
+            "attack": {
+              "threshold_only": 1.7999999999999998,
+              "full_policy": 0.6666666666666667
+            }
+          }
+        }
+      },
+      "0.01": {
+        "telemetry.read": {
+          "legit_allow_threshold": 100.0,
+          "legit_allow_full": 100.0,
+          "attack_accepted": {
+            "attack": {
+              "threshold_only": 100.0,
+              "full_policy": 100.0
+            }
+          }
+        },
+        "historian.write": {
+          "legit_allow_threshold": 100.0,
+          "legit_allow_full": 100.0,
+          "attack_accepted": {
+            "attack": {
+              "threshold_only": 100.0,
+              "full_policy": 15.2
+            }
+          }
+        },
+        "plc.setpoint.write": {
+          "legit_allow_threshold": 100.0,
+          "legit_allow_full": 100.0,
+          "attack_accepted": {
+            "attack": {
+              "threshold_only": 17.133333333333333,
+              "full_policy": 16.0
+            }
+          }
+        },
+        "plc.firmware.update": {
+          "legit_allow_threshold": 100.0,
+          "legit_allow_full": 99.93333333333332,
+          "attack_accepted": {
+            "attack": {
+              "threshold_only": 16.0,
+              "full_policy": 6.266666666666667
+            }
+          }
+        }
+      }
+    },
+    "gate_sweep": [
+      {
+        "gate": 0.05,
+        "legit_denied_pct": 0.1674340728338217,
+        "attack_blocked_pct": 99.94238801670747
+      },
+      {
+        "gate": 0.1,
+        "legit_denied_pct": 0.1674340728338217,
+        "attack_blocked_pct": 99.94238801670747
+      },
+      {
+        "gate": 0.2,
+        "legit_denied_pct": 0.1590623691921306,
+        "attack_blocked_pct": 99.94238801670747
+      },
+      {
+        "gate": 0.3,
+        "legit_denied_pct": 0.008371703641691083,
+        "attack_blocked_pct": 99.84156704594555
+      },
+      {
+        "gate": 0.5,
+        "legit_denied_pct": 0.008371703641691083,
+        "attack_blocked_pct": 99.84156704594555
+      },
+      {
+        "gate": 0.7,
+        "legit_denied_pct": 0.008371703641691083,
+        "attack_blocked_pct": 99.84156704594555
+      },
+      {
+        "gate": 0.9,
+        "legit_denied_pct": 0.008371703641691083,
+        "attack_blocked_pct": 99.78395506265304
+      }
+    ]
+  },
+  "iforest_normal_only": {
+    "legit_A_quantiles": {
+      "0.5": 0.0,
+      "0.9": 0.43808985058711397,
+      "0.99": 0.9707917236998662,
+      "0.999": 0.9976785901204847
+    },
+    "attack_A_quantiles": {
+      "0.01": 0.16890337068833644,
+      "0.1": 0.44038072759184,
+      "0.5": 0.44038072759184
+    },
+    "policy": {
+      "telemetry.read": {
+        "legit_allow_threshold": 99.26666666666667,
+        "legit_allow_full": 99.26666666666667,
+        "attack_accepted": {
+          "attack": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          }
+        }
+      },
+      "historian.write": {
+        "legit_allow_threshold": 98.26666666666667,
+        "legit_allow_full": 97.13333333333334,
+        "attack_accepted": {
+          "attack": {
+            "threshold_only": 100.0,
+            "full_policy": 100.0
+          }
+        }
+      },
+      "plc.setpoint.write": {
+        "legit_allow_threshold": 93.16666666666666,
+        "legit_allow_full": 87.5,
+        "attack_accepted": {
+          "attack": {
+            "threshold_only": 100.0,
+            "full_policy": 8.200000000000001
+          }
+        }
+      },
+      "plc.firmware.update": {
+        "legit_allow_threshold": 85.53333333333333,
+        "legit_allow_full": 82.23333333333333,
+        "attack_accepted": {
+          "attack": {
+            "threshold_only": 94.1,
+            "full_policy": 4.266666666666667
+          }
+        }
+      }
+    },
+    "evasion": {
+      "0.1": {
+        "telemetry.read": {
+          "legit_allow_threshold": 99.26666666666667,
+          "legit_allow_full": 99.26666666666667,
+          "attack_accepted": {
+            "attack": {
+              "threshold_only": 100.0,
+              "full_policy": 100.0
+            }
+          }
+        },
+        "historian.write": {
+          "legit_allow_threshold": 98.0,
+          "legit_allow_full": 97.0,
+          "attack_accepted": {
+            "attack": {
+              "threshold_only": 100.0,
+              "full_policy": 100.0
+            }
+          }
+        },
+        "plc.setpoint.write": {
+          "legit_allow_threshold": 93.60000000000001,
+          "legit_allow_full": 88.0,
+          "attack_accepted": {
+            "attack": {
+              "threshold_only": 100.0,
+              "full_policy": 86.86666666666667
+            }
+          }
+        },
+        "plc.firmware.update": {
+          "legit_allow_threshold": 85.93333333333332,
+          "legit_allow_full": 81.8,
+          "attack_accepted": {
+            "attack": {
+              "threshold_only": 99.33333333333333,
+              "full_policy": 43.0
+            }
+          }
+        }
+      },
+      "0.01": {
+        "telemetry.read": {
+          "legit_allow_threshold": 99.26666666666667,
+          "legit_allow_full": 99.26666666666667,
+          "attack_accepted": {
+            "attack": {
+              "threshold_only": 100.0,
+              "full_policy": 100.0
+            }
+          }
+        },
+        "historian.write": {
+          "legit_allow_threshold": 98.0,
+          "legit_allow_full": 97.0,
+          "attack_accepted": {
+            "attack": {
+              "threshold_only": 100.0,
+              "full_policy": 100.0
+            }
+          }
+        },
+        "plc.setpoint.write": {
+          "legit_allow_threshold": 93.60000000000001,
+          "legit_allow_full": 88.0,
+          "attack_accepted": {
+            "attack": {
+              "threshold_only": 100.0,
+              "full_policy": 100.0
+            }
+          }
+        },
+        "plc.firmware.update": {
+          "legit_allow_threshold": 85.93333333333332,
+          "legit_allow_full": 81.8,
+          "attack_accepted": {
+            "attack": {
+              "threshold_only": 100.0,
+              "full_policy": 100.0
+            }
+          }
+        }
+      }
+    },
+    "gate_sweep": [
+      {
+        "gate": 0.05,
+        "legit_denied_pct": 18.024277940560903,
+        "attack_blocked_pct": 100.0
+      },
+      {
+        "gate": 0.1,
+        "legit_denied_pct": 18.024277940560903,
+        "attack_blocked_pct": 100.0
+      },
+      {
+        "gate": 0.2,
+        "legit_denied_pct": 18.015906236919214,
+        "attack_blocked_pct": 95.67910125306064
+      },
+      {
+        "gate": 0.3,
+        "legit_denied_pct": 12.490581833403096,
+        "attack_blocked_pct": 91.32939651447501
+      },
+      {
+        "gate": 0.5,
+        "legit_denied_pct": 6.203432398493093,
+        "attack_blocked_pct": 0.04320898746939363
+      },
+      {
+        "gate": 0.7,
+        "legit_denied_pct": 2.193386354123064,
+        "attack_blocked_pct": 0.0
+      },
+      {
+        "gate": 0.9,
+        "legit_denied_pct": 1.9506069485140227,
+        "attack_blocked_pct": 0.0
+      }
+    ]
+  }
+}

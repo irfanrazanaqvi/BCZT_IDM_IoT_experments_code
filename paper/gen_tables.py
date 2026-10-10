@@ -102,3 +102,19 @@ for k, v in b2.items():
     L.append(f"{name} & {v['mean_exposure']:.1f} & {v['max_exposure']} & {v['legit_availability_pct']:.1f} \\\\")
 L += [r"\bottomrule", r"\end{tabular}"]
 open("tab_base2.tex", "w").write("\n".join(L))
+
+# ---- WUSTL-IIOT-2018 table
+wu = json.load(open(f"{B}/wustl_metrics.json"))
+names = {"telemetry.read": "T0", "historian.write": "T1", "plc.setpoint.write": "T2", "plc.firmware.update": "T3"}
+L = [r"\begin{tabular}{@{}lrrrrrr@{}}", r"\toprule",
+     r" & \multicolumn{3}{c}{Supervised $A$} & \multicolumn{3}{c}{Isolation Forest $A$} \\",
+     r"\cmidrule(lr){2-4}\cmidrule(lr){5-7}",
+     r"Tier & Legit & Att.\ thr. & Att.\ full & Legit & Att.\ thr. & Att.\ full \\", r"\midrule"]
+for rn, tn in names.items():
+    cells = []
+    for key in ("supervised", "iforest_normal_only"):
+        v = wu[key]["policy"][rn]; a = v["attack_accepted"]["attack"]
+        cells += [f"{v['legit_allow_full']:.1f}", f"{a['threshold_only']:.1f}", f"{a['full_policy']:.1f}"]
+    L.append(f"{tn} & " + " & ".join(cells) + r" \\")
+L += [r"\bottomrule", r"\end{tabular}"]
+open("tab_wustl.tex", "w").write("\n".join(L))

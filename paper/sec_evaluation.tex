@@ -85,6 +85,22 @@ Sweeping the gate on the real scores, a gate of 0.05 denies 3.6\% of legitimate 
 \label{fig:iiotres}
 \end{figure*}
 
+\subsection{A Second Dataset: WUSTL-IIOT-2018 (SCADA)}\label{sec:wustl_eval}
+To check that the gate behaviour is not specific to one collection, we repeat the policy experiment on WUSTL-IIOT-2018, flow records captured on a SCADA testbed with injected attacks \cite{teixeira2018scada,teixeira2018wustl}. The file has 7{,}037{,}983 rows and seven columns but only 62{,}959 distinct rows (99.1\% duplicates; 39{,}817 normal and 23{,}142 attack), and it carries a binary label only. Two consequences follow. First, de-duplication is essential: a random split of the raw file puts identical records in training and test data. Second, there are no attack types, so the held-out-type test of Section~\ref{sec:real_eval} cannot be repeated. We exclude the source port, as before, which leaves five count features (total, source and destination packets, total and source bytes), and use a stratified 70/30 split on the unique rows over five seeds.
+
+A gradient-boosted classifier is almost perfect (AUC 0.99998, sd $2\times10^{-5}$): attack flows in this testbed are short (a median of two packets, at most 22) and normal flows are not, so the task is nearly trivial and the result says little about hard attacks. An Isolation Forest trained on normal flows only reaches AUC $0.909\pm0.006$, a more realistic stand-in for an attack never seen in training. For the policy we map the Isolation Forest score to $A\in[0,1]$ using normal training data alone (median to the 99.9th percentile), so no attack information enters the calibration.
+
+Table~\ref{tab:wustl} gives the results. With the supervised score the full policy accepts at most 0.3\% of attack requests at T1--T3 and denies at most 0.2\% of legitimate ones, essentially the TON\_IoT picture. With the unsupervised score the gate and strict mode still reduce attack acceptance at the two critical tiers from 100\% and 94.1\% (threshold only) to 8.2\% and 4.3\%, but legitimate allowance drops to 87.5\% at T2 and 82.2\% at T3, a cost far above the 1--2\% seen with the supervised detector, because many normal flows look unusual to a detector fitted on five coarse counters. At T0 and T1 the unsupervised variant accepts all attack requests: the T1 gate is 0.60, above the median attack score of about 0.49. For an adaptive attacker that sends only its best 10\% (1\%) of flows, acceptance with the unsupervised score is 86.9\% (100\%) at T2 and 43.0\% (100\%) at T3, against 2.1\% (16.0\%) and 0.7\% (6.3\%) with the supervised score. A gate sweep with the unsupervised score shows the same trade-off as before: a gate of 0.3 denies 12.5\% of legitimate flows and blocks 91.3\% of attack flows, and a gate of 0.5 blocks none. The finding that carries over is the role of the gate; the finding that does not is that a strong detector is available. When the detector is weak, as an unsupervised one on coarse features is, the policy trades a large share of legitimate availability for protection at the critical tiers. As with TON\_IoT, posture and network context are synthetic and the flow-to-device pairing is arbitrary.
+
+\begin{table}[t]
+\centering
+\caption{WUSTL-IIOT-2018: legitimate requests allowed and attack requests accepted (\%) under the threshold-only and full policies, for two sources of the anomaly signal}
+\label{tab:wustl}
+\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\input{tab_wustl}
+\end{table}
+
 \subsection{Baseline Comparison: Revocation Exposure}\label{sec:baselines}
 On a shared logical clock we compare the per-request design with a session token (HMAC bearer token, TTL 60 or 300\,s) and PKI with a CRL refreshed every 60 or 300\,s, for 60 devices at 1 request/s with revocation times drawn from $U(100,500)$\,s. Table~\ref{tab:base} shows that the audited design accepts no request after revocation, as Proposition~\ref{prop:revoke} predicts, whereas the baselines accept on average 33 and 147 requests for the 60\,s and 300\,s windows (worst cases 59--299). The mechanism implies this result; the experiment quantifies it. Token validation is the cheapest per request (an HMAC, no public-key operation) and our design costs more per accepted request, which we do not hide. The fast path trades the zero for a bounded exposure of at most $\rho\Delta$ requests (Proposition~\ref{prop:stale}): for example, with $\Delta=5$\,s and one request per second the bound is 5 requests, still far below the 33--147 of token and CRL schemes.
 

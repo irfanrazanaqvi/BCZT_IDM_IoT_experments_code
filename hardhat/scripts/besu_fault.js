@@ -3,7 +3,10 @@
 const { ethers } = require("ethers");
 const fs = require("fs"), path = require("path");
 const abi = ethers.AbiCoder.defaultAbiCoder();
-const URLS = [8545, 8546, 8547, 8548].map(p => `http://127.0.0.1:${p}`);
+// BESU_RPC = comma-separated RPC URLs of the 4 validators (default: local network). OUT_TAG renames the result file; BESU_CTL = control script (default: ../../../besu_net/start_net.sh).
+const URLS = process.env.BESU_RPC ? process.env.BESU_RPC.split(",").map(x => x.trim()) : [8545, 8546, 8547, 8548].map(p => `http://127.0.0.1:${p}`);
+const TAG = process.env.OUT_TAG ? "_" + process.env.OUT_TAG : "";
+const CTL = process.env.BESU_CTL || path.join(__dirname, "..", "..", "besu_net", "start_net.sh");
 const CHAIN = 2026;
 class RP extends ethers.JsonRpcProvider {
   async send(m, p) {
@@ -53,7 +56,7 @@ async function main() {
   const bl = []; for (let i = 0; i < 8; i++) bl.push((await regDev(i)).ms); out.baseline_register_ms = st(bl);
   // ---- E6 fault tolerance
   {
-    const { execSync } = require("child_process"); const ctl = (a) => execSync(`${path.join(__dirname, "..", "..", "..", "besu_net", "start_net.sh")} ${a}`, { stdio: "ignore" });
+    const { execSync } = require("child_process"); const ctl = (a) => execSync(`${CTL} ${a}`, { stdio: "ignore" });
     const f = {};
     ctl("stopnode 3"); await sleep(3000);
     const l1 = []; for (let i = 0; i < 8; i++) l1.push((await regDev(3000 + i)).ms);
@@ -68,6 +71,6 @@ async function main() {
     out.fault_tolerance = f;
   }
 
-  const p = path.join(__dirname, "..", "..", "results", "besu_fault.json"); fs.writeFileSync(p, JSON.stringify(out, null, 2)); console.log(JSON.stringify(out, null, 1));
+  const p = path.join(__dirname, "..", "..", "results", `besu_fault${TAG}.json`); fs.writeFileSync(p, JSON.stringify(out, null, 2)); console.log(JSON.stringify(out, null, 1));
 }
 main().catch(e => { console.error(e); process.exit(1); });

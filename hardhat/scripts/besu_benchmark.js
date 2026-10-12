@@ -3,7 +3,10 @@
 const { ethers } = require("ethers");
 const fs = require("fs"), path = require("path");
 const abi = ethers.AbiCoder.defaultAbiCoder();
-const URLS = [8545, 8546, 8547, 8548].map(p => `http://127.0.0.1:${p}`);
+// BESU_RPC = comma-separated RPC URLs of the 4 validators (default: local network). OUT_TAG renames the result file; BESU_CTL = control script (default: ../../besu_net/start_net.sh).
+const URLS = process.env.BESU_RPC ? process.env.BESU_RPC.split(",").map(x => x.trim()) : [8545, 8546, 8547, 8548].map(p => `http://127.0.0.1:${p}`);
+const TAG = process.env.OUT_TAG ? "_" + process.env.OUT_TAG : "";
+const CTL = process.env.BESU_CTL || path.join(__dirname, "..", "..", "besu_net", "start_net.sh");
 const CHAIN = 2026;
 class RP extends ethers.JsonRpcProvider {
   async send(m, p) {
@@ -38,7 +41,7 @@ const art = n => JSON.parse(fs.readFileSync(path.join(__dirname, "..", "artifact
 async function main() {
   const skipFault = process.argv.includes("--skip-fault");
   const deployer = W(0), oracle = W(1), pep = W(2), voters = [3, 4, 5, 6, 7].map(W);
-  const out = { network: "4-validator QBFT Besu 25.7.0, localhost, blockperiodseconds=2, requesttimeoutseconds=4, zeroBaseFee", host: "2 vCPU / 7 GB container; all 4 nodes + load generator on one host", date: new Date().toISOString() };
+  const out = { network: process.env.NET_DESC || "4-validator QBFT Besu 25.7.0, localhost, blockperiodseconds=2, requesttimeoutseconds=4, zeroBaseFee", host: process.env.HOST_DESC || "2 vCPU / 7 GB container; all 4 nodes + load generator on one host", rpc: URLS, date: new Date().toISOString() };
   const F = {}; for (const n of ["IdentityRegistry", "ZeroTrustAccess", "RevocationGovernance"]) F[n] = art(n);
   const dep = async (n, args) => { const f = new ethers.ContractFactory(F[n].abi, F[n].bytecode, deployer); const c = await f.deploy(...args, OV); const r = await waitReceipt(c.deploymentTransaction().hash); return new ethers.Contract(r.contractAddress, F[n].abi, deployer); };
   const registry = await dep("IdentityRegistry", []);
@@ -147,7 +150,7 @@ async function main() {
 
   // ---- E6 fault tolerance
   if (!skipFault) {
-    const { execSync } = require("child_process"); const ctl = (a) => execSync(`${path.join(__dirname, "..", "..", "..", "besu_net", "start_net.sh")} ${a}`, { stdio: "ignore" });
+    const { execSync } = require("child_process"); const ctl = (a) => execSync(`${CTL} ${a}`, { stdio: "ignore" });
     const f = {};
     ctl("stopnode 3"); await sleep(3000);
     const l1 = []; for (let i = 0; i < 8; i++) l1.push((await regDev(3000 + i)).ms);
@@ -161,7 +164,7 @@ async function main() {
     const r3 = await waitReceipt(tx.hash, P[0], 120000); f.recovery_ms_until_pending_tx_mined = r3 ? now() - t0 : null;
     out.fault_tolerance = f;
   }
-  fs.writeFileSync(path.join(__dirname, "..", "..", "results", "besu_metrics.json"), JSON.stringify(out, null, 2));
+  fs.writeFileSync(path.join(__dirname, "..", "..", "results", `besu_metrics${TAG}.json`), JSON.stringify(out, null, 2));
   console.log(JSON.stringify(out, null, 1));
 }
 main().catch(e => { console.error(e); process.exit(1); });

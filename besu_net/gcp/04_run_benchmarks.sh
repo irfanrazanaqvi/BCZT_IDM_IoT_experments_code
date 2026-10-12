@@ -3,7 +3,7 @@
 # (with fault test) and copies the result JSON files back into ./results_gcp. Usage: ./04_run_benchmarks.sh [tag]
 set -euo pipefail; cd "$(dirname "$0")"; source config.env
 TAG="${1:-gcp4region}"
-LG() { gcloud compute ssh "$LOADGEN_NAME" --zone="$LOADGEN_ZONE" --quiet --command "$1"; }
+LG() { for a in 1 2 3 4 5; do gcloud compute ssh "$LOADGEN_NAME" --zone="$LOADGEN_ZONE" --quiet --command "$1" && return 0; echo "  gcloud ssh failed (attempt $a), retrying in 30 s..." >&2; sleep 30; done; return 1; }
 LG "command -v node >/dev/null && node -v | grep -q v20 || (curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash - && sudo apt-get install -y nodejs)
   [ -d ~/repo ] || git clone --depth 1 $REPO_URL ~/repo
   cd ~/repo && git pull -q || true
@@ -17,5 +17,5 @@ LG "source ~/hosts.env; cd ~/repo/hardhat
   mkdir -p ../results
   node scripts/besu_benchmark.js $([ "${SKIP_FAULT:-0}" = 1 ] && echo --skip-fault)"
 mkdir -p results_gcp
-gcloud compute scp --recurse "$LOADGEN_NAME":~/repo/results/besu_*_"$TAG".json results_gcp/ --zone="$LOADGEN_ZONE" --quiet
+for a in 1 2 3; do gcloud compute scp --recurse "$LOADGEN_NAME":~/repo/results/besu_*_"$TAG".json results_gcp/ --zone="$LOADGEN_ZONE" --quiet && break; sleep 20; done
 echo "Results are in $(pwd)/results_gcp -- send these files back."

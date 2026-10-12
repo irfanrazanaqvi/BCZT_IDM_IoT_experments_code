@@ -2,8 +2,10 @@
 # Run in Cloud Shell after 01. Installs Besu on all VMs, generates the QBFT genesis + 4 validator keys on the load
 # generator, copies key i to node i, installs a systemd service and starts the network.
 set -euo pipefail; cd "$(dirname "$0")"; source config.env
-ssh_n() { gcloud compute ssh "${NODE_NAMES[$1]}" --zone="${ZONES[$1]}" --quiet --command "$2"; }
-ssh_l() { gcloud compute ssh "$LOADGEN_NAME" --zone="$LOADGEN_ZONE" --quiet --command "$1"; }
+# ssh with up to 4 attempts (the first connection to a new VM sometimes fails while the key propagates)
+retry() { for a in 1 2 3 4; do "$@" && return 0; echo "  ssh attempt $a failed, retrying in 15 s..." >&2; sleep 15; done; return 1; }
+ssh_n() { retry gcloud compute ssh "${NODE_NAMES[$1]}" --zone="${ZONES[$1]}" --quiet --command "$2"; }
+ssh_l() { retry gcloud compute ssh "$LOADGEN_NAME" --zone="$LOADGEN_ZONE" --quiet --command "$1"; }
 ip_of() { gcloud compute instances describe "$1" --zone="$2" --format='get(networkInterfaces[0].networkIP)'; }
 ZONE_OF_LG="$LOADGEN_ZONE"
 declare -a IPS; for i in 0 1 2 3; do IPS[$i]=$(ip_of "${NODE_NAMES[$i]}" "${ZONES[$i]}"); done
@@ -12,7 +14,8 @@ LGIP=$(ip_of "$LOADGEN_NAME" "$ZONE_OF_LG"); echo "node IPs: ${IPS[*]}  loadgen:
 # 1. wait for Java on every VM, install Besu
 INSTALL="until [ -f /var/lib/startup-done ]; do sleep 5; done; java -version 2>&1 | head -1;
   [ -d ~/besu-$BESU_VERSION ] || (curl -sSL https://github.com/hyperledger/besu/releases/download/$BESU_VERSION/besu-$BESU_VERSION.tar.gz | tar xz -C ~)"
-for i in 0 1 2 3; do ssh_n $i "$INSTALL" & done; ssh_l "$INSTALL" & wait
+pids=(); for i in 0 1 2 3; do ssh_n $i "$INSTALL" & pids+=($!); done; ssh_l "$INSTALL" & pids+=($!)
+for p in "${pids[@]}"; do wait "$p" || { echo "ERROR: Besu install failed on one VM; rerun this script." >&2; exit 1; }; done
 
 # 2. generate genesis + keys on the load generator
 gcloud compute scp ../qbftConfigFile.json "$LOADGEN_NAME":~/qbftConfigFile.json --zone="$ZONE_OF_LG" --quiet
@@ -40,7 +43,7 @@ Restart=no
 [Install]
 WantedBy=multi-user.target
 UNIT
-sudo systemctl daemon-reload && sudo systemctl enable --now besu"
+sudo systemctl daemon-reload && sudo systemctl stop besu 2>/dev/null; rm -rf \$HOME/data/*; sudo systemctl enable besu && sudo systemctl restart besu"
   [ $i -eq 0 ] && sleep 15
 done
 

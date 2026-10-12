@@ -134,3 +134,28 @@ for rn, tn in names.items():
     L.append(f"{tn} & {ps[rn]['legit_allow_full']:.1f} & {mean_full(ps, rn):.1f} & {mean_full(pl, rn):.1f} & {pi[rn]['legit_allow_full']:.1f} & {mean_full(pi, rn):.1f} & {mean_thr(pl, rn):.1f} \\\\")
 L += [r"\bottomrule", r"\end{tabular}"]
 open("tab_wustl21.tex", "w").write("\n".join(L))
+
+# ---- Multi-region Google Cloud vs single-host Besu table
+g1 = json.load(open(f"{B}/besu_metrics.json")); g4 = json.load(open(f"{B}/besu_metrics_gcp4region.json"))
+def ms(x, d=0): return f"{x['mean']:.{d}f} $\\pm$ {x['sd']:.{d}f}"
+def sec(x): return f"{x['mean']/1000:.2f} $\\pm$ {x['sd']/1000:.2f}"
+rows = [
+ ("Block interval (s)", lambda g: ms(g['block_interval_s'])),
+ ("\\texttt{register}, submit$\\to$receipt (ms)", lambda g: ms(g['sequential_latency_ms']['register'])),
+ ("\\texttt{evaluateAccess}, submit$\\to$receipt (ms)", lambda g: ms(g['sequential_latency_ms']['evaluateAccess'])),
+ ("\\texttt{anchorDecisions}, submit$\\to$receipt (ms)", lambda g: ms(g['sequential_latency_ms']['anchor'])),
+ ("Revocation, submit$\\to$receipt (ms)", lambda g: ms(g['revocation']['submit_to_receipt_ms'])),
+ ("Revocation, submit$\\to$visible on replica (ms)", lambda g: ms(g['revocation']['submit_to_replica_ms'])),
+ ("Replica minus receipt (ms)", lambda g: ms(g['revocation']['receipt_to_replica_ms'])),
+ ("Quorum revocation $N{=}5,q{=}3$, sequential (s)", lambda g: sec(g['governance_N5_q3']['sequential_votes_ms'])),
+ ("Quorum revocation $N{=}5,q{=}3$, parallel (s)", lambda g: sec(g['governance_N5_q3']['parallel_votes_ms'])),
+ ("\\texttt{revokeBatch}, 50 devices, receipt (s)", lambda g: f"{g['batch_recall'][0]['revokeBatch_receipt_ms']/1000:.2f}"),
+ ("\\texttt{revokeBatch}, 200 devices, receipt (s)", lambda g: f"{g['batch_recall'][1]['revokeBatch_receipt_ms']/1000:.2f}"),
+]
+for i, off in enumerate((100, 300, 600)):
+    rows.append((f"Throughput, {off} offered (tx/s)", (lambda i: lambda g: f"{g['audited_decision_throughput'][i]['tps']:.1f}")(i)))
+rows.append(("Mean latency at 600 offered (s)", lambda g: f"{g['audited_decision_throughput'][2]['latency_ms']['mean']/1000:.1f}"))
+L = [r"\begin{tabular}{@{}lrr@{}}", r"\toprule", r"Measurement & One host & Four regions \\", r"\midrule"]
+for name, f in rows: L.append(f"{name} & {f(g1)} & {f(g4)} \\\\")
+L += [r"\bottomrule", r"\end{tabular}"]
+open("tab_gcp.tex", "w").write("\n".join(L))

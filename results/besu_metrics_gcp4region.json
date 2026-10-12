@@ -1,0 +1,183 @@
+{
+  "network": "4-validator QBFT Besu 25.7.0 on Google Cloud (europe-west3-b us-east4-b asia-southeast1-b southamerica-east1-b), blockperiodseconds=2, requesttimeoutseconds=4, zeroBaseFee",
+  "host": "e2-standard-2 VMs (2 vCPU, 8 GB), one validator per VM; load generator in europe-west3-b",
+  "rpc": [
+    "http://10.156.0.2:8545",
+    "http://10.150.0.2:8545",
+    "http://10.148.0.2:8545",
+    "http://10.158.0.2:8545"
+  ],
+  "date": "2026-10-12T09:03:46.802Z",
+  "block_interval_s": {
+    "n": 40,
+    "mean": 2,
+    "sd": 0,
+    "p50": 2,
+    "p95": 2,
+    "min": 2,
+    "max": 2
+  },
+  "sequential_latency_ms": {
+    "register": {
+      "n": 40,
+      "mean": 1980.2328454499996,
+      "sd": 161.9728731731099,
+      "p50": 2062.0833060000004,
+      "p95": 2158.375018999999,
+      "min": 1339.2720710000012,
+      "max": 2163.013878999991
+    },
+    "evaluateAccess": {
+      "n": 40,
+      "mean": 1996.981287099998,
+      "sd": 133.87882378462766,
+      "p50": 2066.0151580000093,
+      "p95": 2177.6137380000146,
+      "min": 1809.6744820000022,
+      "max": 2197.3806329999934
+    },
+    "anchor": {
+      "n": 20,
+      "mean": 1992.8212670000007,
+      "sd": 129.80011005061775,
+      "p50": 2075.8017279999913,
+      "p95": 2169.7675889999955,
+      "min": 1809.8388219999906,
+      "max": 2169.7675889999955
+    }
+  },
+  "revocation": {
+    "submit_to_receipt_ms": {
+      "n": 30,
+      "mean": 1552.4953804333315,
+      "sd": 169.3754503185674,
+      "p50": 1602.28364899999,
+      "p95": 1856.5588739999803,
+      "min": 1051.9525929999945,
+      "max": 1883.8778129999992
+    },
+    "submit_to_replica_ms": {
+      "n": 30,
+      "mean": 1764.110073533332,
+      "sd": 210.95912512099534,
+      "p50": 1634.075159,
+      "p95": 1947.3651119999995,
+      "min": 1293.1797149999766,
+      "max": 2378.515588999988
+    },
+    "receipt_to_replica_ms": {
+      "n": 30,
+      "mean": 211.61469310000055,
+      "sd": 145.18720182606077,
+      "p50": 275.793296000018,
+      "p95": 361.9830939999956,
+      "min": -39.20476100000087,
+      "max": 494.63777599998866
+    },
+    "decisions_after_revocation": 30,
+    "denied": 30,
+    "note": "replica = a different validator's RPC (node 3 view for status, node 4 for decision); polled every ~5 ms"
+  },
+  "audited_decision_throughput": [
+    {
+      "offered_txs": 100,
+      "mined": 100,
+      "submit_window_ms": 310.6429460000363,
+      "total_ms": 3243.3524890000117,
+      "tps": 30.832294774975857,
+      "latency_ms": {
+        "n": 100,
+        "mean": 3142.6292492599996,
+        "sd": 73.74541231193012,
+        "p50": 3161.259427000012,
+        "p95": 3232.46087900002,
+        "min": 2933.8582830000087,
+        "max": 3242.9153289999813
+      }
+    },
+    {
+      "offered_txs": 300,
+      "mined": 300,
+      "submit_window_ms": 783.4244639999815,
+      "total_ms": 8728.08231800003,
+      "tps": 34.37181147814181,
+      "latency_ms": {
+        "n": 300,
+        "mean": 7247.42150965,
+        "sd": 770.9613197077196,
+        "p50": 7290.180756999995,
+        "p95": 8240.726958999992,
+        "min": 6119.04333700001,
+        "max": 8720.407198
+      }
+    },
+    {
+      "offered_txs": 600,
+      "mined": 600,
+      "submit_window_ms": 1287.755868999986,
+      "total_ms": 11984.583296000026,
+      "tps": 50.06431889878524,
+      "latency_ms": {
+        "n": 600,
+        "mean": 8647.992777911666,
+        "sd": 1941.8209358739048,
+        "p50": 9948.23498899996,
+        "p95": 10722.74777799996,
+        "min": 5147.365377999959,
+        "max": 10916.92567299999
+      }
+    }
+  ],
+  "governance_N5_q3": {
+    "sequential_votes_ms": {
+      "n": 10,
+      "mean": 8168.459382000001,
+      "sd": 141.8613307363961,
+      "p50": 8196.942149999959,
+      "p95": 8401.502814000007,
+      "min": 7871.891406999959,
+      "max": 8401.502814000007
+    },
+    "parallel_votes_ms": {
+      "n": 10,
+      "mean": 4325.621224200004,
+      "sd": 132.97424779126888,
+      "p50": 4339.632650999993,
+      "p95": 4507.143986999989,
+      "min": 4118.070519000001,
+      "max": 4507.143986999989
+    },
+    "all_revoked": true,
+    "trials_each": 10
+  },
+  "batch_recall": [
+    {
+      "devices": 50,
+      "register_all_ms": 99717.65781699994,
+      "revokeBatch_receipt_ms": 2410.336632999941,
+      "gas": 1768639,
+      "sampled_revoked_on_other_node": true
+    },
+    {
+      "devices": 200,
+      "register_all_ms": 399042.051189,
+      "revokeBatch_receipt_ms": 2989.163901000051,
+      "gas": 6999523,
+      "sampled_revoked_on_other_node": true
+    }
+  ],
+  "fault_tolerance": {
+    "one_validator_down_register_ms": {
+      "n": 8,
+      "mean": 3431.7342943750555,
+      "sd": 2168.3878744725307,
+      "p50": 2141.143398999935,
+      "p95": 6285.678083000006,
+      "min": 1338.6948619999457,
+      "max": 6285.678083000006
+    },
+    "two_validators_down_mined_within_20s": false,
+    "two_validators_down_blocks_produced": 0,
+    "recovery_ms_until_pending_tx_mined": 74991.17372299987
+  }
+}

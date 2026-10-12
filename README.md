@@ -133,3 +133,7 @@ All timings are compute-bound and use synthetic signals (see paper Sec. 7).
 
 ## v6: real-data study (TON_IoT)
 `python3 -m sim.experiments_realdata` expects the TON_IoT CSVs in `data/` (Train_Test_IoT_{Fridge,Modbus,Thermostat,Weather}.csv and Train_Test_Network.csv). The data are NOT redistributed: obtain them from the TON_IoT page (free for academic research; cite the dataset papers).
+
+
+## Multi-region result
+`results/besu_metrics_gcp4region.json` holds the four-region Google Cloud Besu run (europe-west3, us-east4, asia-southeast1, southamerica-east1); scripts in `besu_net/gcp/`. See Section 7.15 of the paper.

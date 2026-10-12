@@ -1,0 +1,21 @@
+\begin{tabular}{@{}lrr@{}}
+\toprule
+Measurement & One host & Four regions \\
+\midrule
+Block interval (s) & 2 $\pm$ 0 & 2 $\pm$ 0 \\
+\texttt{register}, submit$\to$receipt (ms) & 1977 $\pm$ 139 & 1980 $\pm$ 162 \\
+\texttt{evaluateAccess}, submit$\to$receipt (ms) & 1997 $\pm$ 125 & 1997 $\pm$ 134 \\
+\texttt{anchorDecisions}, submit$\to$receipt (ms) & 1993 $\pm$ 127 & 1993 $\pm$ 130 \\
+Revocation, submit$\to$receipt (ms) & 1985 $\pm$ 121 & 1552 $\pm$ 169 \\
+Revocation, submit$\to$visible on replica (ms) & 1868 $\pm$ 85 & 1764 $\pm$ 211 \\
+Replica minus receipt (ms) & -117 $\pm$ 75 & 212 $\pm$ 145 \\
+Quorum revocation $N{=}5,q{=}3$, sequential (s) & 8.07 $\pm$ 0.24 & 8.17 $\pm$ 0.14 \\
+Quorum revocation $N{=}5,q{=}3$, parallel (s) & 4.03 $\pm$ 0.12 & 4.33 $\pm$ 0.13 \\
+\texttt{revokeBatch}, 50 devices, receipt (s) & 2.95 & 2.41 \\
+\texttt{revokeBatch}, 200 devices, receipt (s) & 6.13 & 2.99 \\
+Throughput, 100 offered (tx/s) & 17.8 & 30.8 \\
+Throughput, 300 offered (tx/s) & 16.0 & 34.4 \\
+Throughput, 600 offered (tx/s) & 11.3 & 50.1 \\
+Mean latency at 600 offered (s) & 31.6 & 8.6 \\
+\bottomrule
+\end{tabular}

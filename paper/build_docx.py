@@ -192,11 +192,17 @@ children = list(B)
 first_h = next(i for i, c in enumerate(children) if c.tag == qn("w:p") and c.find(".//" + qn("w:pStyle")) is not None and c.find(".//" + qn("w:pStyle")).get(qn("w:val")) == "Heading1")
 B.insert(list(B).index(children[first_h]), sect_par(1, cont=False))
 
+ALT = ["Architecture diagram: field zone (sensors, PLCs, legacy devices behind a protocol gateway, zone policy enforcement point), site operations zone (trust engine, trust oracle, local chain replica) and consortium zone (IdentityRegistry, ZeroTrustAccess, RevocationGovernance contracts), linked by event synchronisation.",
+       "Three charts: (a) bar chart of attacker requests accepted per criticality tier T0-T3 for threshold-only versus full policy, hatched by attack type; (b) line chart of attacks blocked and legitimate requests denied against anomaly gate level; (c) log-log line chart of gas to recall devices, one transaction per device versus revokeBatch."]
 # image sizing: column images 3.05in wide; wide image (fig5) full width
 for dr in B.iter("{http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing}inline"):
     ext = dr.find("{http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing}extent")
     cx, cy = int(ext.get("cx")), int(ext.get("cy"))
     alt = "".join(dr.itertext())
+    dp = dr.find("{http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing}docPr")
+    if dp is not None:
+        nth = globals().setdefault("_nimg", [0]); nth[0] += 1
+        dp.set("descr", ALT[min(nth[0], len(ALT)) - 1]); dp.set("title", "Figure %d" % nth[0])
     pic = dr.find(".//{http://schemas.openxmlformats.org/drawingml/2006/main}blip")
     wide = True   # both figures are full-width
     newcx = 5200000 if wide else 3000000
@@ -279,6 +285,8 @@ for figlabel in ("Fig. 1.", "Fig. 2."):
 final = B.find(qn("w:sectPr"))
 if final is not None: B.remove(final)
 B.append(sect(2, cont=True))
+doc.core_properties.language = "en-US"
+doc.core_properties.author = ""
 doc.core_properties.title = "A Blockchain-Enabled Zero Trust Architecture for Industrial IoT Identity Management: Tiered Continuous Authorization and Quorum-Governed Revocation"
 doc.save(OUT)
 print("saved", OUT)

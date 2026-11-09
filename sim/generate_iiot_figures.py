@@ -41,31 +41,31 @@ def arch():
 
 def results():
     d = json.load(open(os.path.join(R, "iiot_metrics.json"))); ev = json.load(open(os.path.join(R, "evm_iiot_gas.json")))
-    fig, ax = plt.subplots(1, 3, figsize=(7.4, 2.5))
+    fig, ax = plt.subplots(1, 3, figsize=(7.4, 2.9))
     # (a) attacker acceptance by tier
     tiers = list(d["X1_tiers"]["results"]); lab = ["T0", "T1", "T2", "T3"]
     import numpy as np
     x = np.arange(4); w = .2
-    for j, (atk, col) in enumerate([("stealthy mimicry", OR), ("full spoof (P,N,R=1)", "#8e24aa")]):
+    for j, (atk, col, hat) in enumerate([("stealthy mimicry", OR, "//"), ("full spoof (P,N,R=1)", "#8e24aa", "xx")]):
         a1 = [d["X1_tiers"]["results"][t]["attack_accepted_pct"][atk]["threshold_only"] for t in tiers]
         a2 = [d["X1_tiers"]["results"][t]["attack_accepted_pct"][atk]["full_policy"] for t in tiers]
-        ax[0].bar(x + (j * 2) * w - 1.5 * w, a1, w, color=col, alpha=.45, label=f"{atk}, threshold")
-        ax[0].bar(x + (j * 2 + 1) * w - 1.5 * w, a2, w, color=col, label=f"{atk}, full policy")
+        ax[0].bar(x + (j * 2) * w - 1.5 * w, a1, w, color="white", edgecolor=col, hatch=hat, lw=1.0, label=f"{atk}, threshold")
+        ax[0].bar(x + (j * 2 + 1) * w - 1.5 * w, a2, w, color=col, edgecolor="black", hatch=hat, lw=1.0, label=f"{atk}, full policy")
     ax[0].set_xticks(x); ax[0].set_xticklabels(lab); ax[0].set_ylabel("attacker requests accepted (%)"); ax[0].set_title("(a) by criticality tier", fontsize=8)
-    ax[0].legend(fontsize=5.2, loc="upper right"); ax[0].set_ylim(0, 175)
+    ax[0].legend(fontsize=6.5, loc="upper right"); ax[0].set_ylim(0, 215)
     # (b) gate sweep
     rows = d["X2_gate_sweep"]["upset_rate_0.05"]; g = [r["gate"] for r in rows if r["gate"] < 1]
-    ax[1].plot(g, [r["stealthy_blocked_pct"] for r in rows if r["gate"] < 1], "o-", color=OR, label="stealthy mimicry blocked")
-    ax[1].plot(g, [r["full_spoof_blocked_pct"] for r in rows if r["gate"] < 1], "s-", color="#8e24aa", label="full spoof blocked")
-    for u, ls in (("upset_rate_0.05", "--"), ("upset_rate_0.15", ":")):
-        ax[1].plot(g, [r["legit_denied_pct"] for r in d["X2_gate_sweep"][u] if r["gate"] < 1], ls, color=BLUE, label=f"legit denied ({u.split('_')[-1]} upsets)")
-    ax[1].set_xlabel("anomaly gate level"); ax[1].set_ylabel("%"); ax[1].set_title("(b) gate trade-off", fontsize=8); ax[1].legend(fontsize=5.2, loc="center right")
+    ax[1].plot(g, [r["stealthy_blocked_pct"] for r in rows if r["gate"] < 1], "o-", color=OR, ms=4, label="stealthy mimicry blocked")
+    ax[1].plot(g, [r["full_spoof_blocked_pct"] for r in rows if r["gate"] < 1], "s-", color="#8e24aa", ms=4, label="full spoof blocked")
+    for u, ls in (("upset_rate_0.05", "^--"), ("upset_rate_0.15", "v:")):
+        ax[1].plot(g, [r["legit_denied_pct"] for r in d["X2_gate_sweep"][u] if r["gate"] < 1], ls, color=BLUE, ms=4, label=f"legit denied ({u.split('_')[-1]} upsets)")
+    ax[1].set_xlabel("anomaly gate level"); ax[1].set_ylabel("%"); ax[1].set_title("(b) gate trade-off", fontsize=8); ax[1].set_ylim(-4, 190); ax[1].legend(fontsize=6.5, loc="upper right")
     # (c) recall
     r = ev["recall"]; k = [x_["devices"] for x_ in r]
     ax[2].plot(k, [x_["individual_total_gas"] / 1e6 for x_ in r], "o-", color=GR, label="one tx per device")
     ax[2].plot(k, [x_["batch_gas"] / 1e6 for x_ in r], "s-", color=GN, label="revokeBatch")
-    ax[2].set_xscale("log"); ax[2].set_yscale("log"); ax[2].set_xlabel("devices recalled"); ax[2].set_ylabel("gas (millions)"); ax[2].set_title("(c) firmware-recall gas", fontsize=8); ax[2].legend(fontsize=6)
-    for a in ax: a.tick_params(labelsize=6.5); a.xaxis.label.set_size(7); a.yaxis.label.set_size(7); a.grid(alpha=.25)
+    ax[2].set_xscale("log"); ax[2].set_yscale("log"); ax[2].set_xlabel("devices recalled"); ax[2].set_ylabel("gas (millions)"); ax[2].set_title("(c) firmware-recall gas", fontsize=8); ax[2].legend(fontsize=6.5)
+    for a in ax: a.tick_params(labelsize=7.5); a.xaxis.label.set_size(8); a.yaxis.label.set_size(8); a.title.set_size(9); a.grid(alpha=.25)
     fig.tight_layout(); fig.savefig(os.path.join(F, "fig8_iiot_results.png"), dpi=220); plt.close(fig)
 
 if __name__ == "__main__":

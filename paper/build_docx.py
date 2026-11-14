@@ -123,8 +123,8 @@ abstract = re.sub(r"\\noindent\\textbf\{Index Terms\}\\textemdash", "\n\n\\\\tex
 abstract = abstract.replace("\\noindent", "")
 tex = ("\\documentclass{article}\\usepackage{graphicx}\\begin{document}\n"
        "\\begin{center}{\\Large\\textbf{A Blockchain-Enabled Zero Trust Architecture for Industrial IoT Identity Management: Tiered Continuous Authorization and Quorum-Governed Revocation}}\n\n"
-       "Author Name\\textsuperscript{1}, Author Name\\textsuperscript{2}\n\n"
-       "\\textsuperscript{1}Department of Computer Science, University Name, City, Country; \\textsuperscript{2}Department of Computer Science, University Name, City, Country\n\n"
+       "Syed Irfan Raza Naqvi\\textsuperscript{1}, Co-author Name\\textsuperscript{2}\n\n"
+       "\\textsuperscript{1}Department of Computer Science, FAST National University of Computer and Emerging Sciences (FAST-NUCES), Lahore, Pakistan; \\textsuperscript{2}Department of Computer Science, University Name, City, Country\n\n"
        "\\end{center}\n\n\\textbf{\\emph{Abstract}}---" + abstract.strip() + "\n\n\\section*{ABSTRACTEND}\n" + body + "\n\\end{document}")
 open("_flat.tex", "w").write(tex)
 subprocess.run(["pandoc", "_flat.tex", "-f", "latex", "-t", "docx", "-o", "_raw.docx", "--resource-path=."], check=True)

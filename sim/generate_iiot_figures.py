@@ -37,7 +37,7 @@ def arch():
     arrow(ax, (.86, .68), (.45, .52), c=BLUE); arrow(ax, (.50, .44), (.55, .44)); arrow(ax, (.73, .44), (.78, .44))
     arrow(ax, (.60, .36), (.46, .21), c=GN); arrow(ax, (.88, .21), (.88, .36), c=GN, ls="--")
     ax.text(.895, .285, "sync (events)", fontsize=6.5, color=GN)
-    fig.savefig(os.path.join(F, "fig7_iiot_arch.png"), dpi=220, bbox_inches="tight"); plt.close(fig)
+    plt.close(fig)  # fig7 is produced by figures/src/make_fig_arch.py (draw.io source)
 
 def results():
     d = json.load(open(os.path.join(R, "iiot_metrics.json"))); ev = json.load(open(os.path.join(R, "evm_iiot_gas.json")))
@@ -66,7 +66,7 @@ def results():
     ax[2].plot(k, [x_["batch_gas"] / 1e6 for x_ in r], "s-", color=GN, label="revokeBatch")
     ax[2].set_xscale("log"); ax[2].set_yscale("log"); ax[2].set_xlabel("devices recalled"); ax[2].set_ylabel("gas (millions)"); ax[2].set_title("(c) firmware-recall gas", fontsize=8); ax[2].legend(fontsize=6.5)
     for a in ax: a.tick_params(labelsize=7.5); a.xaxis.label.set_size(8); a.yaxis.label.set_size(8); a.title.set_size(9); a.grid(alpha=.25)
-    fig.tight_layout(); fig.savefig(os.path.join(F, "fig8_iiot_results.png"), dpi=220); plt.close(fig)
+    fig.tight_layout(); fig.savefig(os.path.join(F, "fig8_iiot_results.png"), dpi=600); fig.savefig(os.path.join(F, "fig8_iiot_results.pdf")); plt.close(fig)
 
 if __name__ == "__main__":
     arch(); results(); print("ok")

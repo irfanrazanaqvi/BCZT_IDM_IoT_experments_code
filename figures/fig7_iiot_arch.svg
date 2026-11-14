@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1260" height="725" viewBox="0 0 1260 725" font-family="DejaVu Sans Condensed, Arial, Helvetica, sans-serif">
+<title>Architecture of the blockchain-enabled Zero Trust system for Industrial IoT identity management</title>
+<desc>Three stacked zones: field zone (sensors, PLCs, legacy devices, protocol gateway, zone PEP), site operations zone (HMI, trust engine, trust oracle, local replica) and consortium zone (IdentityRegistry, ZeroTrustAccess, RevocationGovernance).</desc>
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#3a4654"/></marker></defs>
+<rect width="1260" height="725" fill="#ffffff"/>
+<rect x="15" y="15" width="1230" height="205" rx="16" fill="#FFF6E3" stroke="#D9902B" stroke-width="2" stroke-dasharray="9 6"/>
+<text x="35" y="45" font-size="21" font-weight="bold" fill="#8A5200">Field zone (Purdue levels 0–1)</text>
+<rect x="15" y="235" width="1230" height="200" rx="16" fill="#EAF2FC" stroke="#2D6CB5" stroke-width="2" stroke-dasharray="9 6"/>
+<text x="35" y="265" font-size="21" font-weight="bold" fill="#14407A">Site operations zone (levels 2–3)</text>
+<rect x="15" y="445" width="1230" height="170" rx="16" fill="#E8F5EB" stroke="#3C8D4B" stroke-width="2" stroke-dasharray="9 6"/>
+<text x="35" y="475" font-size="21" font-weight="bold" fill="#1E5B2B">Consortium zone (OEM, operator, auditor)</text>
+<line x1="45" y1="172" x2="45" y2="180" stroke="#3a4654" stroke-width="2.5"/>
+<line x1="45" y1="180" x2="400" y2="180" stroke="#3a4654" stroke-width="2.5"/>
+<line x1="400" y1="180" x2="400" y2="172" stroke="#3a4654" stroke-width="2.5"/>
+<polyline points="222.5,180 222.5,196 930,196 930,165" fill="none" stroke="#3a4654" stroke-width="2.5" marker-end="url(#a)"/>
+<polyline points="595,115 630,115" fill="none" stroke="#3a4654" stroke-width="2.5" marker-end="url(#a)"/>
+<polyline points="880,115 915,115" fill="none" stroke="#3a4654" stroke-width="2.5" marker-end="url(#a)"/>
+<polyline points="1000,165 1000,228 417.5,228 417.5,285" fill="none" stroke="#3a4654" stroke-width="2.5" marker-end="url(#a)"/>
+<polyline points="550,340 620,340" fill="none" stroke="#3a4654" stroke-width="2.5" marker-end="url(#a)"/>
+<polyline points="745,395 745,495" fill="none" stroke="#3a4654" stroke-width="2.5" marker-end="url(#a)"/>
+<polyline points="1150,285 1150,165" fill="none" stroke="#3a4654" stroke-width="2.5" marker-end="url(#a)"/>
+<polyline points="1030,495 1030,395" fill="none" stroke="#3a4654" stroke-width="2.5" stroke-dasharray="10 7" marker-end="url(#a)"/>
+<rect x="45" y="65" width="170" height="100" rx="12" fill="#FFE9B8" stroke="#D9902B" stroke-width="2.5"/>
+<text x="130.0" y="109.5" font-size="20" text-anchor="middle" fill="#1b2733" font-weight="bold">Sensor /</text>
+<text x="130.0" y="134.5" font-size="20" text-anchor="middle" fill="#1b2733">actuator</text>
+<rect x="230" y="65" width="170" height="100" rx="12" fill="#FFE9B8" stroke="#D9902B" stroke-width="2.5"/>
+<text x="315.0" y="109.5" font-size="20" text-anchor="middle" fill="#1b2733" font-weight="bold">PLC /</text>
+<text x="315.0" y="134.5" font-size="20" text-anchor="middle" fill="#1b2733">robot</text>
+<rect x="415" y="65" width="180" height="100" rx="12" fill="#FFE0CF" stroke="#D9692F" stroke-width="2.5" stroke-dasharray="8 5"/>
+<text x="505.0" y="109.5" font-size="20" text-anchor="middle" fill="#1b2733" font-weight="bold">Legacy device</text>
+<text x="505.0" y="134.5" font-size="20" text-anchor="middle" fill="#1b2733">(no keys)</text>
+<rect x="630" y="65" width="250" height="100" rx="12" fill="#FFE0CF" stroke="#D9692F" stroke-width="2.5"/>
+<text x="755.0" y="97.0" font-size="20" text-anchor="middle" fill="#1b2733" font-weight="bold">Protocol gateway</text>
+<text x="755.0" y="122.0" font-size="20" text-anchor="middle" fill="#1b2733">identity proxy for</text>
+<text x="755.0" y="147.0" font-size="20" text-anchor="middle" fill="#1b2733">legacy devices</text>
+<rect x="915" y="65" width="300" height="100" rx="12" fill="#CFE3F8" stroke="#2D6CB5" stroke-width="2.5"/>
+<text x="1065.0" y="97.0" font-size="20" text-anchor="middle" fill="#1b2733" font-weight="bold">Zone PEP</text>
+<text x="1065.0" y="122.0" font-size="20" text-anchor="middle" fill="#1b2733">verify, enforce, log</text>
+<text x="1065.0" y="147.0" font-size="20" text-anchor="middle" fill="#1b2733">fast path + audited path</text>
+<rect x="45" y="285" width="200" height="110" rx="12" fill="#CFE3F8" stroke="#2D6CB5" stroke-width="2.5"/>
+<text x="145.0" y="322.0" font-size="20" text-anchor="middle" fill="#1b2733" font-weight="bold">HMI /</text>
+<text x="145.0" y="347.0" font-size="20" text-anchor="middle" fill="#1b2733">engineering</text>
+<text x="145.0" y="372.0" font-size="20" text-anchor="middle" fill="#1b2733">workstation</text>
+<rect x="285" y="285" width="265" height="110" rx="12" fill="#CFE3F8" stroke="#2D6CB5" stroke-width="2.5"/>
+<text x="417.5" y="322.0" font-size="20" text-anchor="middle" fill="#1b2733" font-weight="bold">Trust engine (PDP)</text>
+<text x="417.5" y="347.0" font-size="20" text-anchor="middle" fill="#1b2733">signals P, A, N, R;</text>
+<text x="417.5" y="372.0" font-size="20" text-anchor="middle" fill="#1b2733">per-tier policy</text>
+<rect x="620" y="285" width="250" height="110" rx="12" fill="#CFE3F8" stroke="#2D6CB5" stroke-width="2.5"/>
+<text x="745.0" y="322.0" font-size="20" text-anchor="middle" fill="#1b2733" font-weight="bold">Trust oracle</text>
+<text x="745.0" y="347.0" font-size="20" text-anchor="middle" fill="#1b2733">signs DID, resource,</text>
+<text x="745.0" y="372.0" font-size="20" text-anchor="middle" fill="#1b2733">T, A, nonce</text>
+<rect x="915" y="285" width="300" height="110" rx="12" fill="#CFE3F8" stroke="#2D6CB5" stroke-width="2.5"/>
+<text x="1065.0" y="322.0" font-size="20" text-anchor="middle" fill="#1b2733" font-weight="bold">Local replica of</text>
+<text x="1065.0" y="347.0" font-size="20" text-anchor="middle" fill="#1b2733">chain state +</text>
+<text x="1065.0" y="372.0" font-size="20" text-anchor="middle" fill="#1b2733">decision log</text>
+<rect x="45" y="495" width="360" height="100" rx="12" fill="#D2EBD8" stroke="#3C8D4B" stroke-width="2.5"/>
+<text x="225.0" y="527.0" font-size="20" text-anchor="middle" fill="#1b2733" font-weight="bold">IdentityRegistry</text>
+<text x="225.0" y="552.0" font-size="20" text-anchor="middle" fill="#1b2733">status FSM, key blacklist,</text>
+<text x="225.0" y="577.0" font-size="20" text-anchor="middle" fill="#1b2733">batch revoke / quarantine</text>
+<rect x="435" y="495" width="380" height="100" rx="12" fill="#D2EBD8" stroke="#3C8D4B" stroke-width="2.5"/>
+<text x="625.0" y="527.0" font-size="20" text-anchor="middle" fill="#1b2733" font-weight="bold">ZeroTrustAccess</text>
+<text x="625.0" y="552.0" font-size="20" text-anchor="middle" fill="#1b2733">tier policy, anomaly gate,</text>
+<text x="625.0" y="577.0" font-size="20" text-anchor="middle" fill="#1b2733">strict mode, root anchoring</text>
+<rect x="845" y="495" width="370" height="100" rx="12" fill="#D2EBD8" stroke="#3C8D4B" stroke-width="2.5"/>
+<text x="1030.0" y="527.0" font-size="20" text-anchor="middle" fill="#1b2733" font-weight="bold">RevocationGovernance</text>
+<text x="1030.0" y="552.0" font-size="20" text-anchor="middle" fill="#1b2733">quorum q = ⌊N/2⌋+1;</text>
+<text x="1030.0" y="577.0" font-size="20" text-anchor="middle" fill="#1b2733">vendor, operator, auditor vote</text>
+<circle cx="600" cy="196" r="14" fill="#ffffff" stroke="#3a4654" stroke-width="2.5"/>
+<text x="600" y="203" font-size="19" font-weight="bold" text-anchor="middle" fill="#1b2733">1</text>
+<circle cx="700" cy="228" r="14" fill="#ffffff" stroke="#3a4654" stroke-width="2.5"/>
+<text x="700" y="235" font-size="19" font-weight="bold" text-anchor="middle" fill="#1b2733">2</text>
+<circle cx="571" cy="340" r="14" fill="#ffffff" stroke="#3a4654" stroke-width="2.5"/>
+<text x="571" y="347" font-size="19" font-weight="bold" text-anchor="middle" fill="#1b2733">3</text>
+<circle cx="745" cy="445" r="14" fill="#ffffff" stroke="#3a4654" stroke-width="2.5"/>
+<text x="745" y="452" font-size="19" font-weight="bold" text-anchor="middle" fill="#1b2733">4</text>
+<circle cx="1150" cy="225" r="14" fill="#ffffff" stroke="#3a4654" stroke-width="2.5"/>
+<text x="1150" y="232" font-size="19" font-weight="bold" text-anchor="middle" fill="#1b2733">5</text>
+<circle cx="1030" cy="445" r="14" fill="#ffffff" stroke="#3a4654" stroke-width="2.5"/>
+<text x="1030" y="452" font-size="19" font-weight="bold" text-anchor="middle" fill="#1b2733">6</text>
+<line x1="30" y1="628" x2="1230" y2="628" stroke="#c9d1da" stroke-width="1.5"/>
+<circle cx="44" cy="648" r="12" fill="#ffffff" stroke="#3a4654" stroke-width="2"/>
+<text x="44" y="654" font-size="16" font-weight="bold" text-anchor="middle" fill="#1b2733">1</text>
+<text x="68" y="654" font-size="18" fill="#1b2733">Signed request (DID, nonce, signature)</text>
+<circle cx="44" cy="675" r="12" fill="#ffffff" stroke="#3a4654" stroke-width="2"/>
+<text x="44" y="681" font-size="16" font-weight="bold" text-anchor="middle" fill="#1b2733">2</text>
+<text x="68" y="681" font-size="18" fill="#1b2733">Request context to the trust engine</text>
+<circle cx="44" cy="702" r="12" fill="#ffffff" stroke="#3a4654" stroke-width="2"/>
+<text x="44" y="708" font-size="16" font-weight="bold" text-anchor="middle" fill="#1b2733">3</text>
+<text x="68" y="708" font-size="18" fill="#1b2733">Trust score T and anomaly A to the oracle</text>
+<circle cx="664" cy="648" r="12" fill="#ffffff" stroke="#3a4654" stroke-width="2"/>
+<text x="664" y="654" font-size="16" font-weight="bold" text-anchor="middle" fill="#1b2733">4</text>
+<text x="688" y="654" font-size="18" fill="#1b2733">Signed attestation on the audited path (T2–T3)</text>
+<circle cx="664" cy="675" r="12" fill="#ffffff" stroke="#3a4654" stroke-width="2"/>
+<text x="664" y="681" font-size="16" font-weight="bold" text-anchor="middle" fill="#1b2733">5</text>
+<text x="688" y="681" font-size="18" fill="#1b2733">Chain state for the local fast path (T0–T1)</text>
+<circle cx="664" cy="702" r="12" fill="#ffffff" stroke="#3a4654" stroke-width="2"/>
+<text x="664" y="708" font-size="16" font-weight="bold" text-anchor="middle" fill="#1b2733">6</text>
+<text x="688" y="708" font-size="18" fill="#1b2733">Contract events synchronised to the replica</text>
+</svg>

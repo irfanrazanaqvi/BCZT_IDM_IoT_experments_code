@@ -5,8 +5,8 @@ Figure~\ref{fig:arch} shows the design. Devices and a protocol gateway sit in th
 
 \begin{figure*}[t]
 \centering
-\includegraphics[width=0.62\textwidth]{../figures/fig7_iiot_arch.png}
-\caption{Architecture of the blockchain-enabled Zero Trust system for Industrial IoT identity management, organized by plant zone. Text description: three stacked zones; in the field zone, sensors, PLCs and legacy devices reach a protocol gateway and a zone policy enforcement point (fast path plus audited path); in the site operations zone, a trust engine and trust oracle feed a local replica of the chain; the consortium zone holds the three contracts (IdentityRegistry, ZeroTrustAccess, RevocationGovernance), and the replica syncs from them by events.}
+\includegraphics[width=0.88\textwidth]{../figures/fig7_iiot_arch.png}
+\caption{Architecture of the blockchain-enabled Zero Trust system for Industrial IoT identity management, organized by plant zone. Text description: three stacked zones; in the field zone, sensors, PLCs and legacy devices reach a protocol gateway and a zone policy enforcement point (fast path plus audited path); in the site operations zone, a trust engine and trust oracle feed the audited path and a local replica of the chain serves the fast path; the consortium zone holds the three contracts (IdentityRegistry, ZeroTrustAccess, RevocationGovernance), whose events synchronise the replica. Numbered arrows: (1) signed request, (2) request context to the trust engine, (3) trust score and anomaly signal to the oracle, (4) signed attestation on the audited path (T2--T3), (5) chain state for the local fast path (T0--T1), (6) contract events to the replica.}
 \label{fig:arch}
 \end{figure*}
 

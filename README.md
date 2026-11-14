@@ -137,3 +137,7 @@ All timings are compute-bound and use synthetic signals (see paper Sec. 7).
 
 ## Multi-region result
 `results/besu_metrics_gcp4region.json` holds the four-region Google Cloud Besu run (europe-west3, us-east4, asia-southeast1, southamerica-east1); scripts in `besu_net/gcp/`. See Section 7.15 of the paper.
+
+
+## Figures
+`figures/fig7_iiot_arch.drawio` is the editable draw.io source of the architecture figure; `figures/src/make_fig_arch.py` regenerates the draw.io file, SVG, vector PDF and the 600 dpi PNG. `sim/generate_iiot_figures.py` regenerates the results figure (`fig8_iiot_results`, 600 dpi PNG and PDF).

@@ -203,6 +203,8 @@ for dr in B.iter("{http://schemas.openxmlformats.org/drawingml/2006/wordprocessi
     if dp is not None:
         nth = globals().setdefault("_nimg", [0]); nth[0] += 1
         dp.set("descr", ALT[min(nth[0], len(ALT)) - 1]); dp.set("title", "Figure %d" % nth[0])
+        for cn in dr.iter("{http://schemas.openxmlformats.org/drawingml/2006/picture}cNvPr"):
+            cn.set("descr", ALT[min(nth[0], len(ALT)) - 1]); cn.set("name", "Figure %d" % nth[0])
     pic = dr.find(".//{http://schemas.openxmlformats.org/drawingml/2006/main}blip")
     wide = True   # both figures are full-width
     newcx = 5200000 if wide else 3000000
@@ -228,7 +230,14 @@ def fix_table(t):
         ppr = p.find(qn("w:pPr"))
         if ppr is None: ppr = OxmlElement("w:pPr"); p.insert(0, ppr)
         jc = OxmlElement("w:jc"); jc.set(qn("w:val"), "left"); ppr.append(jc)
-for t in B.iter(qn("w:tbl")): fix_table(t)
+for t in B.iter(qn("w:tbl")):
+    fix_table(t)
+    r0 = t.find(qn("w:tr"))
+    if r0 is not None:   # mark first row as header so screen readers announce column names
+        trp = r0.find(qn("w:trPr"))
+        if trp is None:
+            trp = OxmlElement("w:trPr"); r0.insert(1 if r0.find(qn("w:tblPrEx")) is not None else 0, trp)
+        if trp.find(qn("w:tblHeader")) is None: trp.append(OxmlElement("w:tblHeader"))
 
 # centre equations; keep tables together
 for p in B.iter(qn("w:p")):

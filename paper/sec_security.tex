@@ -39,5 +39,31 @@ With $N$ voters and quorum $q$: (a) a revocation executes only if at least $q$ d
 
 \emph{Corollary (what a fixed threshold cannot do).} With the default weights a fully spoofing attacker has $T\ge0.70$ even at $A=1$. Hence on a non-strict resource with $\theta=0.55$ and no gate, \emph{no} anomaly value gets such an attacker denied, and for the tiers of Table~\ref{tab:tiers} the bound $(1-\theta-m)/w_b$ is $0.83$ (T2) and $0.60$ (T3), above the gates $0.30$ and $0.20$; the \emph{gate}, not the score, is what stops the attacker, and the residual risk is exactly the set of attackers who keep $A\le g$. The experiments of Section~\ref{sec:gate_eval} measure how that residual behaves.
 
+\subsection{Trust Anchors: Oracle, Voters and Collusion}\label{sec:anchors}
+The guarantees rest on two trusted parties that the design does not remove. \emph{The trust oracle} signs the context signals. If its key is stolen, an attacker can attest any posture and network context, which defeats the gate (Proposition~\ref{prop:bound}(d)) but not revocation or replay protection, because the status and nonce checks do not use the oracle. Oracle compromise therefore degrades continuous authorization to signature plus status. A threshold-signed oracle ($t$ of $n$ attesters run by different organizations) with periodic key rotation recorded as a role change is the remedy; we recommend it but have not implemented it. \emph{The voters} are the named consortium members (for example manufacturer, operator and auditor). In our contracts the voter set is fixed at deployment; admitting or removing a voter should itself need the same quorum, which we do not implement. Governance bounds what colluding voters can do: fewer than $q$ cannot revoke any device (Proposition~\ref{prop:gov}), but $q$ or more can revoke any device, which is a denial of service against the plant. Sybil voters are excluded by admission, not by cryptography: voters are identified organizations that join by agreement, so that defence is legal and organizational and the chain cannot enforce it. Choosing $N$ and $q$ is therefore a governance decision, since a larger $N$ raises the collusion threshold and the gas cost (313k--800k gas for $N=5$--$21$).
+
+\subsection{Alignment with the NIST Zero Trust Tenets}\label{sec:tenets}
+Table~\ref{tab:tenets} maps the seven tenets of NIST SP~800-207 \cite{nist800207} onto the design and states where it falls short.
+
+\begin{table}[t]
+\centering
+\caption{Design against the seven NIST SP~800-207 tenets}
+\label{tab:tenets}
+\scriptsize
+\begin{tabular}{@{}p{2.2cm}p{1.1cm}p{3.6cm}@{}}
+\toprule
+\textbf{Tenet} & \textbf{Status} & \textbf{How, and where it stops} \\
+\midrule
+1 All data sources and services are resources & Partial & Device-to-resource requests are covered by criticality tier; users and applications are out of scope. \\
+2 All communication is secured regardless of location & Not covered & Requests are signed and replay-protected; channel confidentiality (TLS, OPC UA security) is assumed off-chain. \\
+3 Access is granted per session & Met, stricter & Decided per request, not per session. \\
+4 Access follows dynamic policy (identity, device state, behaviour) & Met & Tiered score of behaviour, posture, network and reliability; posture and network inputs are synthetic in our experiments. \\
+5 Integrity and posture of all assets are monitored & Partial & Posture is an oracle-attested input; attestation and monitoring are off-chain dependencies (A3). \\
+6 Authentication and authorization are dynamic and enforced before access & Met & Signature, status and policy are checked before each decision; the fast path has the bounded exposure of Proposition~\ref{prop:stale}. \\
+7 Information on assets, traffic and access is collected to improve posture & Partial & Decisions are logged and anchored; telemetry collection and policy learning are not evaluated. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \subsection{Residual Risks}\label{sec:residual}
-The properties say nothing about (i) compromised validators or oracle keys (A1, A4); (ii) a stolen key used by an attacker who behaves like the owner until revoked, which no continuous scheme separates from the owner except by behaviour; (iii) side-channel extraction of keys; or (iv) smart-contract defects, for which the quality-assurance literature recommends testing, verification and audit \cite{wei2024quality}. Also, the trust oracle is a trusted data source, which is the blockchain-oracle problem in a specific form \cite{hassan2023oracle}; a threshold-signed oracle would reduce it (Section~\ref{sec:disc}). Finally, the nonce set costs one storage slot per accepted audited request and needs epoch-based pruning in a long-lived deployment.
+The properties say nothing about (i) compromised validators or oracle keys (A1, A4); (ii) a stolen key used by an attacker who behaves like the owner until revoked, which no continuous scheme separates from the owner except by behaviour; (iii) side-channel extraction of keys; or (iv) smart-contract defects, for which the quality-assurance literature recommends testing, verification and audit \cite{wei2024quality}. Also, the trust oracle is a trusted data source, which is the blockchain-oracle problem in a specific form \cite{hassan2023oracle}; a threshold-signed oracle would reduce it (Section~\ref{sec:disc}). All properties hold under A1--A5 (Section~\ref{sec:sysmodel}), and the contracts themselves are not formally verified. Finally, the nonce set costs one storage slot per accepted audited request and needs epoch-based pruning in a long-lived deployment.

@@ -123,10 +123,10 @@ abstract = re.sub(r"\\noindent\\textbf\{Index Terms\}\\textemdash", "\n\n\\\\tex
 abstract = abstract.replace("\\noindent", "")
 tex = ("\\documentclass{article}\\usepackage{graphicx}\\begin{document}\n"
        "\\begin{center}{\\Large\\textbf{Blockchain-Enabled Zero Trust Identity Management for Industrial IoT with Tiered Authorization and Quorum-Governed Revocation}}\n\n"
-       "Syed Irfan Raza Naqvi\\textsuperscript{1,*}, Muhammad Umar Aftab\\textsuperscript{2}, Rana Asif Rehman\\textsuperscript{3}, Ahmad Mohsin\\textsuperscript{4}, Sayed Qaiser Ali Shah\\textsuperscript{5}\n\n"
-       "\\textsuperscript{1}Department of Computer Science, FAST National University of Computer and Emerging Sciences (FAST-NUCES), Lahore, Pakistan; \\textsuperscript{2}Department of Computer Science, FAST-NUCES, Chiniot-Faisalabad Campus, Pakistan; \\textsuperscript{3}Faculty of Engineering and Technology, Muscat University, Oman; \\textsuperscript{4}School of Science, Computing and Security Discipline, Edith Cowan University, Joondalup WA 6027, Australia; \\textsuperscript{5}Department of Computer Science, International Islamic University (IIU), Islamabad, Pakistan\n\n"
-       "\\textsuperscript{*}Corresponding author: l259000@lhr.nu.edu.pk, irfanrazanaqvi9@gmail.com\n\n"
-       "umar.aftab@nu.edu.pk, rasif@muscatuniversity.edu.om, a.mohsin@ecu.edu.au, qaiser.ali@iiu.edu.pk\n\n"
+       "Syed Irfan Raza Naqvi\\textsuperscript{1}, Muhammad Umar Aftab\\textsuperscript{2}, Ahmad Mohsin\\textsuperscript{3,*}, Rana Asif Rehman\\textsuperscript{4}, Sayed Qaiser Ali Shah\\textsuperscript{5}\n\n"
+       "\\textsuperscript{1}Department of Computer Science, FAST National University of Computer and Emerging Sciences (FAST-NUCES), Lahore, Pakistan; \\textsuperscript{2}Department of Computer Science, FAST-NUCES, Chiniot-Faisalabad Campus, Pakistan; \\textsuperscript{3}School of Science, Computing and Security Discipline, Edith Cowan University, Joondalup WA 6027, Australia; \\textsuperscript{4}Faculty of Engineering and Technology, Muscat University, Oman; \\textsuperscript{5}Department of Computer Science, International Islamic University (IIU), Islamabad, Pakistan\n\n"
+       "\\textsuperscript{*}Corresponding author: Dr Ahmad Mohsin, a.mohsin@ecu.edu.au\n\n"
+       "l259000@lhr.nu.edu.pk, irfanrazanaqvi9@gmail.com, umar.aftab@nu.edu.pk, rasif@muscatuniversity.edu.om, qaiser.ali@iiu.edu.pk\n\n"
        "\\end{center}\n\n\\textbf{\\emph{Abstract}}---" + abstract.strip() + "\n\n\\section*{ABSTRACTEND}\n" + body + "\n\\end{document}")
 open("_flat.tex", "w").write(tex)
 subprocess.run(["pandoc", "_flat.tex", "-f", "latex", "-t", "docx", "-o", "_raw.docx", "--resource-path=."], check=True)

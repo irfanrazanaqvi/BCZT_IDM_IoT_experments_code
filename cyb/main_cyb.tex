@@ -1,0 +1,41 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{mathtools}
+\usepackage{times}
+\usepackage{amsmath,amssymb,amsthm}
+\newtheorem{proposition}{Proposition}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{caption}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{setspace}
+\usepackage{lineno}
+\usepackage[pdftitle={Blockchain-Enabled Zero Trust Identity Management for Industrial IoT with Tiered Authorization and Quorum-Governed Revocation},pdfauthor={},pdfcreator={},colorlinks=false,hidelinks]{hyperref}
+\providecommand{\balance}{}
+\lstset{basicstyle=\ttfamily\scriptsize,frame=single,breaklines=true,columns=fullflexible}
+\captionsetup{font=small,labelfont=bf}
+\newcommand{\paperTitle}{Blockchain-Enabled Zero Trust Identity Management for Industrial IoT with Tiered Authorization and Quorum-Governed Revocation}
+\doublespacing
+\setlength{\emergencystretch}{3em}\hfuzz=3pt
+\begin{document}
+\pagestyle{plain}
+\linenumbers
+\begin{center}{\Large\bfseries \paperTitle\par}\end{center}
+\section*{Abstract}
+\noindent
+Industrial plants run long-lived legacy devices shared by several organizations. Identity based on one certificate authority, tokens or refreshed revocation lists fits this poorly: a revoked device keeps working until a token expires or a list refreshes, no party is trusted by all to revoke it, and one trust threshold serves every request. We present a blockchain-enabled Zero Trust architecture for industrial IoT identity management. Three contracts on a permissioned proof-of-authority ledger hold identity and status, a tiered access policy with an anomaly gate, and quorum-voting revocation. Gateways decide routine requests locally on replicated ledger state and high-consequence requests on-chain; batch revocation supports firmware recalls. We prove seven properties, including immediate on-chain revocation and a bounded fast-path exposure window. In simulation, the on-chain path accepted no request after revocation, against 33--147 for token and list baselines. With detector scores from three real datasets, the full policy accepted under 1\% of seen attack types at the critical tiers but 6.6--11.9\% of held-out types, and 29--77\% when an adaptive attacker sent only its best-scoring flows; a normal-traffic detector blocked them but denied 12--22\% of legitimate critical-tier requests. On a four-validator Hyperledger Besu network across four Google Cloud regions, audited calls were final in one 2\,s block, and a revocation reached a remote validator 1.8\,s after submission. The design relies on an external detector and oracle it does not secure; results are single runs, with synthetic posture and network signals.
+\section*{Keywords}
+Industrial IoT; Zero Trust architecture; Blockchain; Decentralized identifiers; Identity management; Smart contracts; Revocation governance
+\input{sec_intro}
+\input{sec_related}
+\input{sec_model}
+\input{sec_architecture}
+\input{sec_security}
+\input{sec_implementation}
+\input{sec_evaluation}
+\input{sec_discussion}
+\input{sec_conclusion}
+\end{document}

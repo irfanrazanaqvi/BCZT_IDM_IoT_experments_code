@@ -122,7 +122,7 @@ for k, it in zip(keys, items):
 abstract = re.sub(r"\\noindent\\textbf\{Index Terms\}\\textemdash", "\n\n\\\\textbf{\\\\emph{Index Terms}}---", abstract)
 abstract = abstract.replace("\\noindent", "")
 tex = ("\\documentclass{article}\\usepackage{graphicx}\\begin{document}\n"
-       "\\begin{center}{\\Large\\textbf{A Blockchain-Enabled Zero Trust Architecture for Industrial IoT Identity Management: Tiered Continuous Authorization and Quorum-Governed Revocation}}\n\n"
+       "\\begin{center}{\\Large\\textbf{Blockchain-Enabled Zero Trust Identity Management for Industrial IoT with Tiered Authorization and Quorum-Governed Revocation}}\n\n"
        "Syed Irfan Raza Naqvi\\textsuperscript{1,*}, Muhammad Umar Aftab\\textsuperscript{2}, Rana Asif Rehman\\textsuperscript{3}, Ahmad Mohsin\\textsuperscript{4}, Sayed Qaiser Ali Shah\\textsuperscript{5}\n\n"
        "\\textsuperscript{1}Department of Computer Science, FAST National University of Computer and Emerging Sciences (FAST-NUCES), Lahore, Pakistan; \\textsuperscript{2}Department of Computer Science, FAST-NUCES, Chiniot-Faisalabad Campus, Pakistan; \\textsuperscript{3}Faculty of Engineering and Technology, Muscat University, Oman; \\textsuperscript{4}School of Science, Computing and Security Discipline, Edith Cowan University, Joondalup WA 6027, Australia; \\textsuperscript{5}Department of Computer Science, International Islamic University (IIU), Islamabad, Pakistan\n\n"
        "\\textsuperscript{*}Corresponding author: l259000@lhr.nu.edu.pk, irfanrazanaqvi9@gmail.com\n\n"
@@ -298,6 +298,6 @@ if final is not None: B.remove(final)
 B.append(sect(2, cont=True))
 doc.core_properties.language = "en-US"
 doc.core_properties.author = ""
-doc.core_properties.title = "A Blockchain-Enabled Zero Trust Architecture for Industrial IoT Identity Management: Tiered Continuous Authorization and Quorum-Governed Revocation"
+doc.core_properties.title = "Blockchain-Enabled Zero Trust Identity Management for Industrial IoT with Tiered Authorization and Quorum-Governed Revocation"
 doc.save(OUT)
 print("saved", OUT)

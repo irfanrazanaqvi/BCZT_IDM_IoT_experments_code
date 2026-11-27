@@ -1,6 +1,6 @@
 \DocumentMetadata{lang=en-US, pdfversion=1.7}
-\documentclass[11pt,a4paper]{article}
-\usepackage[margin=2.5cm]{geometry}
+\documentclass[10pt,a4paper]{extarticle}
+\usepackage[margin=2.2cm]{geometry}
 \usepackage{mathtools}
 \usepackage{times}
 \usepackage{amsmath,amssymb,amsthm}
@@ -19,14 +19,13 @@
 \lstset{basicstyle=\ttfamily\scriptsize,backgroundcolor=\color{gray!8},frame=single,breaklines=true,columns=fullflexible,keywordstyle=\color{blue!60!black}\bfseries,commentstyle=\color{green!40!black}}
 \captionsetup{font=small,labelfont=bf}
 \newcommand{\paperTitle}{A Blockchain-Enabled Zero Trust Architecture for Industrial IoT Identity Management: Tiered Continuous Authorization and Quorum-Governed Revocation}
-\setstretch{1.15}
+\setstretch{1.08}
 \setlength{\emergencystretch}{3em}
 \hfuzz=3pt
 \begin{document}
 \pagestyle{plain}
 % ---------- Title page ----------
-\begin{titlepage}
-\centering
+\begin{center}
 {\Large\bfseries \paperTitle\par}
 \vspace{1.2cm}
 {\large Syed Irfan Raza Naqvi$^{1,*}$, Muhammad Umar Aftab$^{2}$, Rana Asif Rehman$^{3}$, Ahmad Mohsin$^{4}$, Sayed Qaiser Ali Shah$^{5}$\par}
@@ -40,23 +39,11 @@ $^{5}$Department of Computer Science, International Islamic University (IIU), Is
 $^{*}$\textbf{Corresponding author:} Syed Irfan Raza Naqvi, \texttt{l259000@lhr.nu.edu.pk}, \texttt{irfanrazanaqvi9@gmail.com}\\[0.8em]
 \textbf{Other author emails:} \texttt{umar.aftab@nu.edu.pk}, \texttt{rasif@muscatuniversity.edu.om}, \texttt{a.mohsin@ecu.edu.au}, \texttt{qaiser.ali@iiu.edu.pk}
 \end{flushleft}
-\end{titlepage}
-% ---------- Highlights ----------
-\section*{Highlights}
-\begin{itemize}[itemsep=2pt]
-\item Tiered Zero Trust identity with on-chain audited and local fast paths
-\item Quorum-governed and batch revocation without a single trusted registrar
-\item Proofs: immediate on-chain revocation and a bounded fast-path exposure window
-\item Real-data tests expose detector limits on unseen and adaptive attacks
-\item Four-validator Besu test across four cloud regions: one 2\,s block to finality
-\end{itemize}
-\newpage
+\end{center}
 \linenumbers
-\title{\paperTitle}
-\begin{center}{\Large\bfseries \paperTitle\par}\end{center}
 \begin{abstract}
 \noindent
-Industrial plants run long-lived legacy devices shared by several organizations. Identity based on one certificate authority, tokens or refreshed revocation lists fits this poorly: a revoked device keeps working until a token expires or a list refreshes, no party is trusted by all to revoke it, and one trust threshold serves every request. We present a blockchain-enabled Zero Trust architecture for industrial IoT identity management. Three contracts on a permissioned proof-of-authority ledger hold identity and status, a tiered access policy with an anomaly gate, and quorum-voting revocation. Gateways decide routine requests locally on replicated ledger state and high-consequence requests on-chain; batch revocation supports firmware recalls. We prove six properties, including immediate on-chain revocation and a bounded fast-path exposure window. In simulation, the on-chain path accepted no request after revocation, against 33--147 for token and list baselines. With detector scores from three real datasets, the full policy accepted under 1\% of seen attack types at the critical tiers but 6.6--11.9\% of held-out types, and 29--77\% when an adaptive attacker sent only its best-scoring flows; a normal-traffic detector blocked them but denied 12--22\% of legitimate critical-tier requests. On a four-validator Hyperledger Besu network across four Google Cloud regions, audited calls were final in one 2\,s block, and a revocation reached a remote validator 1.8\,s after submission. The design relies on an external detector and oracle it does not secure; results are single runs, with synthetic posture and network signals.
+Industrial plants run long-lived legacy devices shared by several organizations. Identity based on one certificate authority, tokens or refreshed revocation lists fits this poorly: a revoked device keeps working until a token expires or a list refreshes, no party is trusted by all to revoke it, and one trust threshold serves every request. We present a blockchain-enabled Zero Trust architecture for industrial IoT identity management. Three contracts on a permissioned proof-of-authority ledger hold identity and status, a tiered access policy with an anomaly gate, and quorum-voting revocation. Gateways decide routine requests locally on replicated ledger state and high-consequence requests on-chain; batch revocation supports firmware recalls. We prove seven properties, including immediate on-chain revocation and a bounded fast-path exposure window. In simulation, the on-chain path accepted no request after revocation, against 33--147 for token and list baselines. With detector scores from three real datasets, the full policy accepted under 1\% of seen attack types at the critical tiers but 6.6--11.9\% of held-out types, and 29--77\% when an adaptive attacker sent only its best-scoring flows; a normal-traffic detector blocked them but denied 12--22\% of legitimate critical-tier requests. On a four-validator Hyperledger Besu network across four Google Cloud regions, audited calls were final in one 2\,s block, and a revocation reached a remote validator 1.8\,s after submission. The design relies on an external detector and oracle it does not secure; results are single runs, with synthetic posture and network signals.
 \end{abstract}
 \noindent\textbf{Keywords:} Industrial IoT; Zero Trust architecture; Blockchain; Decentralized identifiers; Identity management; Smart contracts; Revocation governance
 \bigskip

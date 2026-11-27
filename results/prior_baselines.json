@@ -1,0 +1,291 @@
+{
+ "seed": 20261004,
+ "P1_session_baseline": {
+  "session 60 s": {
+   "mean_exposure": 29.0,
+   "max_exposure": 60
+  },
+  "session 300 s": {
+   "mean_exposure": 129.2,
+   "max_exposure": 300
+  }
+ },
+ "P2_static_threshold": {
+  "plc.setpoint.write": {
+   "static_threshold_0.55": {
+    "legit_denied_pct": 0.0,
+    "partial mimicry": 100.0,
+    "stealthy mimicry": 100.0,
+    "full spoof (P,N,R=1)": 100.0
+   },
+   "full_policy": {
+    "legit_denied_pct": 2.1834061135371177,
+    "partial mimicry": 0.0,
+    "stealthy mimicry": 60.86248982912937,
+    "full spoof (P,N,R=1)": 0.0
+   }
+  },
+  "plc.firmware.update": {
+   "static_threshold_0.55": {
+    "legit_denied_pct": 0.0,
+    "partial mimicry": 100.0,
+    "stealthy mimicry": 100.0,
+    "full spoof (P,N,R=1)": 100.0
+   },
+   "full_policy": {
+    "legit_denied_pct": 5.244755244755245,
+    "partial mimicry": 0.0,
+    "stealthy mimicry": 13.606194690265486,
+    "full spoof (P,N,R=1)": 0.0
+   }
+  }
+ },
+ "P3_weight_sensitivity": {
+  "n_variants": 208,
+  "summary": {
+   "plc.setpoint.write": {
+    "legit_denied_pct": {
+     "default": 2.1834061135371177,
+     "min": 2.1834061135371177,
+     "median": 2.1834061135371177,
+     "max": 2.2707423580786026
+    },
+    "partial mimicry": {
+     "default": 0.0,
+     "min": 0.0,
+     "median": 0.0,
+     "max": 0.0
+    },
+    "stealthy mimicry": {
+     "default": 60.86248982912937,
+     "min": 60.455655004068355,
+     "median": 60.86248982912937,
+     "max": 60.86248982912937
+    },
+    "full spoof (P,N,R=1)": {
+     "default": 0.0,
+     "min": 0.0,
+     "median": 0.0,
+     "max": 0.0
+    }
+   },
+   "plc.firmware.update": {
+    "legit_denied_pct": {
+     "default": 5.244755244755245,
+     "min": 3.37995337995338,
+     "median": 5.710955710955711,
+     "max": 11.771561771561771
+    },
+    "partial mimicry": {
+     "default": 0.0,
+     "min": 0.0,
+     "median": 0.0,
+     "max": 0.0
+    },
+    "stealthy mimicry": {
+     "default": 13.606194690265486,
+     "min": 11.836283185840708,
+     "median": 13.384955752212392,
+     "max": 14.823008849557523
+    },
+    "full spoof (P,N,R=1)": {
+     "default": 0.0,
+     "min": 0.0,
+     "median": 0.0,
+     "max": 0.0
+    }
+   }
+  },
+  "rows": [
+   {
+    "variant": "default",
+    "weights": [
+     0.3,
+     0.3,
+     0.2,
+     0.2
+    ],
+    "plc.setpoint.write": {
+     "legit_denied_pct": 2.1834061135371177,
+     "partial mimicry": 0.0,
+     "stealthy mimicry": 60.86248982912937,
+     "full spoof (P,N,R=1)": 0.0
+    },
+    "plc.firmware.update": {
+     "legit_denied_pct": 5.244755244755245,
+     "partial mimicry": 0.0,
+     "stealthy mimicry": 13.606194690265486,
+     "full spoof (P,N,R=1)": 0.0
+    }
+   },
+   {
+    "variant": "posture -0.10",
+    "weights": [
+     0.2,
+     0.343,
+     0.229,
+     0.229
+    ],
+    "plc.setpoint.write": {
+     "legit_denied_pct": 2.1834061135371177,
+     "partial mimicry": 0.0,
+     "stealthy mimicry": 60.86248982912937,
+     "full spoof (P,N,R=1)": 0.0
+    },
+    "plc.firmware.update": {
+     "legit_denied_pct": 4.312354312354312,
+     "partial mimicry": 0.0,
+     "stealthy mimicry": 13.827433628318584,
+     "full spoof (P,N,R=1)": 0.0
+    }
+   },
+   {
+    "variant": "posture +0.10",
+    "weights": [
+     0.4,
+     0.257,
+     0.171,
+     0.171
+    ],
+    "plc.setpoint.write": {
+     "legit_denied_pct": 2.1834061135371177,
+     "partial mimicry": 0.0,
+     "stealthy mimicry": 60.86248982912937,
+     "full spoof (P,N,R=1)": 0.0
+    },
+    "plc.firmware.update": {
+     "legit_denied_pct": 6.293706293706294,
+     "partial mimicry": 0.0,
+     "stealthy mimicry": 13.384955752212392,
+     "full spoof (P,N,R=1)": 0.0
+    }
+   },
+   {
+    "variant": "behavior -0.10",
+    "weights": [
+     0.343,
+     0.2,
+     0.229,
+     0.229
+    ],
+    "plc.setpoint.write": {
+     "legit_denied_pct": 2.1834061135371177,
+     "partial mimicry": 0.0,
+     "stealthy mimicry": 60.86248982912937,
+     "full spoof (P,N,R=1)": 0.0
+    },
+    "plc.firmware.update": {
+     "legit_denied_pct": 8.275058275058274,
+     "partial mimicry": 0.0,
+     "stealthy mimicry": 13.274336283185843,
+     "full spoof (P,N,R=1)": 0.0
+    }
+   },
+   {
+    "variant": "behavior +0.10",
+    "weights": [
+     0.257,
+     0.4,
+     0.171,
+     0.171
+    ],
+    "plc.setpoint.write": {
+     "legit_denied_pct": 2.1834061135371177,
+     "partial mimicry": 0.0,
+     "stealthy mimicry": 60.86248982912937,
+     "full spoof (P,N,R=1)": 0.0
+    },
+    "plc.firmware.update": {
+     "legit_denied_pct": 3.37995337995338,
+     "partial mimicry": 0.0,
+     "stealthy mimicry": 13.716814159292035,
+     "full spoof (P,N,R=1)": 0.0
+    }
+   },
+   {
+    "variant": "network -0.10",
+    "weights": [
+     0.337,
+     0.337,
+     0.1,
+     0.225
+    ],
+    "plc.setpoint.write": {
+     "legit_denied_pct": 2.1834061135371177,
+     "partial mimicry": 0.0,
+     "stealthy mimicry": 60.86248982912937,
+     "full spoof (P,N,R=1)": 0.0
+    },
+    "plc.firmware.update": {
+     "legit_denied_pct": 3.7296037296037294,
+     "partial mimicry": 0.0,
+     "stealthy mimicry": 13.716814159292035,
+     "full spoof (P,N,R=1)": 0.0
+    }
+   },
+   {
+    "variant": "network +0.10",
+    "weights": [
+     0.262,
+     0.262,
+     0.3,
+     0.175
+    ],
+    "plc.setpoint.write": {
+     "legit_denied_pct": 2.1834061135371177,
+     "partial mimicry": 0.0,
+     "stealthy mimicry": 60.781122864117165,
+     "full spoof (P,N,R=1)": 0.0
+    },
+    "plc.firmware.update": {
+     "legit_denied_pct": 8.508158508158509,
+     "partial mimicry": 0.0,
+     "stealthy mimicry": 12.831858407079647,
+     "full spoof (P,N,R=1)": 0.0
+    }
+   },
+   {
+    "variant": "reliability -0.10",
+    "weights": [
+     0.337,
+     0.337,
+     0.225,
+     0.1
+    ],
+    "plc.setpoint.write": {
+     "legit_denied_pct": 2.1834061135371177,
+     "partial mimicry": 0.0,
+     "stealthy mimicry": 60.69975589910497,
+     "full spoof (P,N,R=1)": 0.0
+    },
+    "plc.firmware.update": {
+     "legit_denied_pct": 5.827505827505827,
+     "partial mimicry": 0.0,
+     "stealthy mimicry": 13.053097345132745,
+     "full spoof (P,N,R=1)": 0.0
+    }
+   },
+   {
+    "variant": "reliability +0.10",
+    "weights": [
+     0.262,
+     0.262,
+     0.175,
+     0.3
+    ],
+    "plc.setpoint.write": {
+     "legit_denied_pct": 2.1834061135371177,
+     "partial mimicry": 0.0,
+     "stealthy mimicry": 60.86248982912937,
+     "full spoof (P,N,R=1)": 0.0
+    },
+    "plc.firmware.update": {
+     "legit_denied_pct": 5.477855477855478,
+     "partial mimicry": 0.0,
+     "stealthy mimicry": 13.495575221238937,
+     "full spoof (P,N,R=1)": 0.0
+    }
+   }
+  ]
+ }
+}

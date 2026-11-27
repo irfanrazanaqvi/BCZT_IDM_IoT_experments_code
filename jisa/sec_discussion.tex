@@ -20,6 +20,6 @@ The costs are equally concrete. The fast path doubles per-request compute (two s
 
 \emph{Data.} The SCADA dataset has only a binary label and 99.1\% duplicate rows. The dataset with attack types is a laboratory testbed with very regular normal traffic and attacks from a few hosts, and two of its attack types have fewer than 300 flows. Neither is a plant.
 
-\emph{Comparison.} No earlier blockchain-IoT or Zero Trust scheme was re-implemented, so the comparison with prior work in Table~\ref{tab:relatedwork} is qualitative, and the quantitative baselines (token, CRL, OCSP, central decision point) are our own logical-clock models. Signing and verification were not measured on a constrained device. 
+\emph{Comparison.} No earlier blockchain-IoT or Zero Trust scheme was re-implemented, so the comparison with prior work in Table~\ref{tab:relatedwork} is qualitative, and the quantitative baselines (token, CRL, OCSP, central decision point, authenticate-once session, static-threshold policy) are our own class models, not re-implementations of named systems. Signing and verification were not measured on a constrained device. 
 
 \emph{Contracts.} The contracts are research code. They pass 16 tests, including a randomised state-machine test, and a Slither run found no serious issue after one hardening fix, but they have not been audited or formally verified. The literature on smart-contract quality assurance \cite{wei2024quality} should be followed before any production use.

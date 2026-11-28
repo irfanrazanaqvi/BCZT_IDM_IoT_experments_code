@@ -159,3 +159,17 @@ L = [r"\begin{tabular}{@{}lrr@{}}", r"\toprule", r"Measurement & One host & Four
 for name, f in rows: L.append(f"{name} & {f(g1)} & {f(g4)} \\\\")
 L += [r"\bottomrule", r"\end{tabular}"]
 open("tab_gcp.tex", "w").write("\n".join(L))
+
+# Table: ablation at matched legitimate allowance (referee-response experiments)
+_rv = json.load(open(f"{B}/review_metrics.json"))["R1_ablation"]
+_names = [("threshold_only", "Threshold only"), ("strict_only", "Strict only"), ("gate_only", "Gate only"), ("gate_strict", "Full (gate + strict)"),
+          ("raised_threshold", "Raised threshold"), ("min_score", "Min-of-signals score")]
+L = ["\\begin{tabular}{@{}l" + "r" * 8 + "@{}}", "\\toprule", "& \\multicolumn{4}{c}{T2 plc.setpoint.write} & \\multicolumn{4}{c}{T3 plc.firmware.update} \\\\",
+     "\\textbf{Policy} & Legit. & Partial & Stealthy & Spoof & Legit. & Partial & Stealthy & Spoof \\\\", "\\midrule"]
+for k, n in _names:
+    row = [n]
+    for t in ("plc.setpoint.write", "plc.firmware.update"):
+        r = _rv[t][k]; row += [f"{r['legit_allow_pct']:.1f}", f"{r['partial mimicry']['allow_pct']:.1f}", f"{r['stealthy mimicry']['allow_pct']:.1f}", f"{r['full spoof (P,N,R=1)']['allow_pct']:.1f}"]
+    L.append(" & ".join(row) + " \\\\")
+L += ["\\bottomrule", "\\end{tabular}"]
+open(os.path.join(os.path.dirname(__file__), "tab_ablate2.tex"), "w").write("\n".join(L))

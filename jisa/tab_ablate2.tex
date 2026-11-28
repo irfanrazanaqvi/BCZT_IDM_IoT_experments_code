@@ -1,0 +1,13 @@
+\begin{tabular}{@{}lrrrrrrrr@{}}
+\toprule
+& \multicolumn{4}{c}{T2 plc.setpoint.write} & \multicolumn{4}{c}{T3 plc.firmware.update} \\
+\textbf{Policy} & Legit. & Partial & Stealthy & Spoof & Legit. & Partial & Stealthy & Spoof \\
+\midrule
+Threshold only & 99.8 & 53.6 & 98.0 & 100.0 & 95.2 & 7.7 & 53.2 & 53.0 \\
+Strict only & 99.8 & 53.6 & 98.0 & 100.0 & 95.2 & 7.7 & 53.2 & 53.0 \\
+Gate only & 97.2 & 0.0 & 61.1 & 0.0 & 93.6 & 0.0 & 18.8 & 0.0 \\
+Full (gate + strict) & 97.2 & 0.0 & 61.1 & 0.0 & 93.6 & 0.0 & 18.8 & 0.0 \\
+Raised threshold & 97.2 & 9.9 & 57.5 & 58.1 & 93.6 & 6.2 & 47.9 & 49.0 \\
+Min-of-signals score & 97.2 & 0.0 & 60.7 & 0.0 & 93.6 & 0.0 & 54.6 & 0.0 \\
+\bottomrule
+\end{tabular}

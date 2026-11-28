@@ -25,7 +25,9 @@ contract IdentityRegistry {
     address public admin;
     mapping(bytes32 => DeviceRecord) public devices;      // did => record
     mapping(bytes32 => bool) public revokedPubKeyHash;    // pubKeyHash => revoked
-    mapping(address => bool) public registrars;           // gateways allowed to register on behalf of devices
+    mapping(address => bool) public registrars;           // may register, suspend (reversible quarantine) and touch
+    mapping(address => bool) public governors;            // may revoke, recall and reinstate (terminal / privilege-restoring actions)
+    bool public governanceLocked;                         // once set, only the governance contract holds the governor role
 
     event DeviceRegistered(bytes32 indexed did, address indexed owner, string deviceClass, uint256 timestamp);
     event DeviceRevoked(bytes32 indexed did, string reason, uint256 timestamp);
@@ -35,6 +37,8 @@ contract IdentityRegistry {
 
     error NotAdmin();
     error NotRegistrar();
+    error NotGovernor();
+    error GovernanceLocked();
     error AlreadyRegistered();
     error UnknownDevice();
     error InvalidSignature();
@@ -50,9 +54,30 @@ contract IdentityRegistry {
         _;
     }
 
+    modifier onlyGovernor() {
+        if (!governors[msg.sender]) revert NotGovernor();
+        _;
+    }
+
     constructor() {
         admin = msg.sender;
         registrars[msg.sender] = true;
+        governors[msg.sender] = true; // bootstrap only; removed by lockGovernance()
+    }
+
+    /// @notice Add a governor (e.g. the governance contract) while governance is still unlocked.
+    function addGovernor(address g) external onlyAdmin {
+        if (governanceLocked) revert GovernanceLocked();
+        governors[g] = true;
+    }
+
+    /// @notice One-way switch. After this call the administrator can no longer revoke, recall or
+    /// reinstate; only `gov` (the quorum contract) can. Registrars can still register and suspend.
+    function lockGovernance(address gov) external onlyAdmin {
+        if (governanceLocked) revert GovernanceLocked();
+        governors[gov] = true;
+        governors[admin] = false;
+        governanceLocked = true;
     }
 
     function setRegistrar(address registrar, bool allowed) external onlyAdmin {
@@ -96,7 +121,7 @@ contract IdentityRegistry {
         emit DeviceRegistered(did, msg.sender, deviceClass, block.timestamp);
     }
 
-    function revokeDevice(bytes32 did, string calldata reason) external onlyRegistrar {
+    function revokeDevice(bytes32 did, string calldata reason) external onlyGovernor {
         DeviceRecord storage rec = devices[did];
         if (rec.registeredAt == 0) revert UnknownDevice();
         rec.status = Status.REVOKED;
@@ -106,7 +131,7 @@ contract IdentityRegistry {
 
     /// @notice Firmware-recall path: revoke many devices in one transaction.
     /// Unknown DIDs are skipped (not reverted) so one stale entry cannot block a recall.
-    function revokeBatch(bytes32[] calldata dids, string calldata reason) external onlyRegistrar returns (uint256 done) {
+    function revokeBatch(bytes32[] calldata dids, string calldata reason) external onlyGovernor returns (uint256 done) {
         for (uint256 i = 0; i < dids.length; i++) {
             DeviceRecord storage rec = devices[dids[i]];
             if (rec.registeredAt == 0 || rec.status == Status.REVOKED) continue;
@@ -135,7 +160,7 @@ contract IdentityRegistry {
         emit DeviceSuspended(did, block.timestamp);
     }
 
-    function reinstateDevice(bytes32 did) external onlyRegistrar {
+    function reinstateDevice(bytes32 did) external onlyGovernor {
         DeviceRecord storage rec = devices[did];
         if (rec.registeredAt == 0) revert UnknownDevice();
         require(rec.status == Status.SUSPENDED, "only suspended devices can be reinstated");

@@ -3,6 +3,7 @@
 const { ethers } = require("hardhat");
 const fs = require("fs"), path = require("path");
 const abi = ethers.AbiCoder.defaultAbiCoder();
+const VU = 4102444800; // attestation valid-until (far future for gas/measurement scripts)
 async function main() {
   const [deployer, oracle] = await ethers.getSigners();
   const registry = await (await ethers.getContractFactory("IdentityRegistry")).deploy();
@@ -16,10 +17,10 @@ async function main() {
     await (await registry.registerDevice(pk, ah, "plc", await dev.signMessage(ethers.getBytes(mh)), dev.address)).wait();
     return ethers.solidityPackedKeccak256(["string","bytes32"], ["did:iot:", pk]);
   };
-  const sig = (did, T, A, n) => oracle.signMessage(ethers.getBytes(ethers.keccak256(abi.encode(["bytes32","bytes32","uint16","uint16","uint256"], [did, rid, T, A, n]))));
+  const sig = (did, T, A, n) => oracle.signMessage(ethers.getBytes(ethers.keccak256(abi.encode(["bytes32","bytes32","uint16","uint16","uint64","uint256"], [did, rid, T, A, VU, n]))));
   const out = { definePolicy_iiot: Number(dp.gasUsed), decisions: {}, recall: [] };
   const d0 = await reg(0);
-  const dec = async (name, T, A, n) => { const r = await (await zta.evaluateAccess(d0, rid, "plc", T, A, await sig(d0, T, A, n), n)).wait(); out.decisions[name] = Number(r.gasUsed); };
+  const dec = async (name, T, A, n) => { const r = await (await zta.evaluateAccess(d0, rid, "plc", T, A, VU, await sig(d0, T, A, n), n)).wait(); out.decisions[name] = Number(r.gasUsed); };
   await dec("allow_strict_tier", 9500, 500, 1);
   await dec("deny_anomaly_gate", 9500, 3000, 2);
   await dec("deny_strict_borderline", 8000, 500, 3);

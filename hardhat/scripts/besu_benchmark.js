@@ -3,6 +3,7 @@
 const { ethers } = require("ethers");
 const fs = require("fs"), path = require("path");
 const abi = ethers.AbiCoder.defaultAbiCoder();
+const VU = 4102444800; // attestation valid-until (far future for gas/measurement scripts)
 // BESU_RPC = comma-separated RPC URLs of the 4 validators (default: local network). OUT_TAG renames the result file; BESU_CTL = control script (default: ../../besu_net/start_net.sh).
 const URLS = process.env.BESU_RPC ? process.env.BESU_RPC.split(",").map(x => x.trim()) : [8545, 8546, 8547, 8548].map(p => `http://127.0.0.1:${p}`);
 const TAG = process.env.OUT_TAG ? "_" + process.env.OUT_TAG : "";
@@ -47,7 +48,7 @@ async function main() {
   const registry = await dep("IdentityRegistry", []);
   const zta = await dep("ZeroTrustAccess", [await registry.getAddress(), oracle.address]);
   const gov = await dep("RevocationGovernance", [await registry.getAddress(), voters.map(v => v.address), 3]);
-  await waitReceipt((await registry.setRegistrar(await gov.getAddress(), true, OV)).hash);
+  await waitReceipt((await registry.addGovernor(await gov.getAddress(), OV)).hash);
   await waitReceipt((await zta.setPEP(pep.address, true, OV)).hash);
   const rid = ethers.id("plc.setpoint.write");
   await waitReceipt((await zta.definePolicy(rid, 5500, 1500, 300, 10000, false, ["plc"], OV)).hash);
@@ -64,7 +65,7 @@ async function main() {
     const t = await sendWait(() => registry.registerDevice(pk, ah, "plc", sig, dev.address, OV));
     return { did: ethers.solidityPackedKeccak256(["string", "bytes32"], ["did:iot:", pk]), ms: t.ms, gas: Number(t.r.gasUsed) };
   };
-  const oracleSig = (did, T, A, n) => oracle.signMessage(ethers.getBytes(ethers.keccak256(abi.encode(["bytes32", "bytes32", "uint16", "uint16", "uint256"], [did, rid, T, A, n]))));
+  const oracleSig = (did, T, A, n) => oracle.signMessage(ethers.getBytes(ethers.keccak256(abi.encode(["bytes32","bytes32","uint16","uint16","uint64","uint256"], [did, rid, T, A, VU, n]))));
 
   console.log('deployed', registry.target, zta.target, gov.target);
   // ---- block interval
@@ -77,7 +78,7 @@ async function main() {
   const lat = { register: [], evaluateAccess: [], revoke: [], anchor: [] };
   for (let i = 0; i < N; i++) { const d = await regDev(i); devs.push(d.did); lat.register.push(d.ms); }
   for (let i = 0; i < N; i++) { const n = ++ctr; const sig = await oracleSig(devs[i], 9000, 500, n);
-    lat.evaluateAccess.push((await sendWait(() => zta.evaluateAccess(devs[i], rid, "plc", 9000, 500, sig, n, OV))).ms); }
+    lat.evaluateAccess.push((await sendWait(() => zta.evaluateAccess(devs[i], rid, "plc", 9000, 500, VU, sig, n, OV))).ms); }
   const ztaPep = zta.connect(pep);
   for (let i = 0; i < 20; i++) lat.anchor.push((await sendWait(() => ztaPep.anchorDecisions(ethers.id("r" + i), 1000, OV))).ms);
   out.sequential_latency_ms = Object.fromEntries(Object.entries(lat).filter(([k]) => k !== "revoke").map(([k, v]) => [k, st(v)]));
@@ -92,7 +93,7 @@ async function main() {
     const r = await waitReceipt(tx.hash); tr = now(); await poll;
     rev.submit_to_receipt.push(tr - t0); rev.submit_to_replica.push(tv - t0); rev.receipt_to_replica.push(tv - tr);
     const n = ++ctr; const sig = await oracleSig(did, 9000, 500, n);
-    let eff = null; for (let a = 0; a < 5 && eff === null; a++) { try { eff = await ztaR[3].evaluateAccess.staticCall(did, rid, "plc", 9000, 500, sig, n); } catch (e) { await sleep(50); } } rev.trials++; if (eff !== null && Number(eff) === 0) rev.denied_after++;
+    let eff = null; for (let a = 0; a < 5 && eff === null; a++) { try { eff = await ztaR[3].evaluateAccess.staticCall(did, rid, "plc", 9000, 500, VU, sig, n); } catch (e) { await sleep(50); } } rev.trials++; if (eff !== null && Number(eff) === 0) rev.denied_after++;
   }
   out.revocation = { submit_to_receipt_ms: st(rev.submit_to_receipt), submit_to_replica_ms: st(rev.submit_to_replica), receipt_to_replica_ms: st(rev.receipt_to_replica),
                      decisions_after_revocation: rev.trials, denied: rev.denied_after, note: "replica = a different validator's RPC (node 3 view for status, node 4 for decision); polled every ~5 ms" };

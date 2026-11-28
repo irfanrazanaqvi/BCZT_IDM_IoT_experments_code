@@ -80,6 +80,7 @@ contract ZeroTrustAccess {
         string calldata deviceClass,
         uint16 trustScoreBp,
         uint16 anomalyBp,
+        uint64 validUntil,
         bytes calldata oracleSignature,
         uint256 nonce
     ) external returns (Effect effect) {
@@ -103,9 +104,12 @@ contract ZeroTrustAccess {
             return _decide(did, resourceId, Effect.DENY, "class_not_allowed");
         }
 
-        bytes32 scoreHash = keccak256(abi.encode(did, resourceId, trustScoreBp, anomalyBp, nonce));
-        bytes32 ethHash = keccak256(abi.encodePacked("\x19Ethereum Signed Message:\n32", scoreHash));
-        if (_recover(ethHash, oracleSignature) != trustOracle) {
+        // The oracle attestation is time-bound: a signature collected while a device was clean
+        // cannot be banked and replayed after the device is compromised.
+        if (block.timestamp > validUntil) {
+            return _decide(did, resourceId, Effect.DENY, "attestation_expired");
+        }
+        if (!_oracleOk(did, resourceId, trustScoreBp, anomalyBp, validUntil, nonce, oracleSignature)) {
             return _decide(did, resourceId, Effect.DENY, "bad_oracle_signature");
         }
 
@@ -120,6 +124,15 @@ contract ZeroTrustAccess {
         }
 
         return _decide(did, resourceId, Effect.ALLOW, "ok");
+    }
+
+    function _oracleOk(
+        bytes32 did, bytes32 resourceId, uint16 trustScoreBp, uint16 anomalyBp,
+        uint64 validUntil, uint256 nonce, bytes calldata sig
+    ) internal view returns (bool) {
+        bytes32 scoreHash = keccak256(abi.encode(did, resourceId, trustScoreBp, anomalyBp, validUntil, nonce));
+        bytes32 ethHash = keccak256(abi.encodePacked("\x19Ethereum Signed Message:\n32", scoreHash));
+        return _recover(ethHash, sig) == trustOracle;
     }
 
     function setPEP(address pep, bool allowed) external onlyPolicyAdmin { peps[pep] = allowed; }

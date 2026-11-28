@@ -27,8 +27,9 @@ async function main() {
                 suspend: [], reinstate: [], revoke: [] };
   const lat = { register: [], evalAllow: [] };
   const abi = ethers.AbiCoder.defaultAbiCoder();
+const VU = 4102444800; // attestation valid-until (far future for gas/measurement scripts)
   const sign = async (signer, did, bp, nonce) => {
-    const h = ethers.keccak256(abi.encode(["bytes32", "bytes32", "uint16", "uint16", "uint256"], [did, resourceId, bp, 500, nonce]));
+    const h = ethers.keccak256(abi.encode(["bytes32","bytes32","uint16","uint16","uint64","uint256"], [did, resourceId, bp, 500, VU, nonce]));
     return signer.signMessage(ethers.getBytes(h));
   };
   const ms = () => Number(process.hrtime.bigint()) / 1e6;
@@ -45,18 +46,18 @@ async function main() {
     const did = ethers.solidityPackedKeccak256(["string", "bytes32"], ["did:iot:", pk]);
 
     t0 = ms();
-    let r = await (await zta.evaluateAccess(did, resourceId, "sensor", 9000, 500, await sign(oracle, did, 9000, 1), 1)).wait();
+    let r = await (await zta.evaluateAccess(did, resourceId, "sensor", 9000, 500, VU, await sign(oracle, did, 9000, 1), 1)).wait();
     lat.evalAllow.push(ms() - t0); gas.evalAllow.push(Number(r.gasUsed));
-    r = await (await zta.evaluateAccess(did, resourceId, "sensor", 6500, 500, await sign(oracle, did, 6500, 2), 2)).wait();
+    r = await (await zta.evaluateAccess(did, resourceId, "sensor", 6500, 500, VU, await sign(oracle, did, 6500, 2), 2)).wait();
     gas.evalStepUp.push(Number(r.gasUsed));
-    r = await (await zta.evaluateAccess(did, resourceId, "sensor", 9000, 500, await sign(oracle, did, 9000, 1), 1)).wait();
+    r = await (await zta.evaluateAccess(did, resourceId, "sensor", 9000, 500, VU, await sign(oracle, did, 9000, 1), 1)).wait();
     gas.denyReplay.push(Number(r.gasUsed));
-    r = await (await zta.evaluateAccess(did, resourceId, "sensor", 9000, 500, await sign(rogue, did, 9000, 3), 3)).wait();
+    r = await (await zta.evaluateAccess(did, resourceId, "sensor", 9000, 500, VU, await sign(rogue, did, 9000, 3), 3)).wait();
     gas.denyBadOracle.push(Number(r.gasUsed));
     r = await (await registry.suspendDevice(did)).wait(); gas.suspend.push(Number(r.gasUsed));
     r = await (await registry.reinstateDevice(did)).wait(); gas.reinstate.push(Number(r.gasUsed));
     r = await (await registry.revokeDevice(did, "key_rotation")).wait(); gas.revoke.push(Number(r.gasUsed));
-    r = await (await zta.evaluateAccess(did, resourceId, "sensor", 9000, 500, await sign(oracle, did, 9000, 4), 4)).wait();
+    r = await (await zta.evaluateAccess(did, resourceId, "sensor", 9000, 500, VU, await sign(oracle, did, 9000, 4), 4)).wait();
     gas.denyRevoked.push(Number(r.gasUsed));
   }
 

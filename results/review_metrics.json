@@ -1,0 +1,768 @@
+{
+  "seed": 20261004,
+  "R1_ablation": {
+    "historian.write": {
+      "threshold_only": {
+        "legit_allow_pct": 99.89180416553963,
+        "partial mimicry": {
+          "allow_pct": 99.06721536351166,
+          "allow_or_stepup_pct": 100.0
+        },
+        "stealthy mimicry": {
+          "allow_pct": 100.0,
+          "allow_or_stepup_pct": 100.0
+        },
+        "full spoof (P,N,R=1)": {
+          "allow_pct": 100.0,
+          "allow_or_stepup_pct": 100.0
+        }
+      },
+      "gate_only": {
+        "legit_allow_pct": 99.89180416553963,
+        "partial mimicry": {
+          "allow_pct": 75.69272976680385,
+          "allow_or_stepup_pct": 75.69272976680385
+        },
+        "stealthy mimicry": {
+          "allow_pct": 100.0,
+          "allow_or_stepup_pct": 100.0
+        },
+        "full spoof (P,N,R=1)": {
+          "allow_pct": 75.26559520566603,
+          "allow_or_stepup_pct": 75.26559520566603
+        }
+      },
+      "strict_only": {
+        "legit_allow_pct": 99.89180416553963,
+        "partial mimicry": {
+          "allow_pct": 99.06721536351166,
+          "allow_or_stepup_pct": 100.0
+        },
+        "stealthy mimicry": {
+          "allow_pct": 100.0,
+          "allow_or_stepup_pct": 100.0
+        },
+        "full spoof (P,N,R=1)": {
+          "allow_pct": 100.0,
+          "allow_or_stepup_pct": 100.0
+        }
+      },
+      "gate_strict": {
+        "legit_allow_pct": 99.89180416553963,
+        "partial mimicry": {
+          "allow_pct": 75.69272976680385,
+          "allow_or_stepup_pct": 75.69272976680385
+        },
+        "stealthy mimicry": {
+          "allow_pct": 100.0,
+          "allow_or_stepup_pct": 100.0
+        },
+        "full spoof (P,N,R=1)": {
+          "allow_pct": 75.26559520566603,
+          "allow_or_stepup_pct": 75.26559520566603
+        }
+      },
+      "raised_threshold": {
+        "legit_allow_pct": 99.89180416553963,
+        "partial mimicry": {
+          "allow_pct": 98.35390946502058,
+          "allow_or_stepup_pct": 98.35390946502058
+        },
+        "stealthy mimicry": {
+          "allow_pct": 100.0,
+          "allow_or_stepup_pct": 100.0
+        },
+        "full spoof (P,N,R=1)": {
+          "allow_pct": 100.0,
+          "allow_or_stepup_pct": 100.0
+        }
+      },
+      "min_score": {
+        "legit_allow_pct": 99.89180416553963,
+        "partial mimicry": {
+          "allow_pct": 37.338820301783265,
+          "allow_or_stepup_pct": 37.338820301783265
+        },
+        "stealthy mimicry": {
+          "allow_pct": 100.0,
+          "allow_or_stepup_pct": 100.0
+        },
+        "full spoof (P,N,R=1)": {
+          "allow_pct": 38.02778534459275,
+          "allow_or_stepup_pct": 38.02778534459275
+        }
+      },
+      "_matched_threshold": {
+        "raised_theta": 0.6556547439104179,
+        "min_score_tau": 0.5512062822308508,
+        "target_legit_allow_pct": 99.89180416553963
+      }
+    },
+    "plc.setpoint.write": {
+      "threshold_only": {
+        "legit_allow_pct": 99.82964224872232,
+        "partial mimicry": {
+          "allow_pct": 53.57142857142857,
+          "allow_or_stepup_pct": 87.58503401360545
+        },
+        "stealthy mimicry": {
+          "allow_pct": 97.95918367346938,
+          "allow_or_stepup_pct": 100.0
+        },
+        "full spoof (P,N,R=1)": {
+          "allow_pct": 100.0,
+          "allow_or_stepup_pct": 100.0
+        }
+      },
+      "gate_only": {
+        "legit_allow_pct": 97.18909710391823,
+        "partial mimicry": {
+          "allow_pct": 0.0,
+          "allow_or_stepup_pct": 0.0
+        },
+        "stealthy mimicry": {
+          "allow_pct": 61.13945578231292,
+          "allow_or_stepup_pct": 61.13945578231292
+        },
+        "full spoof (P,N,R=1)": {
+          "allow_pct": 0.0,
+          "allow_or_stepup_pct": 0.0
+        }
+      },
+      "strict_only": {
+        "legit_allow_pct": 99.82964224872232,
+        "partial mimicry": {
+          "allow_pct": 53.57142857142857,
+          "allow_or_stepup_pct": 53.57142857142857
+        },
+        "stealthy mimicry": {
+          "allow_pct": 97.95918367346938,
+          "allow_or_stepup_pct": 97.95918367346938
+        },
+        "full spoof (P,N,R=1)": {
+          "allow_pct": 100.0,
+          "allow_or_stepup_pct": 100.0
+        }
+      },
+      "gate_strict": {
+        "legit_allow_pct": 97.18909710391823,
+        "partial mimicry": {
+          "allow_pct": 0.0,
+          "allow_or_stepup_pct": 0.0
+        },
+        "stealthy mimicry": {
+          "allow_pct": 61.13945578231292,
+          "allow_or_stepup_pct": 61.13945578231292
+        },
+        "full spoof (P,N,R=1)": {
+          "allow_pct": 0.0,
+          "allow_or_stepup_pct": 0.0
+        }
+      },
+      "raised_threshold": {
+        "legit_allow_pct": 97.18909710391823,
+        "partial mimicry": {
+          "allow_pct": 9.863945578231291,
+          "allow_or_stepup_pct": 9.863945578231291
+        },
+        "stealthy mimicry": {
+          "allow_pct": 57.48299319727891,
+          "allow_or_stepup_pct": 57.48299319727891
+        },
+        "full spoof (P,N,R=1)": {
+          "allow_pct": 58.13758389261745,
+          "allow_or_stepup_pct": 58.13758389261745
+        }
+      },
+      "min_score": {
+        "legit_allow_pct": 97.18909710391823,
+        "partial mimicry": {
+          "allow_pct": 0.0,
+          "allow_or_stepup_pct": 0.0
+        },
+        "stealthy mimicry": {
+          "allow_pct": 60.71428571428571,
+          "allow_or_stepup_pct": 60.71428571428571
+        },
+        "full spoof (P,N,R=1)": {
+          "allow_pct": 0.0,
+          "allow_or_stepup_pct": 0.0
+        }
+      },
+      "_matched_threshold": {
+        "raised_theta": 0.8145126027138758,
+        "min_score_tau": 0.7004720796758193,
+        "target_legit_allow_pct": 97.18909710391823
+      }
+    },
+    "plc.firmware.update": {
+      "threshold_only": {
+        "legit_allow_pct": 95.17795637198623,
+        "partial mimicry": {
+          "allow_pct": 7.673568818514006,
+          "allow_or_stepup_pct": 31.303288672350792
+        },
+        "stealthy mimicry": {
+          "allow_pct": 53.22777101096224,
+          "allow_or_stepup_pct": 86.84531059683313
+        },
+        "full spoof (P,N,R=1)": {
+          "allow_pct": 52.954808806489,
+          "allow_or_stepup_pct": 85.51564310544612
+        }
+      },
+      "gate_only": {
+        "legit_allow_pct": 93.57060849598163,
+        "partial mimicry": {
+          "allow_pct": 0.0,
+          "allow_or_stepup_pct": 0.0
+        },
+        "stealthy mimicry": {
+          "allow_pct": 18.757612667478686,
+          "allow_or_stepup_pct": 22.0462850182704
+        },
+        "full spoof (P,N,R=1)": {
+          "allow_pct": 0.0,
+          "allow_or_stepup_pct": 0.0
+        }
+      },
+      "strict_only": {
+        "legit_allow_pct": 95.17795637198623,
+        "partial mimicry": {
+          "allow_pct": 7.673568818514006,
+          "allow_or_stepup_pct": 7.673568818514006
+        },
+        "stealthy mimicry": {
+          "allow_pct": 53.22777101096224,
+          "allow_or_stepup_pct": 53.22777101096224
+        },
+        "full spoof (P,N,R=1)": {
+          "allow_pct": 52.954808806489,
+          "allow_or_stepup_pct": 52.954808806489
+        }
+      },
+      "gate_strict": {
+        "legit_allow_pct": 93.57060849598163,
+        "partial mimicry": {
+          "allow_pct": 0.0,
+          "allow_or_stepup_pct": 0.0
+        },
+        "stealthy mimicry": {
+          "allow_pct": 18.757612667478686,
+          "allow_or_stepup_pct": 18.757612667478686
+        },
+        "full spoof (P,N,R=1)": {
+          "allow_pct": 0.0,
+          "allow_or_stepup_pct": 0.0
+        }
+      },
+      "raised_threshold": {
+        "legit_allow_pct": 93.57060849598163,
+        "partial mimicry": {
+          "allow_pct": 6.211936662606577,
+          "allow_or_stepup_pct": 6.211936662606577
+        },
+        "stealthy mimicry": {
+          "allow_pct": 47.868453105968335,
+          "allow_or_stepup_pct": 47.868453105968335
+        },
+        "full spoof (P,N,R=1)": {
+          "allow_pct": 49.015063731170336,
+          "allow_or_stepup_pct": 49.015063731170336
+        }
+      },
+      "min_score": {
+        "legit_allow_pct": 93.57060849598163,
+        "partial mimicry": {
+          "allow_pct": 0.0,
+          "allow_or_stepup_pct": 0.0
+        },
+        "stealthy mimicry": {
+          "allow_pct": 54.56760048721072,
+          "allow_or_stepup_pct": 54.56760048721072
+        },
+        "full spoof (P,N,R=1)": {
+          "allow_pct": 0.0,
+          "allow_or_stepup_pct": 0.0
+        }
+      },
+      "_matched_threshold": {
+        "raised_theta": 0.8247934534210799,
+        "min_score_tau": 0.7101492290457827,
+        "target_legit_allow_pct": 93.57060849598163
+      }
+    }
+  },
+  "R2_exposure": {
+    "definition": "requests accepted per device at 1 request/s after the revocation transaction was SUBMITTED (decision time), i.e. including the block period; window sampled from the measured Besu distribution (clipped to observed min/max)",
+    "results": {
+      "four_regions:audited_until_receipt": {
+        "window_stats_ms": {
+          "mean": 1552.4953804333315,
+          "sd": 169.3754503185674,
+          "min": 1051.9525929999945,
+          "max": 1883.8778129999992
+        },
+        "mean_exposure_requests": 1.5416666666666667,
+        "max_exposure_requests": 2,
+        "runs": 30
+      },
+      "four_regions:fast_until_replica_visible": {
+        "window_stats_ms": {
+          "mean": 1764.110073533332,
+          "sd": 210.95912512099534,
+          "min": 1293.1797149999766,
+          "max": 2378.515588999988
+        },
+        "mean_exposure_requests": 1.755555555555556,
+        "max_exposure_requests": 3,
+        "runs": 30
+      },
+      "one_host:audited_until_receipt": {
+        "window_stats_ms": {
+          "mean": 1984.8984684666627,
+          "sd": 121.23756333284187,
+          "min": 1868.5819499999925,
+          "max": 2157.3536020000174
+        },
+        "mean_exposure_requests": 1.9872222222222224,
+        "max_exposure_requests": 3,
+        "runs": 30
+      },
+      "one_host:fast_until_replica_visible": {
+        "window_stats_ms": {
+          "mean": 1868.138713966667,
+          "sd": 85.08336504692025,
+          "min": 1718.4244860000035,
+          "max": 2026.143465000001
+        },
+        "mean_exposure_requests": 1.8561111111111113,
+        "max_exposure_requests": 3,
+        "runs": 30
+      }
+    }
+  },
+  "R3_real": {
+    "ton_iot_host_grouped": {
+      "hosts_train_test": [
+        35,
+        16
+      ],
+      "sup_auc_mean": 0.9989939809754793,
+      "sup_auc_sd": 0.0017028812131501007,
+      "iforest_auc_mean": 0.873606418343489,
+      "iforest_auc_sd": 0.03911607774450475,
+      "splits_used": 5,
+      "attack_types_with_>=50_test_flows": {
+        "backdoor": 93,
+        "ddos": 3320,
+        "dos": 621,
+        "injection": 12112,
+        "mitm": 509,
+        "password": 10198,
+        "ransomware": 7191,
+        "scanning": 3491
+      },
+      "supervised": {
+        "hand_tuned_gates": {
+          "historian.write": {
+            "legit_allow_full": 100.0,
+            "gate": 0.6,
+            "attack_full_mean": 3.46875,
+            "attack_full_worst": 19.0,
+            "attack_thr_mean": 100.0,
+            "types": 8
+          },
+          "plc.setpoint.write": {
+            "legit_allow_full": 99.85000000000001,
+            "gate": 0.3,
+            "attack_full_mean": 2.73125,
+            "attack_full_worst": 12.3,
+            "attack_thr_mean": 4.30625,
+            "types": 8
+          },
+          "plc.firmware.update": {
+            "legit_allow_full": 99.65,
+            "gate": 0.2,
+            "attack_full_mean": 1.3312500000000003,
+            "attack_full_worst": 8.450000000000001,
+            "attack_thr_mean": 3.15625,
+            "types": 8
+          }
+        },
+        "calibrated_gate_q99": {
+          "gate": 0.05,
+          "policy": {
+            "historian.write": {
+              "legit_allow_full": 99.7,
+              "gate": 0.05,
+              "attack_full_mean": 0.41875,
+              "attack_full_worst": 3.1,
+              "attack_thr_mean": 100.0,
+              "types": 8
+            },
+            "plc.setpoint.write": {
+              "legit_allow_full": 99.75,
+              "gate": 0.05,
+              "attack_full_mean": 0.45625,
+              "attack_full_worst": 3.25,
+              "attack_thr_mean": 4.231249999999999,
+              "types": 8
+            },
+            "plc.firmware.update": {
+              "legit_allow_full": 99.65,
+              "gate": 0.05,
+              "attack_full_mean": 0.48125000000000007,
+              "attack_full_worst": 3.3000000000000003,
+              "attack_thr_mean": 3.20625,
+              "types": 8
+            }
+          },
+          "legit_denied_by_gate_pct_on_eval_half": 0.26723677177979693,
+          "evasion_best10pct": {
+            "historian.write": {
+              "legit_allow_full": 99.73333333333333,
+              "gate": 0.05,
+              "attack_full_mean": 4.35,
+              "attack_full_worst": 28.933333333333334,
+              "attack_thr_mean": 100.0,
+              "types": 8
+            },
+            "plc.setpoint.write": {
+              "legit_allow_full": 99.93333333333332,
+              "gate": 0.05,
+              "attack_full_mean": 4.1000000000000005,
+              "attack_full_worst": 27.400000000000002,
+              "attack_thr_mean": 28.316666666666663,
+              "types": 8
+            },
+            "plc.firmware.update": {
+              "legit_allow_full": 99.86666666666667,
+              "gate": 0.05,
+              "attack_full_mean": 4.116666666666667,
+              "attack_full_worst": 27.0,
+              "attack_thr_mean": 24.691666666666666,
+              "types": 8
+            }
+          }
+        },
+        "legit_A_quantiles": {
+          "0.5": 0.0006277939174291923,
+          "0.9": 0.0014608217900081548,
+          "0.99": 0.015414299507762064,
+          "0.999": 0.3776450902035447
+        }
+      },
+      "iforest": {
+        "hand_tuned_gates": {
+          "historian.write": {
+            "legit_allow_full": 97.95,
+            "gate": 0.6,
+            "attack_full_mean": 76.85625,
+            "attack_full_worst": 100.0,
+            "attack_thr_mean": 100.0,
+            "types": 8
+          },
+          "plc.setpoint.write": {
+            "legit_allow_full": 85.9,
+            "gate": 0.3,
+            "attack_full_mean": 40.51875,
+            "attack_full_worst": 98.45,
+            "attack_thr_mean": 92.96875,
+            "types": 8
+          },
+          "plc.firmware.update": {
+            "legit_allow_full": 80.45,
+            "gate": 0.2,
+            "attack_full_mean": 34.66875,
+            "attack_full_worst": 98.45,
+            "attack_thr_mean": 65.10625,
+            "types": 8
+          }
+        },
+        "calibrated_gate_q99": {
+          "gate": 0.690405458954467,
+          "policy": {
+            "historian.write": {
+              "legit_allow_full": 98.65,
+              "gate": 0.690405458954467,
+              "attack_full_mean": 91.83125,
+              "attack_full_worst": 100.0,
+              "attack_thr_mean": 100.0,
+              "types": 8
+            },
+            "plc.setpoint.write": {
+              "legit_allow_full": 95.5,
+              "gate": 0.690405458954467,
+              "attack_full_mean": 91.48125,
+              "attack_full_worst": 100.0,
+              "attack_thr_mean": 93.01249999999999,
+              "types": 8
+            },
+            "plc.firmware.update": {
+              "legit_allow_full": 84.89999999999999,
+              "gate": 0.690405458954467,
+              "attack_full_mean": 64.9875,
+              "attack_full_worst": 99.0,
+              "attack_thr_mean": 64.9875,
+              "types": 8
+            }
+          },
+          "legit_denied_by_gate_pct_on_eval_half": 1.2292891501870657,
+          "evasion_best10pct": {
+            "historian.write": {
+              "legit_allow_full": 99.06666666666666,
+              "gate": 0.690405458954467,
+              "attack_full_mean": 100.0,
+              "attack_full_worst": 100.0,
+              "attack_thr_mean": 100.0,
+              "types": 8
+            },
+            "plc.setpoint.write": {
+              "legit_allow_full": 96.53333333333333,
+              "gate": 0.690405458954467,
+              "attack_full_mean": 100.0,
+              "attack_full_worst": 100.0,
+              "attack_thr_mean": 100.0,
+              "types": 8
+            },
+            "plc.firmware.update": {
+              "legit_allow_full": 84.73333333333333,
+              "gate": 0.690405458954467,
+              "attack_full_mean": 100.0,
+              "attack_full_worst": 100.0,
+              "attack_thr_mean": 100.0,
+              "types": 8
+            }
+          }
+        },
+        "legit_A_quantiles": {
+          "0.5": 0.0,
+          "0.9": 0.3197065333751507,
+          "0.99": 0.703778495536944,
+          "0.999": 1.0
+        }
+      }
+    },
+    "ton_iot_stratified_supervised": {
+      "hand_tuned_gates": {
+        "seen": {
+          "historian.write": {
+            "legit_allow_full": 99.65,
+            "gate": 0.6,
+            "attack_full_mean": 0.7277777777777777,
+            "attack_full_worst": 4.9,
+            "attack_thr_mean": 100.0,
+            "types": 9
+          },
+          "plc.setpoint.write": {
+            "legit_allow_full": 99.3,
+            "gate": 0.3,
+            "attack_full_mean": 0.35,
+            "attack_full_worst": 2.25,
+            "attack_thr_mean": 1.0222222222222221,
+            "types": 9
+          },
+          "plc.firmware.update": {
+            "legit_allow_full": 98.55000000000001,
+            "gate": 0.2,
+            "attack_full_mean": 0.20555555555555557,
+            "attack_full_worst": 1.25,
+            "attack_thr_mean": 0.5666666666666667,
+            "types": 9
+          }
+        },
+        "held_out": {
+          "historian.write": {
+            "legit_allow_full": 99.45,
+            "gate": 0.6,
+            "attack_full_mean": 11.816666666666666,
+            "attack_full_worst": 41.75,
+            "attack_thr_mean": 99.99444444444445,
+            "types": 9
+          },
+          "plc.setpoint.write": {
+            "legit_allow_full": 99.25,
+            "gate": 0.3,
+            "attack_full_mean": 7.861111111111111,
+            "attack_full_worst": 33.300000000000004,
+            "attack_thr_mean": 16.27777777777778,
+            "types": 9
+          },
+          "plc.firmware.update": {
+            "legit_allow_full": 98.5,
+            "gate": 0.2,
+            "attack_full_mean": 6.250000000000001,
+            "attack_full_worst": 33.45,
+            "attack_thr_mean": 9.177777777777777,
+            "types": 9
+          }
+        }
+      },
+      "calibrated_gate_q99": {
+        "gate": 0.2675619126165451,
+        "seen": {
+          "historian.write": {
+            "legit_allow_full": 99.35000000000001,
+            "gate": 0.2675619126165451,
+            "attack_full_mean": 0.31666666666666665,
+            "attack_full_worst": 1.8499999999999999,
+            "attack_thr_mean": 99.98333333333333,
+            "types": 9
+          },
+          "plc.setpoint.write": {
+            "legit_allow_full": 98.9,
+            "gate": 0.2675619126165451,
+            "attack_full_mean": 0.3111111111111111,
+            "attack_full_worst": 1.6,
+            "attack_thr_mean": 1.0833333333333333,
+            "types": 9
+          },
+          "plc.firmware.update": {
+            "legit_allow_full": 99.05000000000001,
+            "gate": 0.2675619126165451,
+            "attack_full_mean": 0.3,
+            "attack_full_worst": 2.1999999999999997,
+            "attack_thr_mean": 0.6444444444444445,
+            "types": 9
+          }
+        },
+        "held_out": {
+          "historian.write": {
+            "legit_allow_full": 99.15,
+            "gate": 0.2675619126165451,
+            "attack_full_mean": 7.377777777777778,
+            "attack_full_worst": 34.150000000000006,
+            "attack_thr_mean": 100.0,
+            "types": 9
+          },
+          "plc.setpoint.write": {
+            "legit_allow_full": 98.75,
+            "gate": 0.2675619126165451,
+            "attack_full_mean": 7.438888888888889,
+            "attack_full_worst": 33.0,
+            "attack_thr_mean": 15.88888888888889,
+            "types": 9
+          },
+          "plc.firmware.update": {
+            "legit_allow_full": 99.0,
+            "gate": 0.2675619126165451,
+            "attack_full_mean": 7.655555555555555,
+            "attack_full_worst": 34.599999999999994,
+            "attack_thr_mean": 9.461111111111112,
+            "types": 9
+          }
+        },
+        "held_out_evasion_best10pct": {
+          "historian.write": {
+            "legit_allow_full": 99.53333333333333,
+            "gate": 0.2675619126165451,
+            "attack_full_mean": 37.214814814814815,
+            "attack_full_worst": 100.0,
+            "attack_thr_mean": 99.9925925925926,
+            "types": 9
+          },
+          "plc.setpoint.write": {
+            "legit_allow_full": 99.13333333333333,
+            "gate": 0.2675619126165451,
+            "attack_full_mean": 36.88148148148148,
+            "attack_full_worst": 100.0,
+            "attack_thr_mean": 63.62222222222223,
+            "types": 9
+          },
+          "plc.firmware.update": {
+            "legit_allow_full": 98.93333333333332,
+            "gate": 0.2675619126165451,
+            "attack_full_mean": 37.111111111111114,
+            "attack_full_worst": 100.0,
+            "attack_thr_mean": 49.46666666666667,
+            "types": 9
+          }
+        }
+      }
+    },
+    "wustl2018_iforest": {
+      "hand_tuned_gates": {
+        "historian.write": {
+          "legit_allow_full": 96.35000000000001,
+          "gate": 0.6,
+          "attack_full_mean": 100.0,
+          "attack_full_worst": 100.0,
+          "attack_thr_mean": 100.0,
+          "types": 1
+        },
+        "plc.setpoint.write": {
+          "legit_allow_full": 86.2,
+          "gate": 0.3,
+          "attack_full_mean": 9.4,
+          "attack_full_worst": 9.4,
+          "attack_thr_mean": 100.0,
+          "types": 1
+        },
+        "plc.firmware.update": {
+          "legit_allow_full": 81.55,
+          "gate": 0.2,
+          "attack_full_mean": 4.15,
+          "attack_full_worst": 4.15,
+          "attack_thr_mean": 94.1,
+          "types": 1
+        }
+      },
+      "calibrated_gate_q99": {
+        "gate": 0.9696077104492158,
+        "policy": {
+          "historian.write": {
+            "legit_allow_full": 98.3,
+            "gate": 0.9696077104492158,
+            "attack_full_mean": 100.0,
+            "attack_full_worst": 100.0,
+            "attack_thr_mean": 100.0,
+            "types": 1
+          },
+          "plc.setpoint.write": {
+            "legit_allow_full": 93.0,
+            "gate": 0.9696077104492158,
+            "attack_full_mean": 100.0,
+            "attack_full_worst": 100.0,
+            "attack_thr_mean": 100.0,
+            "types": 1
+          },
+          "plc.firmware.update": {
+            "legit_allow_full": 84.75,
+            "gate": 0.9696077104492158,
+            "attack_full_mean": 94.55,
+            "attack_full_worst": 94.55,
+            "attack_thr_mean": 94.55,
+            "types": 1
+          }
+        },
+        "evasion_best10pct": {
+          "historian.write": {
+            "legit_allow_full": 97.0,
+            "gate": 0.9696077104492158,
+            "attack_full_mean": 100.0,
+            "attack_full_worst": 100.0,
+            "attack_thr_mean": 100.0,
+            "types": 1
+          },
+          "plc.setpoint.write": {
+            "legit_allow_full": 92.80000000000001,
+            "gate": 0.9696077104492158,
+            "attack_full_mean": 100.0,
+            "attack_full_worst": 100.0,
+            "attack_thr_mean": 100.0,
+            "types": 1
+          },
+          "plc.firmware.update": {
+            "legit_allow_full": 86.6,
+            "gate": 0.9696077104492158,
+            "attack_full_mean": 99.46666666666667,
+            "attack_full_worst": 99.46666666666667,
+            "attack_thr_mean": 99.46666666666667,
+            "types": 1
+          }
+        }
+      }
+    }
+  }
+}

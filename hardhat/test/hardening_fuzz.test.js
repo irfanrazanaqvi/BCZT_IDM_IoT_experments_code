@@ -1,6 +1,7 @@
 const { expect } = require("chai");
 const { ethers } = require("hardhat");
 const abi = ethers.AbiCoder.defaultAbiCoder();
+const VU = 4102444800; // attestation valid-until (far future for gas/measurement scripts)
 
 // Small seeded PRNG so the randomised run is reproducible.
 function prng(seed) { let s = seed >>> 0; return () => ((s = (s * 1664525 + 1013904223) >>> 0) / 2 ** 32); }
@@ -15,7 +16,7 @@ describe("Hardening and randomised invariant checks", function () {
     return ethers.solidityPackedKeccak256(["string", "bytes32"], ["did:iot:", pk]);
   }
   const osig = (did, T, A, n) => oracle.signMessage(ethers.getBytes(ethers.keccak256(
-    abi.encode(["bytes32", "bytes32", "uint16", "uint16", "uint256"], [did, rid, T, A, n]))));
+    abi.encode(["bytes32","bytes32","uint16","uint16","uint64","uint256"], [did, rid, T, A, VU, n]))));
 
   beforeEach(async function () {
     [deployer, oracle] = await ethers.getSigners();
@@ -58,9 +59,9 @@ describe("Hardening and randomised invariant checks", function () {
           // reuse targets the device that originally used the nonce
           const di = reuse ? Number(key.split(":")[0]) : i;
           const s = await osig(dids[di], 9500, 100, n);
-          const eff = Number(await zta.evaluateAccess.staticCall(dids[di], rid, "plc", 9500, 100, s, n));
+          const eff = Number(await zta.evaluateAccess.staticCall(dids[di], rid, "plc", 9500, 100, VU, s, n));
           const fresh = !used.has(di + ":" + n);
-          if (status[di] === 1 && fresh) { expect(eff).to.equal(2); await (await zta.evaluateAccess(dids[di], rid, "plc", 9500, 100, s, n)).wait(); used.add(di + ":" + n); }
+          if (status[di] === 1 && fresh) { expect(eff).to.equal(2); await (await zta.evaluateAccess(dids[di], rid, "plc", 9500, 100, VU, s, n)).wait(); used.add(di + ":" + n); }
           else expect(eff, "inactive device or replayed nonce must not be ALLOWed").to.not.equal(2);
         }
         expect(Number(await registry.getStatus(dids[i]))).to.equal(status[i]);

@@ -1,56 +1,56 @@
 {
   "definePolicy_iiot": 74637,
   "decisions": {
-    "allow_strict_tier": 70339,
-    "deny_anomaly_gate": 70158,
-    "deny_strict_borderline": 70369,
-    "deny_trust_below": 70193
+    "allow_strict_tier": 70718,
+    "deny_anomaly_gate": 70536,
+    "deny_strict_borderline": 70735,
+    "deny_trust_below": 70583
   },
   "recall": [
     {
       "devices": 1,
-      "individual_total_gas": 58862,
-      "batch_gas": 59885,
+      "individual_total_gas": 58836,
+      "batch_gas": 59859,
       "saving_pct": -1.7,
-      "per_device_batch_gas": 59885,
+      "per_device_batch_gas": 59859,
       "suspendBatch_gas": 31626
     },
     {
       "devices": 10,
-      "individual_total_gas": 588620,
-      "batch_gas": 373739,
+      "individual_total_gas": 588336,
+      "batch_gas": 373725,
       "saving_pct": 36.5,
-      "per_device_batch_gas": 37374,
-      "suspendBatch_gas": 98895
+      "per_device_batch_gas": 37373,
+      "suspendBatch_gas": 98907
     },
     {
       "devices": 50,
-      "individual_total_gas": 2943076,
-      "batch_gas": 1768651,
+      "individual_total_gas": 2941716,
+      "batch_gas": 1768637,
       "saving_pct": 39.9,
       "per_device_batch_gas": 35373,
-      "suspendBatch_gas": 397927
+      "suspendBatch_gas": 397903
     },
     {
       "devices": 100,
-      "individual_total_gas": 5885960,
-      "batch_gas": 3512303,
+      "individual_total_gas": 5883408,
+      "batch_gas": 3512289,
       "saving_pct": 40.3,
       "per_device_batch_gas": 35123,
-      "suspendBatch_gas": 771669
+      "suspendBatch_gas": 771717
     },
     {
       "devices": 200,
-      "individual_total_gas": 11772076,
-      "batch_gas": 6999571,
+      "individual_total_gas": 11766864,
+      "batch_gas": 6999533,
       "saving_pct": 40.5,
       "per_device_batch_gas": 34998,
-      "suspendBatch_gas": 1519249
+      "suspendBatch_gas": 1519165
     }
   ],
   "anchor_gas": {
-    "first": 70846,
-    "steady_mean": 53743,
+    "first": 70824,
+    "steady_mean": 53721,
     "per_decision_at_1000": 54
   }
 }

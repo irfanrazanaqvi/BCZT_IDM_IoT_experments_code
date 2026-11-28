@@ -1,6 +1,7 @@
 const { expect } = require("chai");
 const { ethers } = require("hardhat");
 const abi = ethers.AbiCoder.defaultAbiCoder();
+const VU = 4102444800; // attestation valid-until (far future for gas/measurement scripts)
 
 describe("IIoT extensions: anomaly gate, strict tier, batch recall", function () {
   let registry, zta, deployer, oracle, rid;
@@ -12,7 +13,7 @@ describe("IIoT extensions: anomaly gate, strict tier, batch recall", function ()
     return ethers.solidityPackedKeccak256(["string", "bytes32"], ["did:iot:", pk]);
   }
   async function sig(did, T, A, n) {
-    return oracle.signMessage(ethers.getBytes(ethers.keccak256(abi.encode(["bytes32","bytes32","uint16","uint16","uint256"], [did, rid, T, A, n]))));
+    return oracle.signMessage(ethers.getBytes(ethers.keccak256(abi.encode(["bytes32","bytes32","uint16","uint16","uint64","uint256"], [did, rid, T, A, VU, n]))));
   }
   beforeEach(async function () {
     [deployer, oracle] = await ethers.getSigners();
@@ -23,17 +24,17 @@ describe("IIoT extensions: anomaly gate, strict tier, batch recall", function ()
   });
   it("denies a high composite score when the anomaly gate trips (mimicry)", async function () {
     const did = await reg(1);
-    expect(await zta.evaluateAccess.staticCall(did, rid, "plc", 9500, 3000, await sig(did, 9500, 3000, 1), 1)).to.equal(0);
-    expect(await zta.evaluateAccess.staticCall(did, rid, "plc", 9500, 1000, await sig(did, 9500, 1000, 2), 2)).to.equal(2);
+    expect(await zta.evaluateAccess.staticCall(did, rid, "plc", 9500, 3000, VU, await sig(did, 9500, 3000, 1), 1)).to.equal(0);
+    expect(await zta.evaluateAccess.staticCall(did, rid, "plc", 9500, 1000, VU, await sig(did, 9500, 1000, 2), 2)).to.equal(2);
   });
   it("a tampered anomaly value invalidates the oracle signature", async function () {
     const did = await reg(2);
     const good = await sig(did, 9500, 3000, 3);   // oracle attested A=3000
-    expect(await zta.evaluateAccess.staticCall(did, rid, "plc", 9500, 500, good, 3)).to.equal(0); // device claims A=500
+    expect(await zta.evaluateAccess.staticCall(did, rid, "plc", 9500, 500, VU, good, 3)).to.equal(0); // device claims A=500
   });
   it("strict resources never step up", async function () {
     const did = await reg(3);
-    expect(await zta.evaluateAccess.staticCall(did, rid, "plc", 8000, 500, await sig(did, 8000, 500, 4), 4)).to.equal(0);
+    expect(await zta.evaluateAccess.staticCall(did, rid, "plc", 8000, 500, VU, await sig(did, 8000, 500, 4), 4)).to.equal(0);
   });
   it("revokeBatch revokes all known devices, skips unknown, and blocks later access", async function () {
     const dids = [await reg(10), await reg(11), await reg(12)];
@@ -41,7 +42,7 @@ describe("IIoT extensions: anomaly gate, strict tier, batch recall", function ()
     expect(done).to.equal(3);
     await (await registry.revokeBatch(dids, "firmware_recall")).wait();
     for (const d of dids) expect(await registry.getStatus(d)).to.equal(3);
-    expect(await zta.evaluateAccess.staticCall(dids[0], rid, "plc", 9500, 500, await sig(dids[0], 9500, 500, 5), 5)).to.equal(0);
+    expect(await zta.evaluateAccess.staticCall(dids[0], rid, "plc", 9500, 500, VU, await sig(dids[0], 9500, 500, 5), 5)).to.equal(0);
   });
   it("only authorised PEPs can anchor a decision-log root", async function () {
     const [, , pep, other] = await ethers.getSigners();

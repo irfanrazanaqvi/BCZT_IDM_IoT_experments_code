@@ -1,0 +1,39 @@
+[
+  {
+    "devices": 10,
+    "propose_gas": 95559,
+    "vote_gas": 182532,
+    "executeBatch_gas": 389321,
+    "total_gas": 667412,
+    "revoked": true
+  },
+  {
+    "devices": 50,
+    "propose_gas": 95559,
+    "vote_gas": 182532,
+    "executeBatch_gas": 1784951,
+    "total_gas": 2063042,
+    "revoked": true
+  },
+  {
+    "devices": 100,
+    "propose_gas": 95559,
+    "vote_gas": 182532,
+    "executeBatch_gas": 3529627,
+    "total_gas": 3807718,
+    "revoked": true
+  },
+  {
+    "devices": 200,
+    "propose_gas": 95559,
+    "vote_gas": 182496,
+    "executeBatch_gas": 7018868,
+    "total_gas": 7296923,
+    "revoked": true
+  },
+  {
+    "reinstate_N5": true,
+    "total_gas": 291458,
+    "active_again": true
+  }
+]
